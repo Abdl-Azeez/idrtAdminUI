@@ -1,0 +1,27 @@
+/* Dashboard */
+.top-cards {
+  flex-wrap: nowrap !important;
+}
+.logo-dark {
+  width: 150px;
+}
+@media only screen and (max-width: 1650px) {
+  .top-cards {
+    width: max-content !important;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .nk-header-fixed + .nk-content {
+    margin-top: 100px !important;
+  }
+  .logo-dark {
+    width: 100px;
+  }
+  .top-cards {
+    flex-wrap: wrap !important;
+  }
+}
+
+.latestTrans .nk-tb-col {
+  vertical-align: top !important;
+}
