@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Head from "../layout/head/Head";
 import Content from "../layout/content/Content";
 import DatePicker from "react-datepicker";
-import { orderData } from "./panel/e-commerce/order/OrderData";
 import {
   Block,
   BlockHeadContent,
@@ -23,9 +22,11 @@ import {
 import { getDateStructured } from "../utils/Utils";
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Modal, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
+import { transactionTableData } from "../components/table/TableData";
+
 
 const Transaction = () => {
-  const [data, setData] = useState(orderData);
+  const [data, setData] = useState(transactionTableData);
   const [smOption, setSmOption] = useState(false);
   const [formData, setFormData] = useState({
     id: null,
@@ -48,12 +49,12 @@ const Transaction = () => {
   // Changing state value when searching name
   useEffect(() => {
     if (onSearchText !== "") {
-      const filteredObject = orderData.filter((item) => {
+      const filteredObject = transactionTableData.filter((item) => {
         return item.orderId.includes(onSearchText);
       });
       setData([...filteredObject]);
     } else {
-      setData([...orderData]);
+      setData([...transactionTableData]);
     }
   }, [onSearchText]);
 

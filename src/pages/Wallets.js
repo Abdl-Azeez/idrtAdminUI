@@ -17,7 +17,7 @@ import { Card } from "reactstrap";
 const Wallets = () => {
     return (
         <React.Fragment>
-            <Head title="Special table" />
+            <Head title="Wallet" />
             <Content page="component">
                 <BlockHead size="lg" wide="sm">
                     <BlockHeadContent>

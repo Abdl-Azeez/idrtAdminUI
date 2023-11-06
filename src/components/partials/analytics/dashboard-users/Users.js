@@ -23,7 +23,7 @@ const Users = () => {
                                 <span>U0000{i}</span>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-sessions" >
-                                <span style={{ textWrap: 'nowrap' }}>Jane Doe</span>
+                                <span style={{ textWrap: 'nowrap', whiteSpace: 'nowrap' }}>Jane Doe</span>
                             </DataTableRow>
                         </DataTableItem>
                     );
