@@ -6,20 +6,20 @@ const menu = [
   },
   {
     icon: "user-list-fill",
-    text: "Users",
-    link: "/users",
+    text: "Main Wallets",
+    link: "/main_wallets",
+  },
+  {
+    icon: "share-alt",
+    text: "Client Wallets",
+    link: "/wallets",
+
   },
   {
     icon: "rss",
     text: "Transactions",
     link: "/transactions",
-  },
-  {
-    icon: "share-alt",
-    text: "Wallets",
-    link: "/wallets",
-
-  },
+  }
 
 ];
 export default menu;

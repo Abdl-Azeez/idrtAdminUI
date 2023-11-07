@@ -11,15 +11,15 @@ import {
 } from "../components/Component";
 import { dataTableColumns2, userData } from "./components/table/TableData";
 
-const Users = () => {
+const MainWallets = () => {
     return (
         <React.Fragment>
-            <Head title="Users" />
+            <Head title="Main Wallets" />
             <Content page="component">
                 <BlockHead size="lg" wide="sm">
                     <BlockHeadContent>
                         <BlockTitle tag="h2" className="fw-normal">
-                            Users
+                            Main Wallets
                         </BlockTitle>
                     </BlockHeadContent>
                 </BlockHead>
@@ -38,4 +38,4 @@ const Users = () => {
         </React.Fragment>
     );
 };
-export default Users;
+export default MainWallets;

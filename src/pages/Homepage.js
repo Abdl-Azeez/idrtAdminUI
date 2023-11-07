@@ -18,10 +18,13 @@ import {
   Row,
   Col,
   PreviewAltCard,
+  BackTo,
 } from "../components/Component";
-import Internal from "../components/partials/analytics/dashboard-wallet/Internal";
+import MainWallets from "../components/partials/analytics/dashboard-wallet/MainWallets";
 import Users from "../components/partials/analytics/dashboard-users/Users";
 import UserAddress from "../components/partials/analytics/dashboard-users/UserAddress";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+// import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Homepage = () => {
   const [timeFrame, setTimeFrame] = useState("Month");
@@ -46,11 +49,11 @@ const Homepage = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <label className="font-weight-bolder mb-0">Active:</label>
-                      <p>10,000</p>
+                      <p>8,000</p>
                     </div>
                     <div className="d-flex justify-content-between">
                       <label className="font-weight-bolder mb-0">Inactive:</label>
-                      <p>10,000</p>
+                      <p>2,000</p>
                     </div>
                   </div>
                 </div>
@@ -117,7 +120,7 @@ const Homepage = () => {
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                Account Summary
+                ACCOUNT SUMMARY
               </BlockTitle>
             </BlockHeadContent>
           </div>
@@ -205,28 +208,48 @@ const Homepage = () => {
             </Col>
           </Row>
         </Block>
+        <Row className="g-gs py-4">
+          <Col lg="6" xxl="6">
+            <BlockHead size="sm" className="d-flex justify-content-between">
+              <div className="nk-block-between">
+                <BlockHeadContent>
+                  <BlockTitle page tag="h3">
+                    TOP 5 WALLETS
+                  </BlockTitle>
+                </BlockHeadContent>
+              </div>
+            </BlockHead>
+            <Block>
 
-        <BlockHead size="sm" className="d-flex justify-content-between">
-          <div className="nk-block-between">
-            <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                TOP 5 WALLETS
-              </BlockTitle>
-            </BlockHeadContent>
-          </div>
-        </BlockHead>
-        <Block>
-          <Row className="g-gs">
-            <Col lg="7" xxl="6">
               <Card className="h-100">
                 <Wallets />
               </Card>
-            </Col>
-          </Row>
 
-        </Block>
 
-        <BlockHead size="sm" className="d-flex justify-content-between">
+            </Block>
+          </Col>
+          <Col lg="6" xxl="6">
+            <BlockHead size="sm" className="d-flex justify-content-between">
+              <div className="nk-block-between">
+                <BlockHeadContent>
+                  <BlockTitle page tag="h3">
+                    MAIN WALLETS
+                  </BlockTitle>
+                </BlockHeadContent>
+              </div>
+            </BlockHead>
+            <Block>
+
+              <Card className="h-100">
+                <MainWallets />
+              </Card>
+
+
+            </Block>
+
+          </Col>
+        </Row>
+        <BlockHead size="sm" className="d-flex justify-content-between pt-2">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -240,7 +263,10 @@ const Homepage = () => {
             <Col lg="12" xxl="12">
               <Card className="h-100">
                 <LatestTrans />
-                <Button size="sm" color="" className="btn-light font-size-10 text-center"><span>VIEW ALL TRANSACTIONS</span></Button>
+                <Link to='/transactions'>
+                  <Button size="sm" color="" className="btn-light font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
+
+                </Link>
               </Card>
 
             </Col>
@@ -250,23 +276,6 @@ const Homepage = () => {
 
         <Col xxl="12">
           <div className="d-flex pt-5" style={{ gap: '5px' }}>
-            <Col>
-              <BlockHead size="sm" className="d-flex justify-content-between">
-                <div className="nk-block-between">
-                  <BlockHeadContent>
-                    <BlockTitle page tag="h3">
-                      WALLETS [internal]
-                    </BlockTitle>
-                  </BlockHeadContent>
-                </div>
-              </BlockHead>
-              <Block>
-                <Card className="h-100">
-                  <Internal />
-                  <Button size="sm" className="btn-light font-size-10 text-center"><span>VIEW ALL</span></Button>
-                </Card>
-              </Block>
-            </Col>
             <Col>
               <BlockHead size="sm" className="d-flex justify-content-between">
                 <div className="nk-block-between">
