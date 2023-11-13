@@ -1,7 +1,7 @@
 import React, { Suspense, useLayoutEffect } from "react";
-import { Switch } from "react-router-dom";
-import Routes from "./routes"
+import { Switch, Route } from "react-router-dom";
 import { RedirectAs404 } from "../utils/Utils";
+import Login from "../pages/auth/Login";
 import Homepage from "../pages/Homepage";
 import Transactions from "../pages/Transactions";
 import MainWallets from "../pages/MainWallets";
@@ -17,14 +17,17 @@ const Pages = () => {
   return (
     <Suspense fallback={<div />}>
       <Switch>
-        <Routes exact path={`${process.env.PUBLIC_URL}/transactions`} component={Transactions}></Routes>
-        <Routes exact path={`${process.env.PUBLIC_URL}/main_wallets`} component={MainWallets}></Routes>
-        <Routes exact path={`${process.env.PUBLIC_URL}/wallets`} component={Wallets}></Routes>
-        <Routes exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Routes>
+        <Route exact path={`${process.env.PUBLIC_URL}/transactions`} component={Transactions}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/main_wallets`} component={MainWallets}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/wallets`} component={Wallets}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
 
-        <Routes component={RedirectAs404}></Routes>
+        <Route component={RedirectAs404}></Route>
       </Switch>
     </Suspense>
   );
 };
 export default Pages;
+export const publicRoutesData = [
+  { path: `/login`, component: Login },
+];

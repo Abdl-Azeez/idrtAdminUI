@@ -1,15 +1,15 @@
 import { Redirect } from "react-router-dom";
 
 //url for production
-export var url = "";
-if (process.env.NODE_ENV === "development") {
-  url = "";
-} else {
-  url = window.location.host.split("/")[1];
-  if (url) {
-    url = `/${window.location.host.split("/")[1]}`;
-  } else url = process.env.PUBLIC_URL; /// ADD YOUR CPANEL SUB-URL
-}
+// export var url = "";
+// if (process.env.NODE_ENV === "development") {
+//   url = "";
+// } else {
+//   url = window.location.host.split("/")[1];
+//   if (url) {
+//     url = `/${window.location.host.split("/")[1]}`;
+//   } else url = process.env.PUBLIC_URL; /// ADD YOUR CPANEL SUB-URL
+// }
 
 //Function to validate and return errors for a form
 export const checkForm = (formData) => {
