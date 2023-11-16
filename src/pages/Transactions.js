@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "../layout/head/Head";
 import Content from "../layout/content/Content";
-import DatePicker from "react-datepicker";
 import {
   Block,
   BlockHeadContent,
@@ -19,29 +18,14 @@ import {
   Col,
   RSelect,
 } from "../components/Component";
-import { getDateStructured } from "../utils/Utils";
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Modal, ModalBody } from "reactstrap";
-import { useForm } from "react-hook-form";
 import { transactionTableData } from "../components/table/TableData";
 
 
 const Transaction = () => {
   const [data, setData] = useState(transactionTableData);
   const [smOption, setSmOption] = useState(false);
-  const [formData, setFormData] = useState({
-    id: null,
-    orderId: "",
-    date: new Date(),
-    status: "",
-    customer: "",
-    purchased: "",
-    total: "",
-    check: false,
-  });
-  const [view, setView] = useState({
-    add: false,
-    details: false,
-  });
+
   const [onSearchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage] = useState(7);
@@ -58,13 +42,7 @@ const Transaction = () => {
     }
   }, [onSearchText]);
 
-  // toggle function to view order details
-  const toggle = (type) => {
-    setView({
-      add: type === "add" ? true : false,
-      details: type === "details" ? true : false,
-    });
-  };
+
 
   // selects all the order
   const selectorCheck = (e) => {
@@ -84,58 +62,11 @@ const Transaction = () => {
     setData([...newData]);
   };
 
-  // resets forms
-  const resetForm = () => {
-    setFormData({
-      id: null,
-      orderId: "",
-      date: new Date(),
-      status: "",
-      customer: "",
-      purchased: "",
-      total: "",
-      check: false,
-    });
-  };
-
-  const onFormSubmit = (form) => {
-    const { customer, purchased, total } = form;
-    let submittedData = {
-      id: data.length + 1,
-      orderId: "95981",
-      date: getDateStructured(formData.date),
-      status: formData.status,
-      customer: customer,
-      purchased: purchased,
-      total: total,
-      check: false,
-    };
-    setData([submittedData, ...data]);
-    setView({ add: false, details: false });
-    resetForm();
-  };
-
-  // function to load detail data
-  const loadDetail = (id) => {
-    let index = data.findIndex((item) => item.id === id);
-    setFormData(data[index]);
-  };
-
-  // OnChange function to get the input data
-  const onInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   // onChange function for searching name
   const onFilterChange = (e) => {
     setSearchText(e.target.value);
   };
 
-  // function to close the form modal
-  const onFormCancel = () => {
-    setView({ add: false, details: false });
-    resetForm();
-  };
 
   // function to change to approve property for an item
   const markAsDelivered = (id) => {
@@ -177,7 +108,6 @@ const Transaction = () => {
   // Change Page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const { errors, register, handleSubmit } = useForm();
 
   return (
     <React.Fragment>
@@ -206,18 +136,14 @@ const Transaction = () => {
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="primary"
-                        onClick={() => {
-                          toggle("add");
-                        }}
+
                       >
                         <Icon name="plus"></Icon>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
-                        onClick={() => {
-                          toggle("add");
-                        }}
+
                       >
                         <Icon name="plus"></Icon>
                         <span>Add Transaction</span>
@@ -366,10 +292,7 @@ const Transaction = () => {
                       )}
                       <li
                         className="nk-tb-action-hidden"
-                        onClick={() => {
-                          loadDetail(item.id);
-                          toggle("details");
-                        }}
+
                       >
                         <TooltipComponent
                           tag="a"
@@ -391,11 +314,7 @@ const Transaction = () => {
                                 <DropdownItem
                                   tag="a"
                                   href="#dropdown"
-                                  onClick={(ev) => {
-                                    ev.preventDefault();
-                                    loadDetail(item.id);
-                                    toggle("details");
-                                  }}
+
                                 >
                                   <Icon name="eye"></Icon>
                                   <span>Order Details</span>
@@ -454,174 +373,6 @@ const Transaction = () => {
             )}
           </PreviewAltCard>
         </Block>
-
-        <Modal isOpen={view.add} toggle={() => onFormCancel()} className="modal-dialog-centered" size="lg">
-          <ModalBody>
-            <a href="#cancel" className="close">
-              {" "}
-              <Icon
-                name="cross-sm"
-                onClick={(ev) => {
-                  ev.preventDefault();
-                  onFormCancel();
-                }}
-              ></Icon>
-            </a>
-            <div className="p-2">
-              <h5 className="title">Add Order</h5>
-              <div className="mt-4">
-                <form onSubmit={handleSubmit(onFormSubmit)}>
-                  <Row className="g-3">
-                    <Col md="12">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="customer">
-                          Customer Name
-                        </label>
-                        <div className="form-control-wrap">
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="customer"
-                            onChange={(e) => onInputChange(e)}
-                            ref={register({
-                              required: "This field is required",
-                            })}
-                            defaultValue={formData.customer}
-                          />
-                          {errors.customer && <span className="invalid">{errors.customer.message}</span>}
-                        </div>
-                      </div>
-                    </Col>
-                    <Col md="6">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="date">
-                          Date of order
-                        </label>
-                        <div className="form-control-wrap">
-                          <DatePicker
-                            selected={formData.date}
-                            className="form-control"
-                            onChange={(date) => setFormData({ ...formData, date: date })}
-                          />
-                          {errors.date && <span className="invalid">{errors.date.message}</span>}
-                        </div>
-                      </div>
-                    </Col>
-                    <Col md="6">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="purchased">
-                          Purchased Product
-                        </label>
-                        <div className="form-control-wrap">
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="purchased"
-                            ref={register({ required: "This is required" })}
-                            defaultValue={formData.purchased}
-                          />
-                          {errors.purchased && <span className="invalid">{errors.purchased.message}</span>}
-                        </div>
-                      </div>
-                    </Col>
-                    <Col md="6">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="total">
-                          Total Price
-                        </label>
-                        <div className="form-control-wrap">
-                          <input
-                            type="number"
-                            className="form-control"
-                            name="total"
-                            ref={register({ required: "This is required" })}
-                            defaultValue={formData.total}
-                          />
-                          {errors.total && <span className="invalid">{errors.total.message}</span>}
-                        </div>
-                      </div>
-                    </Col>
-                    <Col md="6">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="status">
-                          Status
-                        </label>
-                        <div className="form-control-wrap">
-                          <RSelect
-                            name="status"
-                            options={[
-                              { value: "On Hold", label: "On Hold" },
-                              { value: "Delivered", label: "Delivered" },
-                            ]}
-                            onChange={(e) => setFormData({ ...formData, status: e.value })}
-                            defaultValue={formData.status}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-
-                    <Col size="12">
-                      <Button color="primary" type="submit">
-                        <Icon className="plus"></Icon>
-                        <span>Add Order</span>
-                      </Button>
-                    </Col>
-                  </Row>
-                </form>
-              </div>
-            </div>
-          </ModalBody>
-        </Modal>
-
-        <Modal isOpen={view.details} toggle={() => onFormCancel()} className="modal-dialog-centered" size="lg">
-          <ModalBody>
-            <a href="#cancel" className="close">
-              {" "}
-              <Icon
-                name="cross-sm"
-                onClick={(ev) => {
-                  ev.preventDefault();
-                  onFormCancel();
-                }}
-              ></Icon>
-            </a>
-            <div className="nk-tnx-details mt-sm-3">
-              <div className="nk-modal-head mb-3">
-                <h5 className="title">Order Details</h5>
-              </div>
-              <Row className="gy-3">
-                <Col lg={6}>
-                  <span className="sub-text">Order Id</span>
-                  <span className="caption-text">{formData.orderId}</span>
-                </Col>
-                <Col lg={6}>
-                  <span className="sub-text">Status</span>
-                  <span
-                    className={`dot bg-${formData.status === "Delivered" ? "success" : "warning"} d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${formData.status === "Delivered" ? "success" : "warning"
-                      } d-none d-mb-inline-flex`}
-                  >
-                    {formData.status}
-                  </span>
-                </Col>
-                <Col lg={6}>
-                  <span className="sub-text">Customer</span>
-                  <span className="caption-text">{formData.customer}</span>
-                </Col>
-                <Col lg={6}>
-                  <span className="sub-text">Purchased Product</span>
-                  <span className="caption-text">{formData.purchased}</span>
-                </Col>
-                <Col lg={6}>
-                  <span className="sub-text">Total Price</span>
-                  <span className="caption-text">{formData.total}</span>
-                </Col>
-              </Row>
-            </div>
-          </ModalBody>
-        </Modal>
       </Content>
     </React.Fragment>
   );

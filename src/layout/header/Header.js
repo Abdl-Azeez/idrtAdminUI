@@ -5,8 +5,14 @@ import Logo from "../logo/Logo";
 import User from "./dropdown/user/User";
 import Notification from "./dropdown/notification/Notification";
 import HeaderSearch from "../header-search/HeaderSearch";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Button } from "reactstrap";
+import { logoutUser } from "../../store/actions";
 
 const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const headerClass = classNames({
     "nk-header": true,
     "nk-header-fixed": fixed,
@@ -14,6 +20,11 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
     [`is-${theme}`]: theme !== "white" && theme !== "light",
     [`${className}`]: className,
   });
+
+  const handleSignout = () => {
+    dispatch(logoutUser(history));
+  };
+
   return (
     <div className={headerClass}>
       <div className="container-fluid">
@@ -35,7 +46,8 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
             <ul className="nk-quick-nav">
 
               <li className="notification-dropdown mr-n1" onClick={() => setVisibility(false)}>
-                <Notification />
+                <a onClick={handleSignout}>
+                  <Button color="danger" size="sm">Logout</Button></a>
               </li>
               {/* <li className="user-dropdown"  onClick={() => setVisibility(false)}>
                 <User />

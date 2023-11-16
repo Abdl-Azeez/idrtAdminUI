@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import moment from 'moment';
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
+import DatePicker from "react-datepicker";
 import Transaction from "../components/partials/analytics/dashboard-transaction/Transaction";
 import Transfer from "../components/partials/analytics/dashboard-transfer/Transfer";
 import Fees from "../components/partials/analytics/dashboard-fees/Fees";
 import Wallets from "../components/partials/analytics/dashboard-wallet/Wallet";
 import LatestTrans from "../components/partials/analytics/dashboard-latest-transactions/latestTrans";
-import { DropdownToggle, DropdownMenu, Card, UncontrolledDropdown, DropdownItem } from "reactstrap";
+import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
+import { useForm } from "react-hook-form";
 import {
   Block,
   BlockHead,
   BlockHeadContent,
   BlockTitle,
   Icon,
-  Button,
   Row,
   Col,
   PreviewAltCard,
@@ -28,7 +29,14 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 
 const Homepage = () => {
   const [timeFrame, setTimeFrame] = useState("Month");
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    endDate: new Date(),
+    startDate: new Date(),
 
+  });
+
+  const { errors, register, handleSubmit } = useForm();
   return (
     <React.Fragment>
       <Head title="Dashboard" />
@@ -177,6 +185,18 @@ const Homepage = () => {
               <li className="nav-item">
                 <a
                   href="#navitem"
+                  className={timeFrame === "MonthToday" ? "nav-link active" : "nav-link"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTimeFrame("MonthToday");
+                  }}
+                >
+                  M-TD
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  href="#navitem"
                   className={timeFrame === "Year" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
@@ -185,6 +205,18 @@ const Homepage = () => {
                 >
                   1 Y
                 </a>
+              </li>
+              <li>
+                <Button
+                  className="ml-2 toggle d-none d-md-inline-flex"
+                  color="primary"
+                  size="sm"
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  <span>Edit Date</span>
+                </Button>
               </li>
             </ul>
           </div>
@@ -312,8 +344,54 @@ const Homepage = () => {
             </Col>
           </div>
         </Col>
-      </Content>
-    </React.Fragment>
+        <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
+          <ModalHeader toggle={() => setShowModal(false)}>
+            Date Filter
+          </ModalHeader>
+          <ModalBody>
+            <form onSubmit={handleSubmit()}>
+              <Row className="g-3">
+                <Col md="6">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="startDate">
+                      Start Date
+                    </label>
+                    <FormGroup>
+                      <div className="form-control-wrap">
+                        <input type="date" className="form-control" id="startDate" defaultValue={formData.startDate} selected={formData.startDate}
+
+                          onChange={(startDate) => setFormData({ ...formData, startDate: startDate })} />
+                      </div>
+                    </FormGroup>
+                    {errors.startDate && <span className="invalid">{errors.startDate.message}</span>}
+                  </div>
+                </Col>
+                <Col md="6">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="endDate">
+                      End Date
+                    </label>
+                    <FormGroup>
+                      <div className="form-control-wrap">
+                        <input type="date" className="form-control" id="endDate" defaultValue={formData.endDate} selected={formData.endDate}
+
+                          onChange={(endDate) => setFormData({ ...formData, endDate: endDate })} />
+                      </div>
+                    </FormGroup>
+                    {errors.endDate && <span className="invalid">{errors.endDate.message}</span>}
+                  </div>
+                </Col>
+                <Col size="12">
+                  <Button color="primary" type="submit">
+                    <span>Filter</span>
+                  </Button>
+                </Col>
+              </Row>
+            </form>
+          </ModalBody >
+        </Modal >
+      </Content >
+    </React.Fragment >
   );
 };
 

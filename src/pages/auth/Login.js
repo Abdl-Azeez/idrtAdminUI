@@ -61,8 +61,9 @@ const Login = () => {
             </BlockHead>
             {loginError && (
               <div className="mb-3">
-                <Alert color="danger" className="alert-icon">
-                  <Icon name="alert-circle" /> {loginError}
+                <Alert color="danger" className="">
+                  {/* <Icon name="alert-circle" /> */}
+                  {loginError}
                 </Alert>
               </div>
             )}

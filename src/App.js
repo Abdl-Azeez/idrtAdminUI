@@ -10,17 +10,18 @@ import { RedirectAs404 } from "./utils/Utils";
 
 import Layout from "./layout/Index";
 import { useSelector, useDispatch } from "react-redux";
-import { generalToastError } from "./store/actions";
+import { loadMerchant, generalToastError } from "./store/actions";
 
 
 const App = () => {
   const { Auth } = useSelector((state) => state);
   const { error, toastMessage, toastType } = useSelector((state) => state.General);
+  const { merchant, merchantError } = useSelector((state) => state.Merchant);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(loadUser());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(loadMerchant());
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -29,7 +30,8 @@ const App = () => {
       }, 2000);
     }
   }, [error]);
-  console.log(Auth.isAuthenticated);
+
+  console.log(merchant?.users)
   return (
     <div>
       <Toast type={toastType} message={toastMessage} show={error} />
