@@ -4,10 +4,11 @@ import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
 import DatePicker from "react-datepicker";
 import Transaction from "../components/partials/analytics/dashboard-transaction/Transaction";
-import Transfer from "../components/partials/analytics/dashboard-transfer/Transfer";
 import Fees from "../components/partials/analytics/dashboard-fees/Fees";
 import Wallets from "../components/partials/analytics/dashboard-wallet/Wallet";
 import LatestTrans from "../components/partials/analytics/dashboard-latest-transactions/latestTrans";
+import TransactionTable from "../components/partials/analytics/dashboard-transaction/TransactionTable";
+import IDRT_TXN from "../components/partials/analytics/dashboard-idrt-tnx/Idrt_tnx";
 import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
 import { useForm } from "react-hook-form";
 import {
@@ -25,6 +26,8 @@ import MainWallets from "../components/partials/analytics/dashboard-wallet/MainW
 import Users from "../components/partials/analytics/dashboard-users/Users";
 import UserAddress from "../components/partials/analytics/dashboard-users/UserAddress";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import OrphanTnx from "../components/partials/analytics/dashboard-transaction/OrphanTnx";
+
 // import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Homepage = () => {
@@ -42,8 +45,8 @@ const Homepage = () => {
       <Head title="Dashboard" />
       <Content>
         <Block>
-          <div className="row top-cards">
-            <Col md="5" lg="4" xxl="3" className="p-md-1">
+          <div className="d-flex top-cards justify-content-start">
+            <Col md="4" lg="4" xxl="4" className="p-md-1">
               <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
                 <div className="d-flex">
                   <div className="d-flex align-items-center">
@@ -63,11 +66,16 @@ const Homepage = () => {
                       <label className="font-weight-bolder mb-0">Inactive:</label>
                       <p>2,000</p>
                     </div>
+                    <div className="d-flex justify-content-between">
+                      <label className="font-weight-bolder mb-0">IDRT:</label>
+                      <p>3,614,132,989 </p>
+                    </div>
                   </div>
                 </div>
+
               </Card>
             </Col>
-            <Col md="6" lg="5" xxl="4" className="p-md-1">
+            {/* <Col md="6" lg="5" xxl="4" className="p-md-1">
               <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
                 <div className="d-flex">
                   <div className="d-flex align-items-center">
@@ -79,56 +87,81 @@ const Homepage = () => {
                       <label className="font-weight-bolder mb-0">BNB:</label>
                       <p>1,000 (USD$ xx.xx) </p>
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">IDRT:</label>
-                      <p>3,614,132,989 (USD$ xx.xx) </p>
-                    </div>
+                    
 
                   </div>
                 </div>
               </Card>
-            </Col>
-            <Col className="p-md-1">
-              <div className="h-100 d-flex align-items-center text-center">
-                <div className="d-flex flex-column">
-                  <div className="d-flex" style={{ textWrap: 'nowrap' }}>
-                    <p className="mr-2 mb-0">[{`Date: ${moment().format('L')}`}</p>
-                    <p className="mb-0">{`Time: ${moment().format('h:mm:ss a')}`}]</p>
-                  </div>
-                  <div>Timezone: {moment().format("Z")} hours UTC</div>
-                </div>
+            </Col> */}
+            <Col md="7" lg="7" xxl="7" className="p-0 d-flex flex-column">
+              <div className="text-center">-----Last Updated-----</div>
+              {/* <hr /> */}
+              <div className="d-flex h-100">
+                <Col md="6" lg="6" xxl="6" className="p-md-1">
+                  <Card className="p-1 d-flex align-items-center justify-content-center shadow-none h-100 ">
+                    <div className="d-flex flex-column">
+                      <div className="d-flex" style={{ textWrap: 'nowrap' }}>
+                        <p className="mr-2 mb-0">[{`Date: ${moment().format('L')}`}</p>
+                        <p className="mb-0">{`Time: ${moment().format('h:mm:ss a')}`}]</p>
+                      </div>
+                      <div>Timezone: {moment().format("Z")} hours UTC</div>
+                    </div>
+                  </Card>
+                </Col>
+                <Col md="6" lg="6" xxl="6" className="p-md-1">
+                  <Card className="p-1 d-flex justify-content-center shadow-none h-100">
+                    <div className="d-flex">
+                      <div className="d-flex align-items-center">
+                        <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Exchange Rate</p>
+
+                      </div>
+                      <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
+                          <p>226.51</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
+                          <p>0.00006280</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
               </div>
             </Col>
-            <Col md="5" lg="4" xxl="3" className="p-md-1">
-              <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
-                <div className="d-flex">
-                  <div className="d-flex align-items-center">
-                    <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Exchange Rate</p>
 
-                  </div>
-                  <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
-                      <p>226.51</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
-                      <p>0.00006280</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </Col>
           </div>
         </Block>
+        <Row className="g-gs py-4">
+          <Col lg="7" xxl="7">
+            <BlockHead size="sm" className="d-flex justify-content-between">
+              <div className="nk-block-between">
+                <BlockHeadContent>
+                  <BlockTitle page tag="h3">
+                    MAIN WALLETS
+                  </BlockTitle>
+                </BlockHeadContent>
+              </div>
+            </BlockHead>
+            <Block>
 
+              <Card className="h-100">
+                <MainWallets />
+              </Card>
+
+
+            </Block>
+
+          </Col>
+        </Row>
         <BlockHead size="sm" className="d-flex justify-content-between">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                ACCOUNT SUMMARY
+                IDRT Transactions Overview
               </BlockTitle>
             </BlockHeadContent>
           </div>
@@ -221,16 +254,23 @@ const Homepage = () => {
             </ul>
           </div>
         </BlockHead>
+        <Row className="g-gs py-4">
+          <Col md="12" lg="12" xxl="12">
+            <Card>
+              <TransactionTable timeFrame={timeFrame} />
+            </Card>
+          </Col>
+        </Row>
         <Block>
           <Row className="g-gs">
-            <Col lg="7" xxl="6">
+            <Col lg="7" xxl="5">
               <PreviewAltCard className="h-100">
                 <Transaction timeFrame={timeFrame} />
               </PreviewAltCard>
             </Col>
-            <Col md="6" lg="5" xxl="3">
+            <Col md="6" lg="5" xxl="4">
               <PreviewAltCard className="h-100">
-                <Transfer timeFrame={timeFrame} />
+                <IDRT_TXN timeFrame={timeFrame} />
               </PreviewAltCard>
             </Col>
             <Col md="6" lg="5" xxl="3">
@@ -260,27 +300,28 @@ const Homepage = () => {
 
             </Block>
           </Col>
-          <Col lg="6" xxl="6">
-            <BlockHead size="sm" className="d-flex justify-content-between">
-              <div className="nk-block-between">
-                <BlockHeadContent>
-                  <BlockTitle page tag="h3">
-                    MAIN WALLETS
-                  </BlockTitle>
-                </BlockHeadContent>
-              </div>
-            </BlockHead>
-            <Block>
 
+        </Row>
+        <BlockHead size="sm" className="d-flex justify-content-between pt-2">
+          <div className="nk-block-between">
+            <BlockHeadContent>
+              <BlockTitle page tag="h3">
+                ORPHAN TRANSACTIONS
+              </BlockTitle>
+            </BlockHeadContent>
+          </div>
+        </BlockHead>
+        <Block>
+          <Row className="g-gs">
+            <Col lg="12" xxl="12">
               <Card className="h-100">
-                <MainWallets />
+                <OrphanTnx />
               </Card>
 
+            </Col>
+          </Row>
 
-            </Block>
-
-          </Col>
-        </Row>
+        </Block>
         <BlockHead size="sm" className="d-flex justify-content-between pt-2">
           <div className="nk-block-between">
             <BlockHeadContent>

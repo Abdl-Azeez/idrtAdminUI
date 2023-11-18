@@ -6,19 +6,28 @@ const menu = [
   },
   {
     icon: "user-list-fill",
-    text: "Main Wallets",
-    link: "/main_wallets",
+    text: "User",
+    link: "/user",
   },
   {
     icon: "share-alt",
-    text: "Client Wallets",
+    text: "Wallets",
     link: "/wallets",
-
   },
   {
     icon: "rss",
     text: "Transactions",
     link: "/transactions",
+  },
+  {
+    icon: "rss",
+    text: "Orphan Log",
+    link: "/orphan_log",
+  },
+  {
+    icon: "rss",
+    text: "Settings",
+    link: "/settings",
   }
 
 ];

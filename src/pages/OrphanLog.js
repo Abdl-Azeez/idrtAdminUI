@@ -32,7 +32,7 @@ import { saleOrders, statusOptions } from "../components/table/TableData";
 import { dateFormatterAlt } from "../utils/Utils";
 import { useForm } from "react-hook-form";
 
-const Wallets = () => {
+const OrphanLog = () => {
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const [modal, setModal] = useState({
@@ -137,14 +137,14 @@ const Wallets = () => {
 
     return (
         <React.Fragment>
-            <Head title="Wallets"></Head>
+            <Head title="Orphan Log"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle page>Wallets</BlockTitle>
+                            <BlockTitle page>Orphan Log</BlockTitle>
                             <BlockDes className="text-soft">
-                                <p>You have total {data.length} Wallets.</p>
+                                <p>You have total {data.length} Logs.</p>
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
@@ -158,7 +158,7 @@ const Wallets = () => {
                                             type="text"
                                             className="form-control"
                                             id="default-04"
-                                            placeholder="Search by wallet"
+                                            placeholder="Search by log ID"
                                             onChange={(e) => onFilterChange(e)}
                                         />
                                     </div>
@@ -175,9 +175,110 @@ const Wallets = () => {
                             <div className="card-inner">
                                 <div className="card-title-group">
                                     <div className="card-title">
-                                        <h5 className="title">All Wallets</h5>
+                                        <h5 className="title">All Logs</h5>
                                     </div>
-
+                                    <div className="card-tools mr-n1">
+                                        <ul className="btn-toolbar">
+                                            <li>
+                                                <Button onClick={toggle} className="btn-icon search-toggle toggle-search">
+                                                    <Icon name="search"></Icon>
+                                                </Button>
+                                            </li>
+                                            <li className="btn-toolbar-sep"></li>
+                                            <li>
+                                                <UncontrolledDropdown>
+                                                    <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
+                                                        <Icon name="setting"></Icon>
+                                                    </DropdownToggle>
+                                                    <DropdownMenu right>
+                                                        <ul className="link-check">
+                                                            <li>
+                                                                <span>Show</span>
+                                                            </li>
+                                                            <li className={itemPerPage === 10 ? "active" : ""}>
+                                                                <DropdownItem
+                                                                    tag="a"
+                                                                    href="#dropdownitem"
+                                                                    onClick={(ev) => {
+                                                                        ev.preventDefault();
+                                                                        setItemPerPage(10);
+                                                                    }}
+                                                                >
+                                                                    10
+                                                                </DropdownItem>
+                                                            </li>
+                                                            <li className={itemPerPage === 15 ? "active" : ""}>
+                                                                <DropdownItem
+                                                                    tag="a"
+                                                                    href="#dropdownitem"
+                                                                    onClick={(ev) => {
+                                                                        ev.preventDefault();
+                                                                        setItemPerPage(15);
+                                                                    }}
+                                                                >
+                                                                    15
+                                                                </DropdownItem>
+                                                            </li>
+                                                        </ul>
+                                                        <ul className="link-check">
+                                                            <li>
+                                                                <span>Order</span>
+                                                            </li>
+                                                            <li className={sort === "dsc" ? "active" : ""}>
+                                                                <DropdownItem
+                                                                    tag="a"
+                                                                    href="#dropdownitem"
+                                                                    onClick={(ev) => {
+                                                                        ev.preventDefault();
+                                                                        setSortState("dsc");
+                                                                        sortingFunc("dsc");
+                                                                    }}
+                                                                >
+                                                                    DESC
+                                                                </DropdownItem>
+                                                            </li>
+                                                            <li className={sort === "asc" ? "active" : ""}>
+                                                                <DropdownItem
+                                                                    tag="a"
+                                                                    href="#dropdownitem"
+                                                                    onClick={(ev) => {
+                                                                        ev.preventDefault();
+                                                                        setSortState("asc");
+                                                                        sortingFunc("asc");
+                                                                    }}
+                                                                >
+                                                                    ASC
+                                                                </DropdownItem>
+                                                            </li>
+                                                        </ul>
+                                                    </DropdownMenu>
+                                                </UncontrolledDropdown>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className={`card-search search-wrap ${!onSearch ? "active" : ""}`}>
+                                        <div className="search-content">
+                                            <Button
+                                                className="search-back btn-icon toggle-search"
+                                                onClick={() => {
+                                                    setSearchText("");
+                                                    toggle();
+                                                }}
+                                            >
+                                                <Icon name="arrow-left"></Icon>
+                                            </Button>
+                                            <input
+                                                type="text"
+                                                className="form-control border-transparent form-focus-none"
+                                                placeholder="Search by bill name"
+                                                value={onSearchText}
+                                                onChange={(e) => onFilterChange(e)}
+                                            />
+                                            <Button className="search-submit btn-icon">
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="card-inner p-0">
@@ -319,4 +420,4 @@ const Wallets = () => {
     );
 };
 
-export default Wallets;
+export default OrphanLog;

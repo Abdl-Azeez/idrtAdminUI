@@ -1,9 +1,10 @@
 import React from "react";
 import { Icon, TooltipComponent } from "../../../Component";
-import { TransferBarChart } from "../../charts/analytics/AnalyticsCharts";
+import { IDRTLineChart } from "../../charts/analytics/AnalyticsCharts";
+import { DefaultSalesStatistics } from "../../charts/default/DefaultCharts.js";
+import { LineChart } from "../../charts/default/Charts.js";
 
-
-const ActiveUser = ({ timeFrame }) => {
+const IDRT_TXN = ({ timeFrame }) => {
   return (
     <React.Fragment>
       <div className="card-title-group align-start pb-3 g-2">
@@ -46,7 +47,9 @@ const ActiveUser = ({ timeFrame }) => {
           </div>
         </div>
         <div className="analytic-au-ck">
-          <TransferBarChart state={timeFrame} />
+          {/* <IDRTLineChart state={timeFrame} /> */}
+          {/* <DefaultSalesStatistics state={timeFrame} /> */}
+          <LineChart state={timeFrame} />
         </div>
         <div className="chart-label-group">
           <div className="chart-label">01 Jan, 2020</div>
@@ -56,4 +59,4 @@ const ActiveUser = ({ timeFrame }) => {
     </React.Fragment>
   );
 };
-export default ActiveUser;
+export default IDRT_TXN;

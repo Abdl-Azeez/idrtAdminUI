@@ -18,18 +18,7 @@ const MainWallets = () => {
                         <span>xc04c4e2788858ded9554a7EB1392e760A8E7E341</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        50 BNB
-                    </DataTableRow>
-                </DataTableItem>
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel">
-                        <span>Transaction Fee Wallet</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions text-info">
-                        <span>xc04c4e2788858ded9554a7EB1392e760A8E7E341</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        2 BNB
+                        50 IDRT
                     </DataTableRow>
                 </DataTableItem>
                 <DataTableItem className="nk-tb-item" >
@@ -40,7 +29,18 @@ const MainWallets = () => {
                         <span>xc04c4e2788858ded9554a7EB1392e760A8E7E341</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        2000 USD
+                        2 IDRT
+                    </DataTableRow>
+                </DataTableItem>
+                <DataTableItem className="nk-tb-item" >
+                    <DataTableRow className="nk-tb-channel">
+                        <span>BNB Vault Wallet</span>
+                    </DataTableRow>
+                    <DataTableRow className="nk-tb-sessions text-info">
+                        <span>xc04c4e2788858ded9554a7EB1392e760A8E7E341</span>
+                    </DataTableRow>
+                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
+                        2000 BNB
                     </DataTableRow>
                 </DataTableItem>
 

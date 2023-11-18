@@ -1,6 +1,7 @@
 import React from "react";
 import { TimeOnSiteData, NewUsersData, PageviewsData, BounceRateData } from "../../charts/analytics/AnalyticsData";
 import { WPCharts } from "../../charts/analytics/AnalyticsCharts";
+import { StoreVisitorsChart } from "../../charts/e-commerce/EcomCharts";
 import { Icon, TooltipComponent } from "../../../Component";
 
 const Fees = ({ timeFrame }) => {
@@ -23,57 +24,22 @@ const Fees = ({ timeFrame }) => {
       </div>
       <div className="analytic-wp">
         <div className="analytic-wp-group g-3">
-          <div className="analytic-data analytic-wp-data">
-            <div className="analytic-wp-graph">
-              <div className="title">
-                Total
-              </div>
-              <div className="analytic-wp-ck">
-                <WPCharts className="analytics-line-small" data={BounceRateData}></WPCharts>
+          <div className="analytic-data analytic-wp-data w-100">
+            <div className="analytic-wp-graph w-100">
+
+              <div className="analytic-wp-ck h-100">
+                <StoreVisitorsChart className="analytics-line-small" data={BounceRateData} />
               </div>
             </div>
-            <div className="analytic-wp-text">
+            {/* <div className="analytic-wp-text d-none">
               <div className="amount amount-sm">5,000</div>
               <div className="change up">
                 <Icon name="arrow-long-up"></Icon>4.5%
               </div>
               <div className="subtitle">vs. last month</div>
-            </div>
+            </div> */}
           </div>
-          <div className="analytic-data analytic-wp-data">
-            <div className="analytic-wp-graph">
-              <div className="title">
-                Mean
-              </div>
-              <div className="analytic-wp-ck">
-                <WPCharts className="analytics-line-small" data={PageviewsData}></WPCharts>
-              </div>
-            </div>
-            <div className="analytic-wp-text">
-              <div className="amount amount-sm">0.055</div>
-              <div className="change down">
-                <Icon name="arrow-long-down"></Icon>1.48%
-              </div>
-              <div className="subtitle">vs. last month</div>
-            </div>
-          </div>
-          <div className="analytic-data analytic-wp-data">
-            <div className="analytic-wp-graph">
-              <div className="title">
-                Median <span></span>
-              </div>
-              <div className="analytic-wp-ck">
-                <WPCharts className="analytics-line-small" data={NewUsersData}></WPCharts>
-              </div>
-            </div>
-            <div className="analytic-wp-text">
-              <div className="amount amount-sm">0.05</div>
-              <div className="change up">
-                <Icon name="arrow-long-up"></Icon>6.8%
-              </div>
-              <div className="subtitle">vs. last month</div>
-            </div>
-          </div>
+
         </div>
       </div>
       <div className="card-title-group align-start pt-3 pb-2 g-2">
@@ -92,22 +58,17 @@ const Fees = ({ timeFrame }) => {
       </div>
       <div className="analytic-wp">
         <div className="analytic-wp-group g-3">
-          <div className="analytic-data analytic-wp-data">
-            <div className="analytic-wp-graph">
-              <div className="title">
+          <div className="analytic-data analytic-wp-data w-100">
+            <div className="analytic-wp-graph w-100">
+              {/* <div className="title">
                 Total
-              </div>
-              <div className="analytic-wp-ck">
-                <WPCharts className="analytics-line-small" data={TimeOnSiteData}></WPCharts>
+              </div> */}
+              <div className="analytic-wp-ck h-100">
+                {/* <WPCharts className="analytics-line-small" data={TimeOnSiteData}></WPCharts> */}
+                <StoreVisitorsChart />
               </div>
             </div>
-            <div className="analytic-wp-text">
-              <div className="amount amount-sm">5,000</div>
-              <div className="change up">
-                <Icon name="arrow-long-up"></Icon>1.4%
-              </div>
-              <div className="subtitle">vs. last month</div>
-            </div>
+
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import menu from "./optionData";
+import menu from "./OptionData";
 import { NavLink, Link } from "react-router-dom";
 import Icon from "../../components/icon/Icon";
 import classNames from "classnames";

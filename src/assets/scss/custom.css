@@ -7,7 +7,7 @@
 }
 @media only screen and (max-width: 1650px) {
   .top-cards {
-    width: max-content !important;
+    /* width: max-content !important; */
   }
 }
 @media only screen and (max-width: 1200px) {

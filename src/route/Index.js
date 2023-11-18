@@ -4,8 +4,10 @@ import { RedirectAs404 } from "../utils/Utils";
 import Login from "../pages/auth/Login";
 import Homepage from "../pages/Homepage";
 import Transactions from "../pages/Transactions";
-import MainWallets from "../pages/MainWallets";
+import User from "../pages/User";
 import Wallets from "../pages/Wallets";
+import OrphanLog from "../pages/OrphanLog";
+import Settings from "../pages/Settings";
 
 
 
@@ -17,10 +19,13 @@ const Pages = () => {
   return (
     <Suspense fallback={<div />}>
       <Switch>
-        <Route exact path={`${process.env.PUBLIC_URL}/transactions`} component={Transactions}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/main_wallets`} component={MainWallets}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/wallets`} component={Wallets}></Route>
+
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/user`} component={User}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/wallets`} component={Wallets}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/transactions`} component={Transactions}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/orphan_log`} component={OrphanLog}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/settings`} component={Settings}></Route>
 
         <Route component={RedirectAs404}></Route>
       </Switch>

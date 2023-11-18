@@ -173,6 +173,94 @@ export const TransferBarChart = () => {
   );
 };
 
+
+export const IDRTLineChart = ({ state }) => {
+  const [data, setData] = useState(analyticOvData);
+  useEffect(() => {
+    let object;
+    if (state === "7 days") {
+      object = analyticOvDataSet2;
+    } else {
+      object = analyticAuData;
+    }
+    setData(object);
+  }, [state]);
+  return (
+    <Line
+      className="analytics-line-large"
+      data={data}
+      options={{
+        legend: {
+          display: false,
+          labels: {
+            boxWidth: 12,
+            padding: 20,
+            fontColor: "#6783b8",
+          },
+        },
+        maintainAspectRatio: false,
+        tooltips: {
+          enabled: true,
+          backgroundColor: "#fff",
+          borderColor: "#eff6ff",
+          borderWidth: 2,
+          titleFontSize: 13,
+          titleFontColor: "#6783b8",
+          titleMarginBottom: 6,
+          bodyFontColor: "#9eaecf",
+          bodyFontSize: 12,
+          bodySpacing: 4,
+          yPadding: 10,
+          xPadding: 10,
+          footerMarginTop: 0,
+          displayColors: false,
+        },
+        scales: {
+          yAxes: [
+            {
+              display: true,
+              ticks: {
+                beginAtZero: true,
+                fontSize: 12,
+                fontColor: "#9eaecf",
+                padding: 8,
+                stepSize: 2400,
+              },
+              gridLines: {
+                color: "rgba(82, 100, 132, 0.2)",
+                tickMarkLength: 0,
+                zeroLineColor: "rgba(82, 100, 132,0.2)",
+              },
+            },
+          ],
+          xAxes: [
+            {
+              display: false,
+              ticks: {
+                fontSize: 12,
+                fontColor: "#9eaecf",
+                source: "auto",
+                padding: 0,
+              },
+              gridLines: {
+                color: "transparent",
+                tickMarkLength: 0,
+                zeroLineColor: "transparent",
+                offsetGridLines: true,
+              },
+            },
+          ],
+        },
+      }}
+    ></Line>
+  );
+};
+
+
+
+
+
+
 export const WPCharts = ({ data, className }) => {
   return (
     <Line
