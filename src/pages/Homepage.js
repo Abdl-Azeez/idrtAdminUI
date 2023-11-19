@@ -224,7 +224,7 @@ const Homepage = () => {
                     setTimeFrame("MonthToday");
                   }}
                 >
-                  M-TD
+                  MTD
                 </a>
               </li>
               <li className="nav-item">
@@ -280,7 +280,7 @@ const Homepage = () => {
             </Col>
           </Row>
         </Block>
-        <Row className="g-gs py-4">
+        {/* <Row className="g-gs py-4">
           <Col lg="6" xxl="6">
             <BlockHead size="sm" className="d-flex justify-content-between">
               <div className="nk-block-between">
@@ -301,8 +301,8 @@ const Homepage = () => {
             </Block>
           </Col>
 
-        </Row>
-        <BlockHead size="sm" className="d-flex justify-content-between pt-2">
+        </Row> */}
+        <BlockHead size="sm" className="d-flex justify-content-between py-2">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -322,7 +322,7 @@ const Homepage = () => {
           </Row>
 
         </Block>
-        <BlockHead size="sm" className="d-flex justify-content-between pt-2">
+        <BlockHead size="sm" className="d-flex justify-content-between pt-3">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -347,7 +347,7 @@ const Homepage = () => {
 
         </Block>
 
-        <Col xxl="12">
+        {/* <Col xxl="12">
           <div className="d-flex pt-5" style={{ gap: '5px' }}>
             <Col>
               <BlockHead size="sm" className="d-flex justify-content-between">
@@ -384,7 +384,7 @@ const Homepage = () => {
               </Block>
             </Col>
           </div>
-        </Col>
+        </Col> */}
         <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
           <ModalHeader toggle={() => setShowModal(false)}>
             Date Filter

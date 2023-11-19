@@ -44,7 +44,7 @@ const Fees = ({ timeFrame }) => {
       </div>
       <div className="card-title-group align-start pt-3 pb-2 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">Commission Fees (USD)</h6>
+          <h6 className="title">Commission Fees (IDRT)</h6>
         </div>
         <div className="card-tools">
           <TooltipComponent

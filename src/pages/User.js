@@ -14,17 +14,18 @@ import { dataTableColumns2, userData } from "./components/table/TableData";
 const User = () => {
     return (
         <React.Fragment>
-            <Head title="Users" />
+            <Head title="User" />
             <Content page="component">
                 <BlockHead size="lg" wide="sm">
                     <BlockHeadContent>
                         <BlockTitle tag="h2" className="fw-normal">
-                            Users
+                            User
                         </BlockTitle>
                     </BlockHeadContent>
                 </BlockHead>
                 <Block size="lg">
                     <PreviewCard>
+                        <p>#Add two tables, remove checkbox</p>
                         <ReactDataTable
                             data={userData}
                             columns={dataTableColumns2}

@@ -19,21 +19,21 @@ const Transaction = ({ timeFrame }) => {
             <div className="title">Total</div>
             <div className="amount">{timeFrame === "Month" ? "2.57" : "1.21"}K</div>
             <div className="change up">
-              <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "12.31" : "5.21"}%
+              {/* <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "12.31" : "5.21"}K */}
             </div>
           </div>
           <div className="analytic-data analytic-ov-data">
             <div className="title">Transfer In</div>
             <div className="amount">{timeFrame === "Month" ? "3.98" : "1.6"}K</div>
             <div className="change up">
-              <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "47.5" : "80.6"}%
+              {/* <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "47.5" : "80.6"}% */}
             </div>
           </div>
           <div className="analytic-data analytic-ov-data">
             <div className="title">Transfer Out</div>
-            <div className="amount">{timeFrame === "Month" ? "28.25" : "10.25"}%</div>
+            <div className="amount">{timeFrame === "Month" ? "28.25" : "10.25"}K</div>
             <div className="change down">
-              <Icon name="arrow-long-down"></Icon> {timeFrame === "Month" ? "12.57" : "18.21"}%
+              {/* <Icon name="arrow-long-down"></Icon> {timeFrame === "Month" ? "12.57" : "18.21"}% */}
             </div>
           </div>
 
