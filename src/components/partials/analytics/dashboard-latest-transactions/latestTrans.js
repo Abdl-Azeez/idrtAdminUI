@@ -4,11 +4,25 @@ import {
 } from "../../charts/analytics/AnalyticsData";
 import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem } from "reactstrap";
 import { Icon, DataTableHead, DataTableRow, DataTableItem } from "../../../Component";
-import { WPCharts } from "../../charts/analytics/AnalyticsCharts";
+import { fetchTransactions, generalToastError } from "../../../../store/actions";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 
-const latestTrans = () => {
+const LatestTrans = () => {
+  const { transactions, transactionError } = useSelector((state) => state.Transaction);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (transactionError) {
+      setTimeout(() => {
+        dispatch(generalToastError(transactionError));
+      }, 2000);
+    }
+  }, [transactionError]);
 
   return (
     <React.Fragment>
@@ -31,63 +45,73 @@ const latestTrans = () => {
             <span>Trend</span>
           </DataTableRow>
         </DataTableHead> */}
-        {latestTransData.map((item) => {
-          return (
-            <DataTableItem className="nk-tb-item latestTrans" key={item.id} >
-              <DataTableRow className="nk-tb-channel">
-                {/* <span className="tb-lead">{item.channel}</span> */}
-                <div className="d-flex flex-column">
-                  <span className="tb-lead">ID</span>
-                  <span>10001</span>
-                </div>
-              </DataTableRow>
-              <DataTableRow className="nk-tb-sessions">
-                <div className="d-flex flex-column">
-                  <span className="tb-lead">Time</span>
-                  <span>{moment().format('h:mm:ss')}</span>
-                </div>
-              </DataTableRow>
-              <DataTableRow className="nk-tb-prev-sessions">
-                <div className="d-flex flex-column" style={{ maxWidth: 'fit-content' }}>
-                  <span className="tb-lead">Transaction Hash</span>
-                  <span>Ox502a14b68f8d7e530b6f8849dfefadfc9a7f3d1c7bb19edf375fd97984f23e23</span>
+        {transactions && transactions?.incomingTxns?.map((item, i) => {
+          if (i <= 5) {
+            return (
+              <DataTableItem className="nk-tb-item L" key={item.txnHash} >
+                <DataTableRow className="nk-tb-channel">
+                  {/* <span className="tb-lead">{item.channel}</span> */}
                   <div className="d-flex flex-column">
-                    <div className="d-flex justify-content-end">
-                      <span>From: </span>
-                      <span className="ml-2 tb-lead font-weight-bolder"><span className="mr-2">[external]</span>0x532c23ewB4738349DO5d9rrty04837582dEU63513</span>
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <span>To: </span>
-                      <span className="ml-2 tb-lead font-weight-bolder text-info"><span className="mr-2 text-dark">[internal]</span>xc04c4e2788858ded9554a7EB1392e760A8E7E341</span>
-                    </div>
-
+                    <span className="tb-lead">ID</span>
+                    <span>{item.userId?.substring(0, 7)}</span>
                   </div>
-                </div>
-              </DataTableRow>
-              <DataTableRow className="nk-tb-prev-sessions">
-                <div className="d-flex flex-column" style={{ gap: '15px' }}>
-                  <span className="tb-lead">Amount/Currency/in USD</span>
-                  <span className="font-weight-bolder">{`${item.amount}  ${item.coin}`} (USD$XX)</span>
-                </div>
-              </DataTableRow>
-              <DataTableRow className="nk-tb-prev-sessions">
+                </DataTableRow>
+                <DataTableRow className="nk-tb-sessions">
+                  <div className="d-flex flex-column">
+                    <span className="tb-lead">Date</span>
+                    <div>
+                      {" "}
+                      <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                      <div className="badge badge-soft-secondary font-size-10">
+                        {" "}
+                        {moment(item?.createdAt).format("hh:mm A")}
+                      </div>
+                    </div>
+                  </div>
+                </DataTableRow>
+                <DataTableRow className="nk-tb-prev-sessions">
+                  <div className="d-flex flex-column" style={{ maxWidth: 'fit-content' }}>
+                    <span className="tb-lead">Transaction Hash</span>
+                    <span>{item.txnHash}</span>
+                    <div className="d-flex flex-column">
+                      <div className="d-flex justify-content-end">
+                        <span>From: </span>
+                        <span className="ml-2 tb-lead font-weight-bolder"><span className="mr-2">[external]</span>{item?.fromAddress}</span>
+                      </div>
+                      <div className="d-flex justify-content-end">
+                        <span>To: </span>
+                        <span className="ml-2 tb-lead font-weight-bolder text-info"><span className="mr-2 text-dark">[internal]</span>{item?.walletId}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </DataTableRow>
+                <DataTableRow className="nk-tb-prev-sessions">
+                  <div className="d-flex flex-column" style={{ gap: '15px' }}>
+                    <span className="tb-lead">Amount/Currency/in USD</span>
+                    <span className="font-weight-bolder">{`${item.amount}  ${item.currencySymbol}`}</span>
+                  </div>
+                </DataTableRow>
+                {/* <DataTableRow className="nk-tb-prev-sessions">
                 <div className="d-flex flex-column" style={{ gap: '15px' }}>
                   <span className="tb-lead">Transaction Fee (BNB)</span>
                   <span className="font-weight-bolder">{item.fee}</span>
                 </div>
-              </DataTableRow>
-              <DataTableRow className="nk-tb-prev-sessions">
-                <div className="d-flex flex-column" style={{ gap: '15px' }}>
-                  <span className="tb-lead">Type</span>
-                  <span className="font-weight-bolder">{item.type}</span>
-                </div>
-              </DataTableRow>
+              </DataTableRow> */}
+                <DataTableRow className="nk-tb-prev-sessions">
+                  <div className="d-flex flex-column" style={{ gap: '15px' }}>
+                    <span className="tb-lead">Orphan Tnx</span>
+                    <span className="font-weight-bolder">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
+                  </div>
+                </DataTableRow>
 
-            </DataTableItem>
-          );
+              </DataTableItem>
+            );
+          }
+          return null
         })}
       </div>
     </React.Fragment>
   );
 };
-export default latestTrans;
+export default LatestTrans;

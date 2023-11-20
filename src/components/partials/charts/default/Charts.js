@@ -77,7 +77,7 @@ export const LineChart = () => {
               return data.datasets[tooltipItem.datasetIndex]["data"][tooltipItem["index"]];
             },
           },
-          backgroundColor: "#eff6ff",
+          // backgroundColor: "#eff6ff",
           titleFontSize: 13,
           titleFontColor: "#6783b8",
           titleMarginBottom: 6,

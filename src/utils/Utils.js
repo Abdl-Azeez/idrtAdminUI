@@ -11,6 +11,62 @@ import { Redirect } from "react-router-dom";
 //   } else url = process.env.PUBLIC_URL; /// ADD YOUR CPANEL SUB-URL
 // }
 
+export const QueryReallignment = (queryData) => {
+  if (queryData) {
+    let query = '';
+    for (const [key, value] of Object.entries(queryData)) {
+      // console.log(value)
+      if (
+        value === null ||
+        (typeof value === 'string' && value.trim() === '')
+      ) {
+      } else {
+        let result = `${key}=${value}&`;
+        query = result + query;
+      }
+    }
+    let result = query.slice(0, -1);
+    return result;
+  }
+};
+
+export const formatNumber = (number) => {
+  const decillion = 1e33;
+  const nonillion = 1e30;
+  const octillion = 1e27;
+  const septillion = 1e24;
+  const sextillion = 1e21;
+  const quintillion = 1e18;
+  const trillion = 1e12;
+  const billion = 1e9;
+  const million = 1e6;
+  const thousand = 1e3;
+
+  if (Math.abs(number) >= decillion) {
+    return (number / decillion).toFixed(2).replace(/\.0$/, '') + 'D';
+  } else if (Math.abs(number) >= nonillion) {
+    return (number / nonillion).toFixed(2).replace(/\.0$/, '') + 'N';
+  } else if (Math.abs(number) >= octillion) {
+    return (number / octillion).toFixed(2).replace(/\.0$/, '') + 'O';
+  } else if (Math.abs(number) >= septillion) {
+    return (number / septillion).toFixed(2).replace(/\.0$/, '') + 'S';
+  } else if (Math.abs(number) >= sextillion) {
+    return (number / sextillion).toFixed(2).replace(/\.0$/, '') + 'SX';
+  } else if (Math.abs(number) >= quintillion) {
+    return (number / quintillion).toFixed(2).replace(/\.0$/, '') + 'Q';
+  } else if (Math.abs(number) >= trillion) {
+    return (number / trillion).toFixed(2).replace(/\.0$/, '') + 'T';
+  } else if (Math.abs(number) >= billion) {
+    return (number / billion).toFixed(2).replace(/\.0$/, '') + 'B';
+  } else if (Math.abs(number) >= million) {
+    return (number / million).toFixed(2).replace(/\.0$/, '') + 'M';
+  } else if (Math.abs(number) >= thousand) {
+    return (number / thousand).toFixed(2).replace(/\.0$/, '') + 'K';
+  } else {
+    return number;
+  }
+}
+
 //Function to validate and return errors for a form
 export const checkForm = (formData) => {
   let errorState = {};

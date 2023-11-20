@@ -17,17 +17,7 @@ import {
   deviceStatusDataSet4,
 } from "./AnalyticsData";
 
-export const TransactionLineChart = ({ state }) => {
-  const [data, setData] = useState(analyticOvData);
-  useEffect(() => {
-    let object;
-    if (state === "7 days") {
-      object = analyticOvDataSet2;
-    } else {
-      object = analyticOvDataSet3;
-    }
-    setData(object);
-  }, [state]);
+export const TransactionLineChart = ({ data, stepSize = 50 }) => {
   return (
     <Line
       className="analytics-line-large"
@@ -67,7 +57,7 @@ export const TransactionLineChart = ({ state }) => {
                 fontSize: 12,
                 fontColor: "#9eaecf",
                 padding: 8,
-                stepSize: 2400,
+                stepSize
               },
               gridLines: {
                 color: "rgba(82, 100, 132, 0.2)",
@@ -174,17 +164,7 @@ export const TransferBarChart = () => {
 };
 
 
-export const IDRTLineChart = ({ state }) => {
-  const [data, setData] = useState(analyticOvData);
-  useEffect(() => {
-    let object;
-    if (state === "7 days") {
-      object = analyticOvDataSet2;
-    } else {
-      object = analyticAuData;
-    }
-    setData(object);
-  }, [state]);
+export const IDRTLineChart = ({ data }) => {
   return (
     <Line
       className="analytics-line-large"
@@ -224,7 +204,7 @@ export const IDRTLineChart = ({ state }) => {
                 fontSize: 12,
                 fontColor: "#9eaecf",
                 padding: 8,
-                stepSize: 2400,
+                stepSize: 200,
               },
               gridLines: {
                 color: "rgba(82, 100, 132, 0.2)",

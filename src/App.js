@@ -16,12 +16,8 @@ import { loadMerchant, generalToastError } from "./store/actions";
 const App = () => {
   const { Auth } = useSelector((state) => state);
   const { error, toastMessage, toastType } = useSelector((state) => state.General);
-  const { merchant, merchantError } = useSelector((state) => state.Merchant);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loadMerchant());
-  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -31,26 +27,26 @@ const App = () => {
     }
   }, [error]);
 
-  console.log(merchant?.users)
+
   return (
     <div>
       <Toast type={toastType} message={toastMessage} show={error} />
-      {/* {Auth.isAuthenticated !== null ? ( */}
-      <>
-        <Switch>
-          {publicRoutesData.map((route, idx) => (
-            <PublicRoute path={route.path} component={route.component} auth={Auth.isAuthenticated} key={idx} />
-          ))}
+      {Auth.isAuthenticated !== null ? (
+        <>
+          <Switch>
+            {publicRoutesData.map((route, idx) => (
+              <PublicRoute path={route.path} component={route.component} auth={Auth.isAuthenticated} key={idx} />
+            ))}
 
-          <PrivateRoute exact auth={Auth.isAuthenticated} path={``} component={Layout}></PrivateRoute>
-          <Route component={RedirectAs404}></Route>
-        </Switch>
-      </>
-      {/* ) : (
+            <PrivateRoute exact auth={Auth.isAuthenticated} path={``} component={Layout}></PrivateRoute>
+            <Route component={RedirectAs404}></Route>
+          </Switch>
+        </>
+      ) : (
         <div className="vh-100 d-flex align-items-center justify-content-center text-center">
           <Spinner style={{ width: "10rem", height: "10rem" }} type="grow" color="success" />
         </div>
-      )} */}
+      )}
     </div>
 
   );

@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { TransactionLineChart } from "../../charts/analytics/AnalyticsCharts";
-import { Icon } from "../../../Component";
-import { formatNumber } from "../../../../utils/Utils";
+import React from "react";
+import { Icon, TooltipComponent } from "../../../Component.js";
+import { IDRTLineChart, TransactionLineChart } from "../../charts/analytics/AnalyticsCharts.js";
+import { DefaultSalesStatistics } from "../../charts/default/DefaultCharts.js";
+import { LineChart } from "../../charts/default/Charts.js";
+import { formatNumber } from "../../../../utils/Utils.js";
 import moment from "moment";
 
-const Transaction = ({ dateRange, data }) => {
-
-  const totalTnxIn = data?.reduce((sum, data) => {
-    if (data && data.noOfInTxn) {
-      return sum + Number(data.noOfInTxn);
+const IDRT_TXN = ({ dateRange, data }) => {
+  const totalIDRT_In = data?.reduce((sum, data) => {
+    if (data && data.inAmount) {
+      return sum + Number(data.inAmount);
     }
     return sum;
   }, 0);
 
-  const totalTnxOut = data?.reduce((sum, data) => {
-    if (data && data.noOfOutTxn) {
-      return sum + Number(data.noOfOutTxn);
+  const totalIDRT_Out = data?.reduce((sum, data) => {
+    if (data && data.outAmount) {
+      return sum + Number(data.outAmount);
     }
     return sum;
   }, 0);
@@ -33,11 +34,12 @@ const Transaction = ({ dateRange, data }) => {
     return null
   }
 
-  const getAllNoOfInTxn = (data) => {
-    return data?.map(entry => entry.noOfInTxn);
+  const getAllNoOfIDRT_In = (data) => {
+    return data?.map(entry => entry.inAmount / 1000000000000000000);
+
   }
-  const getAllNoOfOutTxn = (data) => {
-    return data?.map(entry => entry.noOfOutTxn);
+  const getAllNoOfIDRT_Out = (data) => {
+    return data?.map(entry => entry.outAmount / 1000000000000000000);
   }
   const getAllDate = (data) => {
     return data?.map(entry => moment(entry.date).format('DD MMM, YYYY'));
@@ -64,7 +66,7 @@ const Transaction = ({ dateRange, data }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 4,
-        data: getAllNoOfInTxn(data),
+        data: getAllNoOfIDRT_In(data),
       },
       {
         label: "TOTAL OUT",
@@ -84,47 +86,56 @@ const Transaction = ({ dateRange, data }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 4,
-        data: getAllNoOfOutTxn(data),
+        data: getAllNoOfIDRT_Out(data),
       },
     ],
   };
+
+
   return (
     <React.Fragment>
-      <div className="card-title-group pb-3 g-2">
+      <div className="card-title-group align-start pb-3 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">Transactions</h6>
-          <p>Total Number of transactions for {dateRange()}</p>
+          <h6 className="title">IDRT Transfers</h6>
+          <p>IDRT Net for {dateRange()}.</p>
         </div>
-
+        <div className="card-tools">
+          <TooltipComponent
+            iconClass="card-hint"
+            icon="help"
+            direction="left"
+            id="Tooltip-users"
+            text="Users of this month"
+          ></TooltipComponent>
+        </div>
       </div>
-      <div className="analytic-ov">
-        <div className="analytic-data-group analytic-ov-group g-3 justify-content-center">
-          <div className="analytic-data analytic-ov-data">
-            <div className="title">Total</div>
-            <div className="amount">{formatNumber((totalTnxIn + totalTnxOut))}</div>
+      <div className="analytic-au">
+        <div className="analytic-data-group analytic-au-group g-3">
+          <div className="analytic-data analytic-au-data">
+            <div className="title">IDRT Total</div>
+            <div className="amount">{totalIDRT_In ? formatNumber(((totalIDRT_In + totalIDRT_Out))) : 0}</div>
             <div className="change up">
-              {/* <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "12.31" : "5.21"}K */}
+              {/* <Icon name="arrow-long-up"></Icon>4.63% */}
             </div>
           </div>
-          <div className="analytic-data analytic-ov-data">
-            <div className="title">Total In</div>
-            <div className="amount">{formatNumber(totalTnxIn)}</div>
-            <div className="change up">
-              {/* <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "47.5" : "80.6"}% */}
-            </div>
-          </div>
-          <div className="analytic-data analytic-ov-data">
-            <div className="title">Total Out</div>
-            <div className="amount">{formatNumber(totalTnxOut)}</div>
+          <div className="analytic-data analytic-au-data">
+            <div className="title">IDRT In</div>
+            <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In)) : 0}</div>
             <div className="change down">
-              {/* <Icon name="arrow-long-down"></Icon> {timeFrame === "Month" ? "12.57" : "18.21"}% */}
+              {/* <Icon name="arrow-long-down"></Icon>1.92% */}
             </div>
           </div>
-
+          <div className="analytic-data analytic-au-data">
+            <div className="title">IDRT Out</div>
+            <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out)) : 0}</div>
+            <div className="change up">
+              {/* <Icon name="arrow-long-up"></Icon>3.45% */}
+            </div>
+          </div>
         </div>
-        <div className="analytic-ov-ck">
-          {data &&
-            <TransactionLineChart data={analyticData} />}
+        <div className="analytic-au-ck">
+          {data && <IDRTLineChart data={analyticData} />}
+
         </div>
         <div className="chart-label-group ml-5">
           <div className="chart-label">{moment(sortDate(data)?.earliestDate).format('DD MMM, YYYY')}</div>
@@ -135,4 +146,4 @@ const Transaction = ({ dateRange, data }) => {
     </React.Fragment>
   );
 };
-export default Transaction;
+export default IDRT_TXN;

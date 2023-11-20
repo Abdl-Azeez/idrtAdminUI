@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import moment from 'moment';
+import React, { useState, useEffect } from "react";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
-import DatePicker from "react-datepicker";
-import Transaction from "../components/partials/analytics/dashboard-transaction/Transaction";
-import Fees from "../components/partials/analytics/dashboard-fees/Fees";
 import Wallets from "../components/partials/analytics/dashboard-wallet/Wallet";
 import LatestTrans from "../components/partials/analytics/dashboard-latest-transactions/latestTrans";
-import TransactionTable from "../components/partials/analytics/dashboard-transaction/TransactionTable";
-import IDRT_TXN from "../components/partials/analytics/dashboard-idrt-tnx/Idrt_tnx";
 import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
-import { useForm } from "react-hook-form";
+
 import {
   Block,
   BlockHead,
@@ -19,122 +13,36 @@ import {
   Icon,
   Row,
   Col,
-  PreviewAltCard,
-  BackTo,
 } from "../components/Component";
 import MainWallets from "../components/partials/analytics/dashboard-wallet/MainWallets";
 import Users from "../components/partials/analytics/dashboard-users/Users";
 import UserAddress from "../components/partials/analytics/dashboard-users/UserAddress";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import OrphanTnx from "../components/partials/analytics/dashboard-transaction/OrphanTnx";
-
-// import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { DashboardAnalytics } from "../components/partials/analytics/dashboard-analytics";
+import TnxAnalytics from "../components/partials/analytics/dashboard-transaction";
 
 const Homepage = () => {
-  const [timeFrame, setTimeFrame] = useState("Month");
+  const [timeFrame, setSelectedTimeFrame] = useState("1month");
   const [showModal, setShowModal] = useState(false);
+  const [date, setDate] = useState({ startDate: null, endDate: null })
   const [formData, setFormData] = useState({
     endDate: new Date(),
     startDate: new Date(),
 
   });
 
-  const { errors, register, handleSubmit } = useForm();
+
+  const handleTimeFrameChange = (value) => {
+    setSelectedTimeFrame(value);
+  };
+
+
   return (
     <React.Fragment>
       <Head title="Dashboard" />
       <Content>
-        <Block>
-          <div className="d-flex top-cards justify-content-start">
-            <Col md="4" lg="4" xxl="4" className="p-md-1">
-              <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
-                <div className="d-flex">
-                  <div className="d-flex align-items-center">
-                    <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Wallets Summary</p>
-
-                  </div>
-                  <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">Total:</label>
-                      <p>10,000</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">Active:</label>
-                      <p>8,000</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">Inactive:</label>
-                      <p>2,000</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">IDRT:</label>
-                      <p>3,614,132,989 </p>
-                    </div>
-                  </div>
-                </div>
-
-              </Card>
-            </Col>
-            {/* <Col md="6" lg="5" xxl="4" className="p-md-1">
-              <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
-                <div className="d-flex">
-                  <div className="d-flex align-items-center">
-                    <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Total Summary</p>
-
-                  </div>
-                  <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                    <div className="d-flex justify-content-between">
-                      <label className="font-weight-bolder mb-0">BNB:</label>
-                      <p>1,000 (USD$ xx.xx) </p>
-                    </div>
-                    
-
-                  </div>
-                </div>
-              </Card>
-            </Col> */}
-            <Col md="7" lg="7" xxl="7" className="p-0 d-flex flex-column">
-              <div className="text-center">-----Last Updated-----</div>
-              {/* <hr /> */}
-              <div className="d-flex h-100">
-                <Col md="6" lg="6" xxl="6" className="p-md-1">
-                  <Card className="p-1 d-flex align-items-center justify-content-center shadow-none h-100 ">
-                    <div className="d-flex flex-column">
-                      <div className="d-flex" style={{ textWrap: 'nowrap' }}>
-                        <p className="mr-2 mb-0">[{`Date: ${moment().format('L')}`}</p>
-                        <p className="mb-0">{`Time: ${moment().format('h:mm:ss a')}`}]</p>
-                      </div>
-                      <div>Timezone: {moment().format("Z")} hours UTC</div>
-                    </div>
-                  </Card>
-                </Col>
-                <Col md="6" lg="6" xxl="6" className="p-md-1">
-                  <Card className="p-1 d-flex justify-content-center shadow-none h-100">
-                    <div className="d-flex">
-                      <div className="d-flex align-items-center">
-                        <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Exchange Rate</p>
-
-                      </div>
-                      <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                        <div className="d-flex justify-content-between">
-                          <div>
-                            <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
-                          <p>226.51</p>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                          <div>
-                            <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
-                          <p>0.00006280</p>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </Col>
-              </div>
-            </Col>
-
-          </div>
-        </Block>
+        <DashboardAnalytics />
         <Row className="g-gs py-4">
           <Col lg="7" xxl="7">
             <BlockHead size="sm" className="d-flex justify-content-between">
@@ -170,22 +78,10 @@ const Homepage = () => {
               <li className="nav-item">
                 <a
                   href="#navitem"
-                  className={timeFrame === "7 days" ? "nav-link active" : "nav-link"}
+                  className={timeFrame === "today" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setTimeFrame("7 days");
-                  }}
-                >
-                  7 D
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "Today" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTimeFrame("Today");
+                    handleTimeFrameChange("today");
                   }}
                 >
                   Today
@@ -194,34 +90,35 @@ const Homepage = () => {
               <li className="nav-item">
                 <a
                   href="#navitem"
-                  className={timeFrame === "Yesterday" ? "nav-link active" : "nav-link"}
+                  className={timeFrame === "7days" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setTimeFrame("Yesterday");
+                    handleTimeFrameChange("7days");
                   }}
                 >
-                  YTD
+                  7 D
                 </a>
               </li>
               <li className="nav-item">
                 <a
                   href="#navitem"
-                  className={timeFrame === "Month" ? "nav-link active" : "nav-link"}
+                  className={timeFrame === "1month" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setTimeFrame("Month");
+                    handleTimeFrameChange("1month");
                   }}
                 >
                   1 M
                 </a>
               </li>
+
               <li className="nav-item">
                 <a
                   href="#navitem"
-                  className={timeFrame === "MonthToday" ? "nav-link active" : "nav-link"}
+                  className={timeFrame === "monthToDate" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setTimeFrame("MonthToday");
+                    handleTimeFrameChange("monthToDate");
                   }}
                 >
                   MTD
@@ -230,15 +127,29 @@ const Homepage = () => {
               <li className="nav-item">
                 <a
                   href="#navitem"
-                  className={timeFrame === "Year" ? "nav-link active" : "nav-link"}
+                  className={timeFrame === "1year" ? "nav-link active" : "nav-link"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setTimeFrame("Year");
+                    handleTimeFrameChange("1year");
                   }}
                 >
                   1 Y
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  href="#navitem"
+                  className={timeFrame === "yearToDate" ? "nav-link active" : "nav-link"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleTimeFrameChange("yearToDate");
+                  }}
+                >
+                  YTD
+                </a>
+              </li>
+
+
               <li>
                 <Button
                   className="ml-2 toggle d-none d-md-inline-flex"
@@ -254,32 +165,7 @@ const Homepage = () => {
             </ul>
           </div>
         </BlockHead>
-        <Row className="g-gs py-4">
-          <Col md="12" lg="12" xxl="12">
-            <Card>
-              <TransactionTable timeFrame={timeFrame} />
-            </Card>
-          </Col>
-        </Row>
-        <Block>
-          <Row className="g-gs">
-            <Col lg="7" xxl="5">
-              <PreviewAltCard className="h-100">
-                <Transaction timeFrame={timeFrame} />
-              </PreviewAltCard>
-            </Col>
-            <Col md="6" lg="5" xxl="4">
-              <PreviewAltCard className="h-100">
-                <IDRT_TXN timeFrame={timeFrame} />
-              </PreviewAltCard>
-            </Col>
-            <Col md="6" lg="5" xxl="3">
-              <PreviewAltCard className="h-100">
-                <Fees timeFrame={timeFrame} />
-              </PreviewAltCard>
-            </Col>
-          </Row>
-        </Block>
+        <TnxAnalytics timeFrame={timeFrame} date={date} />
         {/* <Row className="g-gs py-4">
           <Col lg="6" xxl="6">
             <BlockHead size="sm" className="d-flex justify-content-between">
@@ -302,7 +188,7 @@ const Homepage = () => {
           </Col>
 
         </Row> */}
-        <BlockHead size="sm" className="d-flex justify-content-between py-2">
+        <BlockHead size="sm" className="d-flex justify-content-between pb-2 pt-5">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -322,11 +208,11 @@ const Homepage = () => {
           </Row>
 
         </Block>
-        <BlockHead size="sm" className="d-flex justify-content-between pt-3">
+        <BlockHead size="sm" className="d-flex justify-content-between pt-5">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                LATEST TRANSACTIONS
+                LATEST INCOMING TRANSACTIONS
               </BlockTitle>
             </BlockHeadContent>
           </div>
@@ -390,7 +276,7 @@ const Homepage = () => {
             Date Filter
           </ModalHeader>
           <ModalBody>
-            <form onSubmit={handleSubmit()}>
+            <div >
               <Row className="g-3">
                 <Col md="6">
                   <div className="form-group">
@@ -401,10 +287,10 @@ const Homepage = () => {
                       <div className="form-control-wrap">
                         <input type="date" className="form-control" id="startDate" defaultValue={formData.startDate} selected={formData.startDate}
 
-                          onChange={(startDate) => setFormData({ ...formData, startDate: startDate })} />
+                          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
                       </div>
                     </FormGroup>
-                    {errors.startDate && <span className="invalid">{errors.startDate.message}</span>}
+                    {/* {errors.startDate && <span className="invalid">{errors.startDate.message}</span>} */}
                   </div>
                 </Col>
                 <Col md="6">
@@ -416,19 +302,24 @@ const Homepage = () => {
                       <div className="form-control-wrap">
                         <input type="date" className="form-control" id="endDate" defaultValue={formData.endDate} selected={formData.endDate}
 
-                          onChange={(endDate) => setFormData({ ...formData, endDate: endDate })} />
+                          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} />
                       </div>
                     </FormGroup>
-                    {errors.endDate && <span className="invalid">{errors.endDate.message}</span>}
+                    {/* {errors.endDate && <span className="invalid">{errors.endDate.message}</span>} */}
                   </div>
                 </Col>
                 <Col size="12">
-                  <Button color="primary" type="submit">
+                  <Button color="primary" type="submit" onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedTimeFrame('customRange')
+                    setDate(formData);
+                    setShowModal(false);
+                  }}>
                     <span>Filter</span>
                   </Button>
                 </Col>
               </Row>
-            </form>
+            </div>
           </ModalBody >
         </Modal >
       </Content >
