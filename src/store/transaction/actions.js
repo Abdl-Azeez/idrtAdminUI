@@ -17,7 +17,15 @@ import {
 
   FETCH_ORPHAN_LOG,
   FETCH_ORPHAN_LOG_SUCCESSFUL,
-  FETCH_ORPHAN_LOG_ERROR
+  FETCH_ORPHAN_LOG_ERROR,
+
+  FETCH_INCOMING_TRANSACTION,
+  FETCH_INCOMING_TRANSACTION_SUCCESSFUL,
+  FETCH_INCOMING_TRANSACTION_ERROR,
+
+  FETCH_OUTGOING_TRANSACTION,
+  FETCH_OUTGOING_TRANSACTION_SUCCESSFUL,
+  FETCH_OUTGOING_TRANSACTION_ERROR,
 } from "./actionTypes";
 
 export const fetchTransactions = (payload) => {
@@ -62,7 +70,6 @@ export const fetchTransactionError = (error) => {
     payload: error,
   };
 };
-
 
 
 export const fetchTransactionAddress = (address) => {
@@ -126,6 +133,48 @@ export const fetchOrphanLogSuccessful = (payload) => {
 export const fetchOrphanLogError = (error) => {
   return {
     type: FETCH_ORPHAN_LOG_ERROR,
+    payload: error,
+  };
+};
+
+export const fetchIncomingTnx = (payload) => {
+  return {
+    type: FETCH_INCOMING_TRANSACTION,
+    payload: payload,
+  };
+};
+
+export const fetchIncomingTransactionSuccessful = (payload) => {
+  return {
+    type: FETCH_INCOMING_TRANSACTION_SUCCESSFUL,
+    payload: payload,
+  };
+};
+
+export const fetchIncomingTransactionError = (error) => {
+  return {
+    type: FETCH_INCOMING_TRANSACTION_ERROR,
+    payload: error,
+  };
+};
+
+export const fetchOutgoingTnx = (payload) => {
+  return {
+    type: FETCH_OUTGOING_TRANSACTION,
+    payload: payload,
+  };
+};
+
+export const fetchOutgoingTransactionSuccessful = (payload) => {
+  return {
+    type: FETCH_OUTGOING_TRANSACTION_SUCCESSFUL,
+    payload: payload,
+  };
+};
+
+export const fetchOutgoingTransactionError = (error) => {
+  return {
+    type: FETCH_OUTGOING_TRANSACTION_ERROR,
     payload: error,
   };
 };

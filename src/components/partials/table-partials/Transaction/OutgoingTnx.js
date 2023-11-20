@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import {
     Card,
 } from "reactstrap";
@@ -13,46 +12,53 @@ import {
     Block,
     PaginationComponent,
 } from "../../../Component";
-
+import { fetchOutgoingTnx, generalToastError } from "../../../../store/actions";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import Content from "../../../../layout/content/Content";
 
 
-const OutgoingTnx = ({ transactions }) => {
+const OutgoingTnx = ({ }) => {
+    const { outgoingTnx, transactionError } = useSelector((state) => state.Transaction);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [sort, setSortState] = useState("");
-    const [data, setData] = useState(transactions?.outgoingTxns);
-
-    console.log(transactions)
+    const [data, setData] = useState(outgoingTnx?.data);
 
 
-    const sortingFunc = (params) => {
-        let defaultData = data;
-        if (params === "asc") {
-            let sortedData = [...defaultData].sort((a, b) => parseFloat(a.ref) - parseFloat(b.ref));
-            setData([...sortedData]);
-        } else if (params === "dsc") {
-            let sortedData = [...defaultData].sort((a, b) => parseFloat(b.ref) - parseFloat(a.ref));
-            setData([...sortedData]);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchOutgoingTnx({ page: currentPage, perPage: itemPerPage }));
+        setData(outgoingTnx?.data)
+
+    }, [dispatch, currentPage]);
+
+    useEffect(() => {
+        if (transactionError) {
+            setTimeout(() => {
+                dispatch(generalToastError(transactionError));
+            }, 2000);
         }
-    };
+    }, [transactionError]);
+
 
     // Changing state value when searching name
     useEffect(() => {
-        if (transactions) {
+        if (outgoingTnx) {
             if (onSearchText !== "") {
-                const filteredObject = transactions?.outgoingTxns.filter((item) => {
-                    return item.userId.toLowerCase().includes(onSearchText.toLowerCase());
+                const filteredObject = outgoingTnx?.data.filter((item) => {
+                    return item.username.toLowerCase().includes(onSearchText.toLowerCase());
                 });
                 setData([...filteredObject]);
             } else {
-                setData([...transactions?.outgoingTxns]);
+                setData([...outgoingTnx?.data]);
             }
+
         }
-    }, [transactions, onSearchText]);
+
+    }, [outgoingTnx, onSearchText]);
 
     // onChange function for searching name
     const onFilterChange = (e) => {
@@ -62,57 +68,47 @@ const OutgoingTnx = ({ transactions }) => {
 
 
 
-    // // function to load detail data
-    // const loadDetail = (id) => {
-    //     let index = data.findIndex((item) => item.id === id);
-    //     setDetail(data[index]);
-    // };
-
-    // function to toggle the search option
-
-
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+    let currentItems = outgoingTnx?.data?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
+    const paginate = ((pageNumber) => { setCurrentPage(pageNumber) });
 
     return (
         <React.Fragment>
-
             <Content>
                 <BlockHead size="sm">
-                    {/* <BlockHeadContent>
-                            <BlockTitle page>Transactions</BlockTitle>
+                    <BlockBetween>
+                        <BlockHeadContent>
+                            {/* <BlockTitle page>Transactions</BlockTitle> */}
                             <BlockDes className="text-soft">
-                                <p>You have total {transactions?.length} Transactions.</p>
+                                <p>You have {outgoingTnx?.totalItems} Outgoing Transactions.</p>
                             </BlockDes>
-                        </BlockHeadContent> */}
-                    <BlockHeadContent>
-                        <ul className="nk-block-tools g-3 justify-content-end">
-                            <li>
-                                <div className="form-control-wrap">
-                                    <div className="form-icon form-icon-right">
-                                        <Icon name="search"></Icon>
+                        </BlockHeadContent>
+                        <BlockHeadContent>
+                            <ul className="nk-block-tools g-3 justify-content-end">
+                                <li>
+                                    <div className="form-control-wrap">
+                                        <div className="form-icon form-icon-right">
+                                            <Icon name="search"></Icon>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="default-04"
+                                            placeholder="Search by User name"
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="default-04"
-                                        placeholder="Search by transaction ID"
-                                        onChange={(e) => onFilterChange(e)}
-                                    />
-                                </div>
-                            </li>
+                                </li>
 
-                        </ul>
-                    </BlockHeadContent>
-
+                            </ul>
+                        </BlockHeadContent>
+                    </BlockBetween>
                 </BlockHead>
+
                 <Block>
                     <Card className="card-bordered card-stretch">
                         <div className="card-inner-group">
@@ -125,83 +121,81 @@ const OutgoingTnx = ({ transactions }) => {
                                 </div>
                             </div>
                             <div className="card-inner p-0">
-                                <table className="table table-tranx">
+                                <table className="table w-100 d-table table-hover table-responsive">
                                     <thead>
                                         <tr className="tb-tnx-head">
                                             <th className="tb-tnx-id">
-                                                <span className="">#</span>
+                                                <span className="">User</span>
+                                            </th>
+                                            <th className="">
+                                                <span>Date</span>
+                                            </th>
+                                            <th className="">
+                                                <span>Transaction Hash</span>
+                                            </th>
+                                            {/* <th className="">
+                                                <span className="">From Wallet</span>
+                                            </th> */}
+                                            <th className="">
+                                                <span className="">To Wallet</span>
+                                            </th>
+                                            <th className="">
+                                                <span className="">Gas Fee</span>
+                                            </th>
+                                            <th className="">
+                                                <span className="">Amount</span>
+                                            </th>
+                                            <th className="">
+                                                <span className="">Currency</span>
+                                            </th>
+                                            <th className="">
+                                                <span className="">Orphan Tnx</span>
                                             </th>
 
-                                            <th className="tb-tnx-amount is-alt">
-                                                <span className="tb-tnx-total">Wallet</span>
-                                            </th>
-                                            <th className="tb-tnx-amount is-alt">
-                                                <span className="tb-tnx-total d-md-inline-block"></span>
-                                            </th>
-                                            <th className="tb-tnx-info">
-                                                <span className="tb-tnx-desc d-none d-sm-inline-block">
-                                                    <span>Transaction Hash</span>
-                                                </span>
-                                            </th>
-                                            <th className="tb-tnx-info">
-                                                <span className=" d-md-inline-block d-none">
-                                                    <span>Date</span>
-                                                </span>
-                                            </th>
+
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {currentItems?.length > 0
-                                            ? currentItems?.map((item) => {
+                                        {data?.length > 0
+                                            ? data?.map((item) => {
                                                 return (
-                                                    <tr key={item.txnHash} className="tb-tnx-item">
+                                                    <tr key={item.txnHash} className="">
                                                         <td className="tb-tnx font-weight-bold">
-
-                                                            <span className="text-success">{item.userId?.substring(0, 7)}</span>
-
-
+                                                            <span className="text-success">{item.username}</span>
                                                         </td>
-
-                                                        <td className="tb-tnx-amount is-alt">
-                                                            {/* <div className="">
-                                <span className="amount title">{item?.fromAddress}</span>
-                              </div> */}
-                                                            <div className="d-flex flex-column amount title">
-                                                                <div className="d-flex justify-content-start ml-2">
-                                                                    <span>From: </span>
-                                                                    <span className="ml-2 tb-lead font-weight-bolder">{item?.fromAddress}</span>
+                                                        <td className="">
+                                                            <span className="date">
+                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                <div className="badge badge-secondary font-size-10">
+                                                                    {" "}
+                                                                    {moment(item?.createdAt).format("hh:mm A")}
                                                                 </div>
-                                                                <div className="d-flex justify-content-start ml-5">
-                                                                    <span>To: </span>
-                                                                    <span className="ml-2 tb-lead font-weight-bolder badge badge-dot badge-info title">{item?.walletId}</span>
-                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                        <td className="">
+                                                            <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
+                                                        </td>
+                                                        {/* <td className="">
+                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
+                                                        </td> */}
+                                                        <td className="">
+                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
+                                                        </td>
+                                                        <td className="tb-info">
+                                                            <span className="">{item?.gasFee}</span>
+                                                        </td>
+                                                        <td className="tb-info">
+                                                            <span className="">{(item?.amount / 1000000000000000000).toLocaleString()}</span>
+                                                        </td>
+                                                        <td className="tb-info">
+                                                            <span className="">{item?.currencySymbol}</span>
+                                                        </td>
+                                                        <td className="tb-info">
+                                                            <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
+                                                        </td>
 
-                                                            </div>
-                                                        </td>
-                                                        <td className="tb-tnx-amount is-alt">
-                                                            <div className="tb-tnx-total">
-                                                                <span
-                                                                    className={`badge badge-dot badge-info title`}
-                                                                >
-                                                                    {/* {item?.walletId} */}
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="tb-tnx-info">
-                                                            <div className="tb-tnx-desc w-100">
-                                                                <span className="title">{item.txnHash}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="tb-tnx-info">
-                                                            <div className="">
-                                                                <span className="date"><div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="badge badge-secondary font-size-10">
-                                                                        {" "}
-                                                                        {moment(item?.createdAt).format("hh:mm A")}
-                                                                    </div></span>
-                                                            </div>
-                                                        </td>
+
 
                                                     </tr>
                                                 );
@@ -211,11 +205,11 @@ const OutgoingTnx = ({ transactions }) => {
                                 </table>
                             </div>
                             <div className="card-inner">
-                                {currentItems?.length > 0 ? (
+                                {data?.length > 0 ? (
                                     <PaginationComponent
-                                        noDown
+
                                         itemPerPage={itemPerPage}
-                                        totalItems={data.length}
+                                        totalItems={outgoingTnx?.totalItems}
                                         paginate={paginate}
                                         currentPage={currentPage}
                                     />
@@ -228,6 +222,8 @@ const OutgoingTnx = ({ transactions }) => {
                         </div>
                     </Card>
                 </Block>
+
+
             </Content>
         </React.Fragment>
     );

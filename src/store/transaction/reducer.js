@@ -15,7 +15,15 @@ import {
 
   FETCH_ORPHAN_LOG,
   FETCH_ORPHAN_LOG_SUCCESSFUL,
-  FETCH_ORPHAN_LOG_ERROR
+  FETCH_ORPHAN_LOG_ERROR,
+
+  FETCH_INCOMING_TRANSACTION,
+  FETCH_INCOMING_TRANSACTION_SUCCESSFUL,
+  FETCH_INCOMING_TRANSACTION_ERROR,
+
+  FETCH_OUTGOING_TRANSACTION,
+  FETCH_OUTGOING_TRANSACTION_SUCCESSFUL,
+  FETCH_OUTGOING_TRANSACTION_ERROR,
 } from "./actionTypes";
 
 const initialState = {
@@ -27,11 +35,14 @@ const initialState = {
   transactionAddress: null,
   orphanTnx: null,
   orphanLog: null,
+  incomingTnx: null,
+  outgoingTnx: null,
 };
 
 const Transaction = (state = initialState, action) => {
   switch (action.type) {
-
+    case FETCH_INCOMING_TRANSACTION:
+    case FETCH_OUTGOING_TRANSACTION:
     case FETCH_TRANSACTIONS:
       state = {
         ...state,
@@ -41,6 +52,19 @@ const Transaction = (state = initialState, action) => {
         message: null,
       };
       break;
+
+    case FETCH_INCOMING_TRANSACTION:
+    case FETCH_OUTGOING_TRANSACTION:
+      state = {
+        ...state,
+        incomingTnx: null,
+        outgoingTnx: null,
+        transactionError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
 
     case FETCH_ORPHAN_TRANSACTION:
       state = {
@@ -82,10 +106,30 @@ const Transaction = (state = initialState, action) => {
       };
       break;
 
+
     case FETCH_TRANSACTIONS_SUCCESSFUL:
       state = {
         ...state,
         transactions: action.payload,
+        message: null,
+        loading: false,
+        transactionError: null,
+      };
+      break;
+
+    case FETCH_INCOMING_TRANSACTION_SUCCESSFUL:
+      state = {
+        ...state,
+        incomingTnx: action.payload,
+        message: null,
+        loading: false,
+        transactionError: null,
+      };
+      break;
+    case FETCH_OUTGOING_TRANSACTION_SUCCESSFUL:
+      state = {
+        ...state,
+        outgoingTnx: action.payload,
         message: null,
         loading: false,
         transactionError: null,
@@ -137,10 +181,14 @@ const Transaction = (state = initialState, action) => {
     case FETCH_TRANSACTIONS_ERROR:
     case FETCH_ORPHAN_TRANSACTION_ERROR:
     case FETCH_ORPHAN_LOG_ERROR:
+    case FETCH_INCOMING_TRANSACTION_ERROR:
+    case FETCH_OUTGOING_TRANSACTION_ERROR:
       state = {
         ...state,
         transaction: null,
         transactions: null,
+        outgoingTnx: null,
+        incomingTnx: null,
         transactionAddress: null,
         loading: false,
         message: null,

@@ -31,3 +31,24 @@ export const GetOrphanLogService = () => {
     let url = `transactions/orphanhistory`;
     return http.getData(url);
 };
+
+export const GetIncomingTnxService = (query) => {
+    const http = new HttpService();
+    let url = 'transactions/incoming';
+
+    if (query) {
+        let queryParams = QueryReallignment(query);
+        url = `${url}?${queryParams}`;
+    }
+    return http.getData(url);
+};
+
+export const GetOutgoingTnxService = (query) => {
+    const http = new HttpService();
+    let url = 'transactions/outgoing';
+    if (query) {
+        let queryParams = QueryReallignment(query);
+        url = `${url}?${queryParams}`;
+    }
+    return http.getData(url);
+};

@@ -5,7 +5,9 @@ import {
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_ADDRESS,
   FETCH_ORPHAN_TRANSACTION,
-  FETCH_ORPHAN_LOG
+  FETCH_ORPHAN_LOG,
+  FETCH_INCOMING_TRANSACTION,
+  FETCH_OUTGOING_TRANSACTION,
 } from "./actionTypes";
 
 import {
@@ -18,7 +20,13 @@ import {
   fetchOrphanSuccessful,
   fetchOrphanError,
   fetchOrphanLogSuccessful,
-  fetchOrphanLogError
+  fetchOrphanLogError,
+
+  fetchIncomingTransactionSuccessful,
+  fetchIncomingTransactionError,
+
+  fetchOutgoingTransactionSuccessful,
+  fetchOutgoingTransactionError,
 } from "./actions";
 
 import {
@@ -26,7 +34,9 @@ import {
   GetTransactionsService,
   GetEachTransactionService,
   GetOrphanTransactionService,
-  GetOrphanLogService
+  GetOrphanLogService,
+  GetIncomingTnxService,
+  GetOutgoingTnxService
 } from "../../services/transactionService";
 
 function* fetchTransactionsHandler() {
@@ -36,6 +46,26 @@ function* fetchTransactionsHandler() {
   } catch (error) {
     console.log(error);
     yield put(fetchTransactionsError(error?.response?.data?.message));
+  }
+}
+
+function* fetchIncomingTnxHandler({ payload }) {
+  try {
+    const response = yield call(GetIncomingTnxService, payload);
+    yield put(fetchIncomingTransactionSuccessful(response.data));
+  } catch (error) {
+    console.log(error);
+    yield put(fetchIncomingTransactionError(error?.response?.data?.message));
+  }
+}
+
+function* fetchOutgoingTnxHandler({ payload }) {
+  try {
+    const response = yield call(GetOutgoingTnxService, payload);
+    yield put(fetchOutgoingTransactionSuccessful(response.data));
+  } catch (error) {
+    console.log(error);
+    yield put(fetchOutgoingTransactionError(error?.response?.data?.message));
   }
 }
 
@@ -101,13 +131,23 @@ export function* watchFetchOrphaLog() {
   yield takeEvery(FETCH_ORPHAN_LOG, fetchOrphanLogHandler);
 }
 
+export function* watchFetchIncomingTnx() {
+  yield takeEvery(FETCH_INCOMING_TRANSACTION, fetchIncomingTnxHandler);
+}
+
+export function* watchFetchOutgoingTnx() {
+  yield takeEvery(FETCH_OUTGOING_TRANSACTION, fetchOutgoingTnxHandler);
+}
+
 function* TransactionsSaga() {
   yield all([
     fork(watchFetchTransactions),
     fork(watchFetchTransactionAddress),
     fork(watchFetchEachTransaction),
     fork(watchFetchOrphaTransaction),
-    fork(watchFetchOrphaLog)
+    fork(watchFetchOrphaLog),
+    fork(watchFetchIncomingTnx),
+    fork(watchFetchOutgoingTnx)
   ]);
 }
 
