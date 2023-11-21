@@ -11,6 +11,10 @@ import {
   FETCH_TRANSACTION_SUCCESSFUL,
   FETCH_TRANSACTION_ERROR,
 
+  FETCH_USER_TRANSACTIONS,
+  FETCH_USER_TRANSACTIONS_SUCCESSFUL,
+  FETCH_USER_TRANSACTIONS_ERROR,
+
   FETCH_ORPHAN_TRANSACTION,
   FETCH_ORPHAN_TRANSACTION_SUCCESSFUL,
   FETCH_ORPHAN_TRANSACTION_ERROR,
@@ -67,6 +71,27 @@ export const fetchTransactionSuccessful = (payload) => {
 export const fetchTransactionError = (error) => {
   return {
     type: FETCH_TRANSACTION_ERROR,
+    payload: error,
+  };
+};
+
+export const fetchUserTransactions = (id) => {
+  return {
+    type: FETCH_USER_TRANSACTIONS,
+    payload: id,
+  };
+};
+
+export const fetchUserTransactionsSuccessful = (payload) => {
+  return {
+    type: FETCH_USER_TRANSACTIONS_SUCCESSFUL,
+    payload: payload,
+  };
+};
+
+export const fetchUserTransactionsError = (error) => {
+  return {
+    type: FETCH_USER_TRANSACTIONS_ERROR,
     payload: error,
   };
 };

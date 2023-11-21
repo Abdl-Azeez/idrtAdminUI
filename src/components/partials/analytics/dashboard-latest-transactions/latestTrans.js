@@ -4,7 +4,7 @@ import {
 } from "../../charts/analytics/AnalyticsData";
 import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem } from "reactstrap";
 import { Icon, DataTableHead, DataTableRow, DataTableItem } from "../../../Component";
-import { fetchTransactions, generalToastError } from "../../../../store/actions";
+import { fetchTransactions, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 
@@ -19,11 +19,13 @@ const LatestTrans = () => {
   useEffect(() => {
     if (transactionError) {
       setTimeout(() => {
-        dispatch(generalToastError(transactionError));
+        dispatch(errorChecker(transactionError));
       }, 2000);
     }
   }, [transactionError]);
 
+
+  console.log(transactions)
   return (
     <React.Fragment>
 
@@ -89,7 +91,7 @@ const LatestTrans = () => {
                 <DataTableRow className="nk-tb-prev-sessions">
                   <div className="d-flex flex-column" style={{ gap: '15px' }}>
                     <span className="tb-lead">Amount/Currency/in USD</span>
-                    <span className="font-weight-bolder">{`${item.amount}  ${item.currencySymbol}`}</span>
+                    <span className="font-weight-bolder">{`${item.amount / 1000000000000000000} ${item.currencySymbol}`}</span>
                   </div>
                 </DataTableRow>
                 {/* <DataTableRow className="nk-tb-prev-sessions">

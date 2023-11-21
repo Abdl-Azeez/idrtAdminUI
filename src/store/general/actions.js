@@ -1,6 +1,6 @@
-import { GENERAL_TOAST, GENERAL_TOAST_SUCCESSFUL, GENERAL_TOAST_ERROR } from "./actionTypes";
+import { GENERAL_TOAST, GENERAL_TOAST_SUCCESSFUL, GENERAL_TOAST_ERROR, ERROR_CHECKER } from "./actionTypes";
 
-// Get Inspection
+
 export const generalToast = (payload) => {
   return {
     type: GENERAL_TOAST,
@@ -21,3 +21,10 @@ export const generalToastError = (payload) => {
     payload,
   };
 };
+
+
+
+export const errorChecker = (message) => ({
+  type: ERROR_CHECKER,
+  payload: { message },
+});

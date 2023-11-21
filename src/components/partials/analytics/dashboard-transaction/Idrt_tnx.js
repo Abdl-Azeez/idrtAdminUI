@@ -113,21 +113,21 @@ const IDRT_TXN = ({ dateRange, data }) => {
         <div className="analytic-data-group analytic-au-group g-3">
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT Total</div>
-            <div className="amount">{totalIDRT_In ? formatNumber(((totalIDRT_In + totalIDRT_Out))) : 0}</div>
+            <div className="amount">{totalIDRT_In ? formatNumber(((totalIDRT_In + totalIDRT_Out) / 1000000000000000000)) : 0}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon>4.63% */}
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT In</div>
-            <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In)) : 0}</div>
+            <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In / 1000000000000000000)) : 0}</div>
             <div className="change down">
               {/* <Icon name="arrow-long-down"></Icon>1.92% */}
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT Out</div>
-            <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out)) : 0}</div>
+            <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out / 1000000000000000000)) : 0}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon>3.45% */}
             </div>

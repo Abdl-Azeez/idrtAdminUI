@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem } from "reactstrap";
 import { DataTableRow, DataTableItem } from "../../../Component";
-import { loadMerchant, fetchWalletBalance, generalToastError } from "../../../../store/actions";
+import { loadMerchant, fetchWalletBalance, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 
 const MainWallets = () => {
-    const { merchant, merchantError } = useSelector((state) => state.Merchant);
+    const { merchants, merchantsError } = useSelector((state) => state.Merchant);
     const { walletBalance } = useSelector((state) => state.Wallet);
     const [merchantWalletResponse, setMerchantWalletResponse] = useState(null);
     const [commissionWalletResponse, setCommissionWalletResponse] = useState(null);
@@ -19,17 +19,17 @@ const MainWallets = () => {
     }, [dispatch]);
 
 
-    const merchantWallet = merchant?.configs?.find((merchant) => {
-        return merchant.key === 'merchantWallet'
+    const merchantWallet = merchants?.configs?.find((merchants) => {
+        return merchants.key === 'merchantWallet'
     })
 
-    const commissionWallet = merchant?.configs?.find((merchant) => {
-        return merchant.key === 'commissionWallet'
+    const commissionWallet = merchants?.configs?.find((merchants) => {
+        return merchants.key === 'commissionWallet'
     })
 
 
-    const bnbWallet = merchant?.configs?.find((merchant) => {
-        return merchant.key === 'bnbWallet'
+    const bnbWallet = merchants?.configs?.find((merchants) => {
+        return merchants.key === 'bnbWallet'
     })
 
 
@@ -37,7 +37,7 @@ const MainWallets = () => {
     useEffect(() => {
         const fetchWalletData = async (walletValue, setResponse) => {
             try {
-                const response = await fetch(`http://13.250.103.220:3000/wallet/balance/${walletValue}`);
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/wallet/balance/${walletValue}`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status} - ${response.statusText}`);
                 }
@@ -60,12 +60,12 @@ const MainWallets = () => {
     }, [bnbWallet, commissionWallet, dispatch, merchantWallet]);
 
     useEffect(() => {
-        if (merchantError) {
+        if (merchantsError) {
             setTimeout(() => {
-                dispatch(generalToastError(merchantError));
+                dispatch(errorChecker(merchantsError));
             }, 2000);
         }
-    }, [merchantError]);
+    }, [merchantsError]);
 
 
     return (

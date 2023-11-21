@@ -204,7 +204,7 @@ export const IDRTLineChart = ({ data }) => {
                 fontSize: 12,
                 fontColor: "#9eaecf",
                 padding: 8,
-                stepSize: 200,
+                stepSize: 1000000,
               },
               gridLines: {
                 color: "rgba(82, 100, 132, 0.2)",

@@ -2,12 +2,18 @@ import {
   FETCH_TRANSACTIONS,
   FETCH_TRANSACTIONS_SUCCESSFUL,
   FETCH_TRANSACTIONS_ERROR,
+
   FETCH_TRANSACTION_ADDRESS,
   FETCH_TRANSACTION_ADDRESS_SUCCESSFUL,
   FETCH_TRANSACTION_ADDRESS_ERROR,
+
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_SUCCESSFUL,
   FETCH_TRANSACTION_ERROR,
+
+  FETCH_USER_TRANSACTIONS,
+  FETCH_USER_TRANSACTIONS_SUCCESSFUL,
+  FETCH_USER_TRANSACTIONS_ERROR,
 
   FETCH_ORPHAN_TRANSACTION,
   FETCH_ORPHAN_TRANSACTION_SUCCESSFUL,
@@ -37,6 +43,8 @@ const initialState = {
   orphanLog: null,
   incomingTnx: null,
   outgoingTnx: null,
+  userTransaction: null,
+  userTransactionError: null,
 };
 
 const Transaction = (state = initialState, action) => {
@@ -48,6 +56,16 @@ const Transaction = (state = initialState, action) => {
         ...state,
         transactions: null,
         transactionError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
+    case FETCH_USER_TRANSACTIONS:
+      state = {
+        ...state,
+        userTransaction: null,
+        userTransactionError: null,
         loading: true,
         message: null,
       };
@@ -166,6 +184,16 @@ const Transaction = (state = initialState, action) => {
       };
       break;
 
+    case FETCH_USER_TRANSACTIONS_SUCCESSFUL:
+      state = {
+        ...state,
+        userTransaction: action.payload,
+        message: null,
+        loading: false,
+        userTransactionError: null,
+      };
+      break;
+
     case FETCH_TRANSACTION_ADDRESS_SUCCESSFUL:
       state = {
         ...state,
@@ -195,6 +223,16 @@ const Transaction = (state = initialState, action) => {
         orphanLog: null,
         orphanTnx: null,
         transactionError: action.payload,
+      };
+      break;
+
+    case FETCH_USER_TRANSACTIONS_ERROR:
+      state = {
+        ...state,
+        userTransaction: null,
+        loading: false,
+        message: null,
+        userTransactionError: action.payload,
       };
       break;
 

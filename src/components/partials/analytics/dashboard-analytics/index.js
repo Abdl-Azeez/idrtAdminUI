@@ -5,7 +5,7 @@ import {
     Col,
 } from "../../../Component";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchWallet, generalToastError } from "../../../../store/actions";
+import { fetchWallet, errorChecker } from "../../../../store/actions";
 import moment from 'moment';
 
 
@@ -50,12 +50,12 @@ export const DashboardAnalytics = () => {
     useEffect(() => {
         if (error) {
             setTimeout(() => {
-                dispatch(generalToastError());
+                dispatch(errorChecker());
             }, 2000);
         }
         if (walletError) {
             setTimeout(() => {
-                dispatch(generalToastError(walletError));
+                dispatch(errorChecker(walletError));
             }, 2000);
         }
         if (fetchError) {

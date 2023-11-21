@@ -4,7 +4,10 @@ import {
   FETCH_WALLET_ERROR,
   FETCH_WALLET_BALANCE,
   FETCH_WALLET_BALANCE_SUCCESSFUL,
-  FETCH_WALLET_BALANCE_ERROR
+  FETCH_WALLET_BALANCE_ERROR,
+  FETCH_WALLET_HISTORY,
+  FETCH_WALLET_HISTORY_SUCCESSFUL,
+  FETCH_WALLET_HISTORY_ERROR
 } from "./actionTypes";
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
   message: null,
   loading: false,
   walletBalance: null,
+  walletHistory: null,
 };
 
 const Wallet = (state = initialState, action) => {
@@ -22,6 +26,16 @@ const Wallet = (state = initialState, action) => {
       state = {
         ...state,
         wallet: null,
+        walletError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
+    case FETCH_WALLET_HISTORY:
+      state = {
+        ...state,
+        walletHistory: null,
         walletError: null,
         loading: true,
         message: null,
@@ -58,12 +72,24 @@ const Wallet = (state = initialState, action) => {
       };
       break;
 
+    case FETCH_WALLET_HISTORY_SUCCESSFUL:
+      state = {
+        ...state,
+        walletHistory: action.payload,
+        walletError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
+    case FETCH_WALLET_HISTORY_ERROR:
     case FETCH_WALLET_BALANCE_ERROR:
     case FETCH_WALLET_ERROR:
       state = {
         ...state,
         wallet: null,
         walletBalance: null,
+        walletHistory: null,
         loading: false,
         message: null,
         walletError: action.payload,

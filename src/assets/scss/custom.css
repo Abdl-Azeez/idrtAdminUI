@@ -25,3 +25,7 @@
 .latestTrans .nk-tb-col {
   vertical-align: top !important;
 }
+
+.updated-field {
+    border: 2px solid #5bc0de; /* Add your desired style for updated fields */
+}

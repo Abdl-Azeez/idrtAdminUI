@@ -22,6 +22,10 @@ class HttpService {
     return axios.put(url, formData)
   }
 
+  patchData = async (formData, url) => {
+    return axios.patch(url, formData)
+  }
+
   putDataWithoutToken = async (formData, url) => {
     return axios.put(url, formData)
   }

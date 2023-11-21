@@ -3,6 +3,7 @@ import { takeEvery, fork, put, all, call } from "redux-saga/effects";
 import {
   FETCH_TRANSACTIONS,
   FETCH_TRANSACTION,
+  FETCH_USER_TRANSACTIONS,
   FETCH_TRANSACTION_ADDRESS,
   FETCH_ORPHAN_TRANSACTION,
   FETCH_ORPHAN_LOG,
@@ -13,10 +14,16 @@ import {
 import {
   fetchTransactionsSuccessful,
   fetchTransactionsError,
+
   fetchTransactionAddressSuccessful,
   fetchTransactionAddressError,
+
   fetchTransactionSuccessful,
   fetchTransactionError,
+
+  fetchUserTransactionsSuccessful,
+  fetchUserTransactionsError,
+
   fetchOrphanSuccessful,
   fetchOrphanError,
   fetchOrphanLogSuccessful,
@@ -36,7 +43,8 @@ import {
   GetOrphanTransactionService,
   GetOrphanLogService,
   GetIncomingTnxService,
-  GetOutgoingTnxService
+  GetOutgoingTnxService,
+  GetUserTransactionService
 } from "../../services/transactionService";
 
 function* fetchTransactionsHandler() {
@@ -81,11 +89,19 @@ function* fetchTransactionAddressHandler({ payload }) {
 
 function* fetchTransactionHandler({ payload }) {
   try {
-    // console.log(payload)
     const response = yield call(GetEachTransactionService, payload);
     yield put(fetchTransactionSuccessful(response.data));
   } catch (error) {
     yield put(fetchTransactionError(error?.response?.data?.message));
+  }
+}
+
+function* fetchUserTransactionsHandler({ payload }) {
+  try {
+    const response = yield call(GetUserTransactionService, payload);
+    yield put(fetchUserTransactionsSuccessful(response.data));
+  } catch (error) {
+    yield put(fetchUserTransactionsError(error?.response?.data?.message));
   }
 }
 
@@ -123,6 +139,10 @@ export function* watchFetchEachTransaction() {
   yield takeEvery(FETCH_TRANSACTION, fetchTransactionHandler);
 }
 
+export function* watchFetchUserTransactions() {
+  yield takeEvery(FETCH_USER_TRANSACTIONS, fetchUserTransactionsHandler);
+}
+
 export function* watchFetchOrphaTransaction() {
   yield takeEvery(FETCH_ORPHAN_TRANSACTION, fetchOrphanHandler);
 }
@@ -147,7 +167,8 @@ function* TransactionsSaga() {
     fork(watchFetchOrphaTransaction),
     fork(watchFetchOrphaLog),
     fork(watchFetchIncomingTnx),
-    fork(watchFetchOutgoingTnx)
+    fork(watchFetchOutgoingTnx),
+    fork(watchFetchUserTransactions)
   ]);
 }
 

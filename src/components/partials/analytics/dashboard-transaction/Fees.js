@@ -160,7 +160,7 @@ const Fees = ({ dateRange, data }) => {
                   <div className="analytic-wp-graph w-100">
                     <div className="analytic-wp-ck h-100">
                       {data &&
-                        <TransactionLineChart data={ComData} stepSize={1000000000000} />}
+                        <TransactionLineChart data={ComData} stepSize={1000000} />}
                     </div>
                   </div>
 

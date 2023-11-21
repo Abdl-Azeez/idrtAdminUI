@@ -14,9 +14,15 @@ export const GetEachTransactionService = (id) => {
     return http.getData(url);
 };
 
+export const GetUserTransactionService = (id) => {
+    const http = new HttpService();
+    let url = `transactions/byUser/${id}`;
+    return http.getData(url);
+};
+
 export const GetTransactionAddressService = (address) => {
     const http = new HttpService();
-    let url = `transactions/alltransactions/${address}`;
+    let url = `transactions/byWallet/${address}`;
     return http.getData(url);
 };
 

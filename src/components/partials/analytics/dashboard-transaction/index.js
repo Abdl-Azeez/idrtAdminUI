@@ -10,7 +10,7 @@ import {
     Col,
     PreviewAltCard,
 } from "../../../Component";
-import { fetchTransaction, generalToastError } from "../../../../store/actions";
+import { fetchTransaction, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const TnxAnalytics = ({ timeFrame, date }) => {
@@ -25,7 +25,7 @@ const TnxAnalytics = ({ timeFrame, date }) => {
     useEffect(() => {
         if (transactionError) {
             setTimeout(() => {
-                dispatch(generalToastError(transactionError));
+                dispatch(errorChecker(transactionError));
             }, 2000);
         }
     }, [transactionError]);

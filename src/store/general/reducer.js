@@ -1,9 +1,10 @@
-import { GENERAL_TOAST, GENERAL_TOAST_SUCCESSFUL, GENERAL_TOAST_ERROR } from "./actionTypes";
+import { GENERAL_TOAST, GENERAL_TOAST_SUCCESSFUL, GENERAL_TOAST_ERROR, ERROR_CHECKER } from "./actionTypes";
 
 const initialState = {
   error: null,
   toastMessage: null,
   toastType: null,
+  errorMessage: null
 };
 
 const GeneralToast = (state = initialState, action) => {
@@ -30,6 +31,13 @@ const GeneralToast = (state = initialState, action) => {
         error: null,
         toastMessage: null,
         toastType: null,
+      };
+      break;
+
+    case ERROR_CHECKER:
+      state = {
+        ...state,
+        errorMessage: action.payload.message,
       };
       break;
 

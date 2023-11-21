@@ -12,7 +12,7 @@ import {
     Block,
     PaginationComponent,
 } from "../../../Component";
-import { fetchIncomingTnx, generalToastError } from "../../../../store/actions";
+import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import Content from "../../../../layout/content/Content";
@@ -38,7 +38,7 @@ const IncomingTnx = ({ }) => {
     useEffect(() => {
         if (transactionError) {
             setTimeout(() => {
-                dispatch(generalToastError(transactionError));
+                dispatch(errorChecker(transactionError));
             }, 2000);
         }
     }, [transactionError]);
