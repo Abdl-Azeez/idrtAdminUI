@@ -22,7 +22,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
   }, 0);
 
   const sortDate = (data) => {
-    if (data) {
+    if (data?.length > 0) {
       data.sort((a, b) => new Date(a.date) - new Date(b.date));
       const midIndex = Math.floor(data.length / 2);
       const earliestDate = data[0].date;
@@ -34,12 +34,12 @@ const IDRT_TXN = ({ dateRange, data }) => {
     return null
   }
 
-  const getAllNoOfIDRT_In = (data) => {
-    return data?.map(entry => entry.inAmount / 1000000000000000000);
+  const getAllIDRT_In = (data) => {
+    return data?.map(entry => entry.inAmount / 100);
 
   }
-  const getAllNoOfIDRT_Out = (data) => {
-    return data?.map(entry => entry.outAmount / 1000000000000000000);
+  const getAllIDRT_Out = (data) => {
+    return data?.map(entry => entry.outAmount / 100);
   }
   const getAllDate = (data) => {
     return data?.map(entry => moment(entry.date).format('DD MMM, YYYY'));
@@ -66,7 +66,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 4,
-        data: getAllNoOfIDRT_In(data),
+        data: getAllIDRT_In(data),
       },
       {
         label: "TOTAL OUT",
@@ -86,7 +86,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 4,
-        data: getAllNoOfIDRT_Out(data),
+        data: getAllIDRT_Out(data),
       },
     ],
   };
@@ -113,21 +113,21 @@ const IDRT_TXN = ({ dateRange, data }) => {
         <div className="analytic-data-group analytic-au-group g-3">
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT Total</div>
-            <div className="amount">{totalIDRT_In ? formatNumber(((totalIDRT_In + totalIDRT_Out) / 1000000000000000000)) : 0}</div>
+            <div className="amount">{totalIDRT_In ? formatNumber(((totalIDRT_In + totalIDRT_Out) / 100)) : 0}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon>4.63% */}
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT In</div>
-            <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In / 1000000000000000000)) : 0}</div>
+            <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In / 100)) : 0}</div>
             <div className="change down">
               {/* <Icon name="arrow-long-down"></Icon>1.92% */}
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
             <div className="title">IDRT Out</div>
-            <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out / 1000000000000000000)) : 0}</div>
+            <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out / 100)) : 0}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon>3.45% */}
             </div>

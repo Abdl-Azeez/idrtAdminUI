@@ -21,8 +21,8 @@ const Transaction = ({ dateRange, data }) => {
   }, 0);
 
   const sortDate = (data) => {
-    if (data) {
-      data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (data?.length > 0) {
+      data.sort((a, b) => new Date(a?.date) - new Date(b?.date));
       const midIndex = Math.floor(data.length / 2);
       const earliestDate = data[0].date;
       const midDate = data[midIndex].date;

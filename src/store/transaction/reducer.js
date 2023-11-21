@@ -7,6 +7,10 @@ import {
   FETCH_TRANSACTION_ADDRESS_SUCCESSFUL,
   FETCH_TRANSACTION_ADDRESS_ERROR,
 
+  FETCH_TRANSACTION_ADDRESS_OUT,
+  FETCH_TRANSACTION_ADDRESS_OUT_SUCCESSFUL,
+  FETCH_TRANSACTION_ADDRESS_OUT_ERROR,
+
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_SUCCESSFUL,
   FETCH_TRANSACTION_ERROR,
@@ -39,6 +43,7 @@ const initialState = {
   message: null,
   loading: false,
   transactionAddress: null,
+  transactionAddressOut: null,
   orphanTnx: null,
   orphanLog: null,
   incomingTnx: null,
@@ -71,18 +76,6 @@ const Transaction = (state = initialState, action) => {
       };
       break;
 
-    case FETCH_INCOMING_TRANSACTION:
-    case FETCH_OUTGOING_TRANSACTION:
-      state = {
-        ...state,
-        incomingTnx: null,
-        outgoingTnx: null,
-        transactionError: null,
-        loading: true,
-        message: null,
-      };
-      break;
-
 
     case FETCH_ORPHAN_TRANSACTION:
       state = {
@@ -108,6 +101,16 @@ const Transaction = (state = initialState, action) => {
       state = {
         ...state,
         transactionAddress: null,
+        transactionError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
+    case FETCH_TRANSACTION_ADDRESS_OUT:
+      state = {
+        ...state,
+        transactionAddressOut: null,
         transactionError: null,
         loading: true,
         message: null,
@@ -204,7 +207,18 @@ const Transaction = (state = initialState, action) => {
       };
       break;
 
+    case FETCH_TRANSACTION_ADDRESS_OUT_SUCCESSFUL:
+      state = {
+        ...state,
+        transactionAddressOut: action.payload,
+        transactionError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
     case FETCH_TRANSACTION_ADDRESS_ERROR:
+    case FETCH_TRANSACTION_ADDRESS_OUT_ERROR:
     case FETCH_TRANSACTION_ERROR:
     case FETCH_TRANSACTIONS_ERROR:
     case FETCH_ORPHAN_TRANSACTION_ERROR:
@@ -222,6 +236,7 @@ const Transaction = (state = initialState, action) => {
         message: null,
         orphanLog: null,
         orphanTnx: null,
+        transactionAddressOut: null,
         transactionError: action.payload,
       };
       break;

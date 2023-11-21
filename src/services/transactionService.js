@@ -20,9 +20,16 @@ export const GetUserTransactionService = (id) => {
     return http.getData(url);
 };
 
-export const GetTransactionAddressService = (address) => {
+export const GetTransactionAddressService = (query) => {
     const http = new HttpService();
-    let url = `transactions/byWallet/${address}`;
+    let url
+    console.log(query)
+    if (query.type === 'in') {
+        url = `transactions/incomingByWallet/${query.walletAddress}?perPage=${query.perPage}&page=${query.page}`;
+    }
+    else {
+        url = `transactions/outgoingByWallet/${query.walletAddress}?perPage=${query.perPage}&page=${query.page}`;
+    }
     return http.getData(url);
 };
 

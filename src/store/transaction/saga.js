@@ -5,6 +5,7 @@ import {
   FETCH_TRANSACTION,
   FETCH_USER_TRANSACTIONS,
   FETCH_TRANSACTION_ADDRESS,
+  FETCH_TRANSACTION_ADDRESS_OUT,
   FETCH_ORPHAN_TRANSACTION,
   FETCH_ORPHAN_LOG,
   FETCH_INCOMING_TRANSACTION,
@@ -17,6 +18,9 @@ import {
 
   fetchTransactionAddressSuccessful,
   fetchTransactionAddressError,
+
+  fetchTransactionAddressOutSuccessful,
+  fetchTransactionAddressOutError,
 
   fetchTransactionSuccessful,
   fetchTransactionError,
@@ -87,6 +91,16 @@ function* fetchTransactionAddressHandler({ payload }) {
   }
 }
 
+function* fetchTransactionAddressOutHandler({ payload }) {
+  try {
+    // console.log(payload)
+    const response = yield call(GetTransactionAddressService, payload);
+    yield put(fetchTransactionAddressOutSuccessful(response.data));
+  } catch (error) {
+    yield put(fetchTransactionAddressOutError(error?.response?.data?.message));
+  }
+}
+
 function* fetchTransactionHandler({ payload }) {
   try {
     const response = yield call(GetEachTransactionService, payload);
@@ -135,6 +149,10 @@ export function* watchFetchTransactionAddress() {
   yield takeEvery(FETCH_TRANSACTION_ADDRESS, fetchTransactionAddressHandler);
 }
 
+export function* watchFetchTransactionAddressOut() {
+  yield takeEvery(FETCH_TRANSACTION_ADDRESS_OUT, fetchTransactionAddressOutHandler);
+}
+
 export function* watchFetchEachTransaction() {
   yield takeEvery(FETCH_TRANSACTION, fetchTransactionHandler);
 }
@@ -168,7 +186,8 @@ function* TransactionsSaga() {
     fork(watchFetchOrphaLog),
     fork(watchFetchIncomingTnx),
     fork(watchFetchOutgoingTnx),
-    fork(watchFetchUserTransactions)
+    fork(watchFetchUserTransactions),
+    fork(watchFetchTransactionAddressOut)
   ]);
 }
 

@@ -92,10 +92,10 @@ const TransactionTable = ({ data }) => {
                         <span>IDRT</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalIDRT_In ? ((totalIDRT_In / 1000000000000000000)?.toLocaleString()) : 0}</span>
+                        <span>{totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalIDRT_Out ? ((totalIDRT_Out / 1000000000000000000)?.toLocaleString()) : 0}</span>
+                        <span>{totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</span>
                     </DataTableRow>
 
                 </DataTableItem>
@@ -104,10 +104,10 @@ const TransactionTable = ({ data }) => {
                         <span>Commssion</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalCommissionIn ? (totalCommissionIn / 1000000000000000000)?.toLocaleString() : 0}</span>
+                        <span>{totalCommissionIn ? (totalCommissionIn / 100)?.toLocaleString() : 0}</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalCommissionOut ? (totalCommissionOut / 1000000000000000000)?.toLocaleString() : 0}</span>
+                        <span>{totalCommissionOut ? (totalCommissionOut / 100)?.toLocaleString() : 0}</span>
                     </DataTableRow>
 
                 </DataTableItem>

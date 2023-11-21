@@ -10,8 +10,8 @@ const Fees = ({ dateRange, data }) => {
 
 
   const sortDate = (data) => {
-    if (data) {
-      data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (data?.length > 0) {
+      data?.sort((a, b) => new Date(a.date) - new Date(b.date));
       const midIndex = Math.floor(data.length / 2);
       const earliestDate = data[0].date;
       const midDate = data[midIndex].date;
@@ -30,7 +30,7 @@ const Fees = ({ dateRange, data }) => {
 
 
   const getAllNoOfInCom = (data) => {
-    return data?.map(entry => entry.inCommission / 1000000000000000000);
+    return data?.map(entry => entry.inCommission / 100);
   }
 
 

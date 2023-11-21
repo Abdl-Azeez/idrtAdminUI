@@ -45,6 +45,8 @@ const Homepage = () => {
         <DashboardAnalytics />
         <Row className="g-gs py-4">
           <Col lg="7" xxl="7">
+
+            {/* MAIN WALLETS */}
             <BlockHead size="sm" className="d-flex justify-content-between">
               <div className="nk-block-between">
                 <BlockHeadContent>
@@ -55,16 +57,14 @@ const Homepage = () => {
               </div>
             </BlockHead>
             <Block>
-
               <Card className="h-100">
                 <MainWallets />
               </Card>
-
-
             </Block>
-
           </Col>
         </Row>
+
+        {/* IDRT Transactions Overview */}
         <BlockHead size="sm" className="d-flex justify-content-between">
           <div className="nk-block-between">
             <BlockHeadContent>
@@ -165,7 +165,11 @@ const Homepage = () => {
             </ul>
           </div>
         </BlockHead>
+
+        {/* Transaction Analytics And Charts */}
         <TnxAnalytics timeFrame={timeFrame} date={date} />
+
+
         {/* <Row className="g-gs py-4">
           <Col lg="6" xxl="6">
             <BlockHead size="sm" className="d-flex justify-content-between">
@@ -208,30 +212,10 @@ const Homepage = () => {
           </Row>
 
         </Block>
-        <BlockHead size="sm" className="d-flex justify-content-between pt-5">
-          <div className="nk-block-between">
-            <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                LATEST INCOMING TRANSACTIONS
-              </BlockTitle>
-            </BlockHeadContent>
-          </div>
-        </BlockHead>
-        <Block>
-          <Row className="g-gs">
-            <Col lg="12" xxl="12">
-              <Card className="h-100">
-                <LatestTrans />
-                <Link to='/transactions'>
-                  <Button size="sm" color="" className="btn-light font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
+        <LatestTrans />
 
-                </Link>
-              </Card>
 
-            </Col>
-          </Row>
 
-        </Block>
 
         {/* <Col xxl="12">
           <div className="d-flex pt-5" style={{ gap: '5px' }}>

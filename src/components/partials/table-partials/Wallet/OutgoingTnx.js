@@ -1,121 +1,79 @@
 import React, { useState, useEffect } from "react";
+import Content from "../../../../layout/content/Content.js";
+import Head from "../../../../layout/head/Head.js";
 import {
-    Card,
-} from "reactstrap";
-import {
+    Block,
     BlockBetween,
     BlockDes,
     BlockHead,
     BlockHeadContent,
     BlockTitle,
     Icon,
-    Block,
+    Col,
     PaginationComponent,
-} from "../../../Component";
-import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
-import { useSelector, useDispatch } from "react-redux";
+} from "../../../Component.js";
 import moment from "moment";
-import Content from "../../../../layout/content/Content";
+import { Alert, Button, Card } from "reactstrap";
+import { fetchTransactionAddressError, fetchTransactionAddressOut } from "../../../../store/actions.js";
+import { useSelector, useDispatch } from "react-redux";
 
 
-const IncomingTnx = ({ }) => {
-    const { incomingTnx, transactionError } = useSelector((state) => state.Transaction);
-    const [onSearch, setonSearch] = useState(true);
-    const [onSearchText, setSearchText] = useState("");
+const OutgoingWalletTnx = ({ walletAddress }) => {
+    const { transactionAddressOut, transactionError } = useSelector((state) => state.Transaction);
+    const [data, setData] = useState(transactionAddressOut?.outgoingTxns || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [data, setData] = useState(incomingTnx?.data);
-
-
     const dispatch = useDispatch();
 
+    // Changing state value when searching name
     useEffect(() => {
-        dispatch(fetchIncomingTnx({ page: currentPage, perPage: itemPerPage }));
-        setData(incomingTnx?.data)
-
-    }, [dispatch, currentPage]);
-
-    useEffect(() => {
-        if (transactionError) {
-            setTimeout(() => {
-                dispatch(errorChecker(transactionError));
-            }, 2000);
+        dispatch(fetchTransactionAddressError());
+        if (walletAddress) {
+            dispatch(fetchTransactionAddressOut({
+                walletAddress,
+                page: currentPage, perPage: itemPerPage,
+                type: 'out'
+            }));
         }
-    }, [transactionError]);
+    }, [walletAddress, currentPage]);
 
 
     // Changing state value when searching name
     useEffect(() => {
-        if (incomingTnx) {
-            if (onSearchText !== "") {
-                const filteredObject = incomingTnx?.data.filter((item) => {
-                    return item.username.toLowerCase().includes(onSearchText.toLowerCase());
-                });
-                setData([...filteredObject]);
-            } else {
-                setData([...incomingTnx?.data]);
-            }
-
+        if (transactionAddressOut?.outgoingTxns) {
+            setData(transactionAddressOut?.outgoingTxns)
         }
-
-    }, [incomingTnx, onSearchText]);
-
-    // onChange function for searching name
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-
+    }, [transactionAddressOut]);
 
 
 
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    let currentItems = incomingTnx?.data?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = transactionAddressOut?.outgoingTxns?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
-    const paginate = ((pageNumber) => { setCurrentPage(pageNumber) });
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <React.Fragment>
-            <Content>
-                <BlockHead size="sm">
-                    <BlockBetween>
-                        <BlockHeadContent>
-                            <BlockTitle page>Transactions</BlockTitle>
-                            <BlockDes className="text-soft">
-                                <p>You have {incomingTnx?.totalItems} Incoming Transactions.</p>
-                            </BlockDes>
-                        </BlockHeadContent>
-                        <BlockHeadContent>
-                            <ul className="nk-block-tools g-3">
-                                <li>
-                                    <div className="form-control-wrap">
-                                        <div className="form-icon form-icon-right">
-                                            <Icon name="search"></Icon>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="default-04"
-                                            placeholder="Search by User name"
-                                            onChange={(e) => onFilterChange(e)}
-                                        />
-                                    </div>
-                                </li>
 
-                            </ul>
-                        </BlockHeadContent>
-                    </BlockBetween>
-                </BlockHead>
 
-                <Block>
+            <Block>
+                <div className="d-flex flex-column">
+                    {transactionError &&
+                        <Alert color="danger">
+                            {transactionError}
+                        </Alert>
+                    }
+                </div>
+                {transactionAddressOut &&
                     <Card className="card-bordered card-stretch">
                         <div className="card-inner-group">
                             <div className="card-inner">
                                 <div className="card-title-group">
                                     <div className="card-title">
-                                        <h5 className="title">Incoming Transactions</h5>
+                                        <h5 className="title">Outgoing Transactions</h5>
                                     </div>
 
                                 </div>
@@ -205,11 +163,11 @@ const IncomingTnx = ({ }) => {
                                 </table>
                             </div>
                             <div className="card-inner">
-                                {data?.length > 0 ? (
+                                {data.length > 0 ? (
                                     <PaginationComponent
                                         noDown
                                         itemPerPage={itemPerPage}
-                                        totalItems={incomingTnx?.totalItems}
+                                        totalItems={transactionAddressOut?.totalCount}
                                         paginate={paginate}
                                         currentPage={currentPage}
                                     />
@@ -220,14 +178,10 @@ const IncomingTnx = ({ }) => {
                                 )}
                             </div>
                         </div>
-                    </Card>
-                </Block>
-
-                {/* clp6mcwfc000bqp0siri5tzoe
-                0x0002 */}
-            </Content>
+                    </Card>}
+            </Block>
         </React.Fragment>
     );
 };
 
-export default IncomingTnx;
+export default OutgoingWalletTnx;

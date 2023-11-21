@@ -81,7 +81,7 @@ const MainWallets = () => {
                         <span>{merchantWallet?.value}</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        {merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 1000000000000000000)?.toLocaleString() : 0} IDRT
+                        {merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0} IDRT
                     </DataTableRow>
                 </DataTableItem>
                 <DataTableItem className="nk-tb-item" >
@@ -92,7 +92,7 @@ const MainWallets = () => {
                         <span>{commissionWallet?.value}</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        {commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 1000000000000000000)?.toLocaleString() : 0}  IDRT
+                        {commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}  IDRT
                     </DataTableRow>
                 </DataTableItem>
                 <DataTableItem className="nk-tb-item" >

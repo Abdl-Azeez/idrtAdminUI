@@ -7,6 +7,10 @@ import {
   FETCH_TRANSACTION_ADDRESS_SUCCESSFUL,
   FETCH_TRANSACTION_ADDRESS_ERROR,
 
+  FETCH_TRANSACTION_ADDRESS_OUT,
+  FETCH_TRANSACTION_ADDRESS_OUT_SUCCESSFUL,
+  FETCH_TRANSACTION_ADDRESS_OUT_ERROR,
+
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_SUCCESSFUL,
   FETCH_TRANSACTION_ERROR,
@@ -97,10 +101,10 @@ export const fetchUserTransactionsError = (error) => {
 };
 
 
-export const fetchTransactionAddress = (address) => {
+export const fetchTransactionAddress = (payload) => {
   return {
     type: FETCH_TRANSACTION_ADDRESS,
-    payload: address,
+    payload: payload,
   };
 };
 
@@ -114,6 +118,27 @@ export const fetchTransactionAddressSuccessful = (payload) => {
 export const fetchTransactionAddressError = (error) => {
   return {
     type: FETCH_TRANSACTION_ADDRESS_ERROR,
+    payload: error,
+  };
+};
+
+export const fetchTransactionAddressOut = (payload) => {
+  return {
+    type: FETCH_TRANSACTION_ADDRESS_OUT,
+    payload: payload,
+  };
+};
+
+export const fetchTransactionAddressOutSuccessful = (payload) => {
+  return {
+    type: FETCH_TRANSACTION_ADDRESS_OUT_SUCCESSFUL,
+    payload: payload,
+  };
+};
+
+export const fetchTransactionAddressOutError = (error) => {
+  return {
+    type: FETCH_TRANSACTION_ADDRESS_OUT_ERROR,
     payload: error,
   };
 };

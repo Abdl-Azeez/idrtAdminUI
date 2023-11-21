@@ -186,7 +186,7 @@ const OutgoingTnx = ({ }) => {
                                                             <span className="">{item?.gasFee}</span>
                                                         </td>
                                                         <td className="tb-info">
-                                                            <span className="">{(item?.amount / 1000000000000000000).toLocaleString()}</span>
+                                                            <span className="">{(item?.amount / 100).toLocaleString()}</span>
                                                         </td>
                                                         <td className="tb-info">
                                                             <span className="">{item?.currencySymbol}</span>
