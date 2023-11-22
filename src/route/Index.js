@@ -20,12 +20,12 @@ const Pages = () => {
     <Suspense fallback={<div />}>
       <Switch>
 
-        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/user`} component={User}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/wallets`} component={Wallets}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/transactions`} component={Transactions}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/orphan_log`} component={OrphanLog}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/settings`} component={Settings}></Route>
+        <Route exact path={`/`} component={Homepage}></Route>
+        <Route exact path={`/user`} component={User}></Route>
+        <Route exact path={`/wallets`} component={Wallets}></Route>
+        <Route exact path={`/transactions`} component={Transactions}></Route>
+        <Route exact path={`/orphan_log`} component={OrphanLog}></Route>
+        <Route exact path={`/settings`} component={Settings}></Route>
 
         <Route component={RedirectAs404}></Route>
       </Switch>
