@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Content from "../layout/content/Content.js";
 import Head from "../layout/head/Head";
-import DatePicker from "react-datepicker";
 import {
-    UncontrolledDropdown,
-    DropdownMenu,
-    DropdownToggle,
-    Card,
-    FormGroup,
-    Modal,
-    ModalBody,
-    DropdownItem,
-    Form,
-    Badge,
-} from "reactstrap";
-import {
-    Button,
     Block,
     BlockBetween,
     BlockDes,
@@ -23,117 +9,60 @@ import {
     BlockHeadContent,
     BlockTitle,
     Icon,
-    Col,
     PaginationComponent,
-    Row,
-    RSelect,
 } from "../components/Component";
-import { saleOrders, statusOptions } from "../components/table/TableData";
-import { dateFormatterAlt } from "../utils/Utils";
-import { useForm } from "react-hook-form";
+import moment from "moment";
+import { Alert, Card } from "reactstrap";
+import { fetchOrphanLog } from "../store/actions.js";
+import { useSelector, useDispatch } from "react-redux";
 
 const OrphanLog = () => {
-    const [onSearch, setonSearch] = useState(true);
+    const { orphanLog, transactionError } = useSelector((state) => state.Transaction);
+    const [data, setData] = useState(orphanLog || []);
     const [onSearchText, setSearchText] = useState("");
-    const [modal, setModal] = useState({
-        add: false,
-    });
-    const [viewModal, setViewModal] = useState(false);
-    const [detail, setDetail] = useState({});
-    const [data, setData] = useState(saleOrders);
-    const [formData, setFormData] = useState({
-        bill: "",
-        issue: new Date(),
-        due: new Date(),
-        total: "",
-        status: "",
-        ref: "",
-    });
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [sort, setSortState] = useState("");
-
-    const sortingFunc = (params) => {
-        let defaultData = data;
-        if (params === "asc") {
-            let sortedData = [...defaultData].sort((a, b) => parseFloat(a.ref) - parseFloat(b.ref));
-            setData([...sortedData]);
-        } else if (params === "dsc") {
-            let sortedData = [...defaultData].sort((a, b) => parseFloat(b.ref) - parseFloat(a.ref));
-            setData([...sortedData]);
-        }
-    };
+    const dispatch = useDispatch();
 
     // Changing state value when searching name
     useEffect(() => {
-        if (onSearchText !== "") {
-            const filteredObject = saleOrders.filter((item) => {
-                return item.bill.toLowerCase().includes(onSearchText.toLowerCase());
-            });
-            setData([...filteredObject]);
-        } else {
-            setData([...saleOrders]);
+        dispatch(fetchOrphanLog())
+    }, []);
+
+    // Changing state value when searching name
+    useEffect(() => {
+        if (orphanLog) {
+            setData(orphanLog)
         }
-    }, [onSearchText]);
+    }, [orphanLog]);
+
+    useEffect(() => {
+        if (orphanLog) {
+            if (onSearchText !== "") {
+                const filteredObject = orphanLog?.filter((item) => {
+                    return item.id.toLowerCase().includes(onSearchText.toLowerCase());
+                });
+                setData([...filteredObject]);
+            } else {
+                setData([...orphanLog]);
+            }
+
+        }
+
+    }, [orphanLog, onSearchText]);
 
     // onChange function for searching name
     const onFilterChange = (e) => {
         setSearchText(e.target.value);
     };
 
-    // function to reset the form
-    const resetForm = () => {
-        setFormData({
-            bill: "",
-            issue: new Date(),
-            due: new Date(),
-            total: "",
-            status: "",
-        });
-    };
-
-    // function to close the form modal
-    const onFormCancel = () => {
-        setModal({ add: false });
-        resetForm();
-    };
-
-    // submit function to add a new item
-    const onFormSubmit = (submitData) => {
-        const { bill, total } = submitData;
-        let submittedData = {
-            id: data.length + 1,
-            ref: 4970,
-            bill: bill,
-            issue: dateFormatterAlt(formData.issue, true),
-            due: dateFormatterAlt(formData.due, true),
-            total: total + ".00",
-            status: formData.status,
-        };
-        setData([submittedData, ...data]);
-
-        resetForm();
-        setModal({ add: false });
-    };
-
-    // function to load detail data
-    const loadDetail = (id) => {
-        let index = data.findIndex((item) => item.id === id);
-        setDetail(data[index]);
-    };
-
-    // function to toggle the search option
-    const toggle = () => setonSearch(!onSearch);
-
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = orphanLog?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const { errors, register, handleSubmit } = useForm();
 
     return (
         <React.Fragment>
@@ -144,7 +73,7 @@ const OrphanLog = () => {
                         <BlockHeadContent>
                             <BlockTitle page>Orphan Log</BlockTitle>
                             <BlockDes className="text-soft">
-                                <p>You have total {data.length} Logs.</p>
+                                <p>You have {orphanLog?.length} Orphan Logs.</p>
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
@@ -152,13 +81,13 @@ const OrphanLog = () => {
                                 <li>
                                     <div className="form-control-wrap">
                                         <div className="form-icon form-icon-right">
-                                            <Icon name="search"></Icon>
+                                            {/* <Icon name="search"></Icon> */}
                                         </div>
                                         <input
                                             type="text"
                                             className="form-control"
                                             id="default-04"
-                                            placeholder="Search by log ID"
+                                            placeholder="Search by Log ID"
                                             onChange={(e) => onFilterChange(e)}
                                         />
                                     </div>
@@ -170,251 +99,91 @@ const OrphanLog = () => {
                 </BlockHead>
 
                 <Block>
-                    <Card className="card-bordered card-stretch">
-                        <div className="card-inner-group">
-                            <div className="card-inner">
-                                <div className="card-title-group">
-                                    <div className="card-title">
-                                        <h5 className="title">All Logs</h5>
-                                    </div>
-                                    <div className="card-tools mr-n1">
-                                        <ul className="btn-toolbar">
-                                            <li>
-                                                <Button onClick={toggle} className="btn-icon search-toggle toggle-search">
-                                                    <Icon name="search"></Icon>
-                                                </Button>
-                                            </li>
-                                            <li className="btn-toolbar-sep"></li>
-                                            <li>
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
-                                                        <Icon name="setting"></Icon>
-                                                    </DropdownToggle>
-                                                    <DropdownMenu right>
-                                                        <ul className="link-check">
-                                                            <li>
-                                                                <span>Show</span>
-                                                            </li>
-                                                            <li className={itemPerPage === 10 ? "active" : ""}>
-                                                                <DropdownItem
-                                                                    tag="a"
-                                                                    href="#dropdownitem"
-                                                                    onClick={(ev) => {
-                                                                        ev.preventDefault();
-                                                                        setItemPerPage(10);
-                                                                    }}
-                                                                >
-                                                                    10
-                                                                </DropdownItem>
-                                                            </li>
-                                                            <li className={itemPerPage === 15 ? "active" : ""}>
-                                                                <DropdownItem
-                                                                    tag="a"
-                                                                    href="#dropdownitem"
-                                                                    onClick={(ev) => {
-                                                                        ev.preventDefault();
-                                                                        setItemPerPage(15);
-                                                                    }}
-                                                                >
-                                                                    15
-                                                                </DropdownItem>
-                                                            </li>
-                                                        </ul>
-                                                        <ul className="link-check">
-                                                            <li>
-                                                                <span>Order</span>
-                                                            </li>
-                                                            <li className={sort === "dsc" ? "active" : ""}>
-                                                                <DropdownItem
-                                                                    tag="a"
-                                                                    href="#dropdownitem"
-                                                                    onClick={(ev) => {
-                                                                        ev.preventDefault();
-                                                                        setSortState("dsc");
-                                                                        sortingFunc("dsc");
-                                                                    }}
-                                                                >
-                                                                    DESC
-                                                                </DropdownItem>
-                                                            </li>
-                                                            <li className={sort === "asc" ? "active" : ""}>
-                                                                <DropdownItem
-                                                                    tag="a"
-                                                                    href="#dropdownitem"
-                                                                    onClick={(ev) => {
-                                                                        ev.preventDefault();
-                                                                        setSortState("asc");
-                                                                        sortingFunc("asc");
-                                                                    }}
-                                                                >
-                                                                    ASC
-                                                                </DropdownItem>
-                                                            </li>
-                                                        </ul>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className={`card-search search-wrap ${!onSearch ? "active" : ""}`}>
-                                        <div className="search-content">
-                                            <Button
-                                                className="search-back btn-icon toggle-search"
-                                                onClick={() => {
-                                                    setSearchText("");
-                                                    toggle();
-                                                }}
-                                            >
-                                                <Icon name="arrow-left"></Icon>
-                                            </Button>
-                                            <input
-                                                type="text"
-                                                className="form-control border-transparent form-focus-none"
-                                                placeholder="Search by bill name"
-                                                value={onSearchText}
-                                                onChange={(e) => onFilterChange(e)}
-                                            />
-                                            <Button className="search-submit btn-icon">
-                                                <Icon name="search"></Icon>
-                                            </Button>
+                    <div className="d-flex flex-column">
+                        {transactionError &&
+                            <Alert color="danger">
+                                Orphan API Error: {transactionError}
+                            </Alert>
+                        }
+                    </div>
+                    {orphanLog &&
+                        <Card className="card-bordered card-stretch">
+                            <div className="card-inner-group">
+                                <div className="card-inner">
+                                    <div className="card-title-group">
+                                        <div className="card-title">
+                                            <h5 className="title">Orphan History</h5>
                                         </div>
+
                                     </div>
                                 </div>
-                            </div>
-                            <div className="card-inner p-0">
-                                <table className="table table-tranx">
-                                    <thead>
-                                        <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
-                                                <span className="">#</span>
-                                            </th>
-                                            <th className="tb-tnx-info">
-                                                <span className="tb-tnx-desc d-none d-sm-inline-block">
-                                                    <span>Bill For</span>
-                                                </span>
-                                                <span className="tb-tnx-date d-md-inline-block d-none">
-                                                    <span className="d-md-none">Date</span>
-                                                    <span className="d-none d-md-block">
-                                                        <span>Issue Date</span>
-                                                        <span>Due Date</span>
-                                                    </span>
-                                                </span>
-                                            </th>
-                                            <th className="tb-tnx-amount is-alt">
-                                                <span className="tb-tnx-total">Total</span>
-                                                <span className="tb-tnx-status d-none d-md-inline-block">Status</span>
-                                            </th>
-                                            <th className="tb-tnx-action">
-                                                <span>&nbsp;</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {currentItems.length > 0
-                                            ? currentItems.map((item) => {
-                                                return (
-                                                    <tr key={item.id} className="tb-tnx-item">
-                                                        <td className="tb-tnx-id">
-                                                            <a
-                                                                href="#ref"
-                                                                onClick={(ev) => {
-                                                                    ev.preventDefault();
-                                                                }}
-                                                            >
-                                                                <span>{item.ref}</span>
-                                                            </a>
-                                                        </td>
-                                                        <td className="tb-tnx-info">
-                                                            <div className="tb-tnx-desc">
-                                                                <span className="title">{item.bill}</span>
-                                                            </div>
-                                                            <div className="tb-tnx-date">
-                                                                <span className="date">{item.issue}</span>
-                                                                <span className="date">{item.due}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="tb-tnx-amount is-alt">
-                                                            <div className="tb-tnx-total">
-                                                                <span className="amount">${item.total}</span>
-                                                            </div>
-                                                            <div className="tb-tnx-status">
-                                                                <span
-                                                                    className={`badge badge-dot badge-${item.status === "Paid" ? "success" : item.status === "Due" ? "warning" : "danger"
-                                                                        }`}
-                                                                >
-                                                                    {item.status}
+                                <div className="card-inner p-0">
+                                    <table className="table w-100 d-table table-hover table-responsive">
+                                        <thead>
+                                            <tr className="tb-tnx-head">
+                                                <th className="tb-tnx-id">
+                                                    <span className="">ID</span>
+                                                </th>
+                                                <th className="">
+                                                    <span>Date</span>
+                                                </th>
+                                                <th className="">
+                                                    <span>Transaction Hash</span>
+                                                </th>
+                                                <th className="">
+                                                    <span className="">User ID</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data?.length > 0
+                                                ? data?.map((item) => {
+                                                    return (
+                                                        <tr key={item.id} className="">
+                                                            <td className="tb-tnx font-weight-bold">
+                                                                <span className="text-success">{item.id}</span>
+                                                            </td>
+                                                            <td className="">
+                                                                <span className="date">
+                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="badge badge-secondary font-size-10">
+                                                                        {" "}
+                                                                        {moment(item?.createdAt).format("hh:mm A")}
+                                                                    </div>
                                                                 </span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="tb-tnx-action">
-                                                            <UncontrolledDropdown>
-                                                                <DropdownToggle
-                                                                    tag="a"
-                                                                    className="text-soft dropdown-toggle btn btn-icon btn-trigger"
-                                                                >
-                                                                    <Icon name="more-h"></Icon>
-                                                                </DropdownToggle>
-                                                                <DropdownMenu right>
-                                                                    <ul className="link-list-plain">
-                                                                        <li
-                                                                            onClick={() => {
-                                                                                loadDetail(item.id);
-                                                                                setViewModal(true);
-                                                                            }}
-                                                                        >
-                                                                            <DropdownItem
-                                                                                tag="a"
-                                                                                href="#view"
-                                                                                onClick={(ev) => {
-                                                                                    ev.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                View
-                                                                            </DropdownItem>
-                                                                        </li>
-                                                                        <li>
-                                                                            <DropdownItem
-                                                                                tag="a"
-                                                                                href="#print"
-                                                                                onClick={(ev) => {
-                                                                                    ev.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                Print
-                                                                            </DropdownItem>
-                                                                        </li>
-                                                                    </ul>
-                                                                </DropdownMenu>
-                                                            </UncontrolledDropdown>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                            : null}
-                                    </tbody>
-                                </table>
+                                                            </td>
+                                                            <td className="">
+                                                                <div className="text-truncate font-weight-bolder">{item?.txnHash}</div>
+                                                            </td>
+                                                            <td className="">
+                                                                <div className="text-truncate font-weight-bolder">{item?.userId}</div>
+                                                            </td>
+
+                                                        </tr>
+                                                    );
+                                                })
+                                                : null}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="card-inner">
+                                    {currentItems.length > 0 ? (
+                                        <PaginationComponent
+                                            noDown
+                                            itemPerPage={itemPerPage}
+                                            totalItems={orphanLog?.length}
+                                            paginate={paginate}
+                                            currentPage={currentPage}
+                                        />
+                                    ) : (
+                                        <div className="text-center">
+                                            <span className="text-silent">No data found</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                            <div className="card-inner">
-                                {currentItems.length > 0 ? (
-                                    <PaginationComponent
-                                        noDown
-                                        itemPerPage={itemPerPage}
-                                        totalItems={data.length}
-                                        paginate={paginate}
-                                        currentPage={currentPage}
-                                    />
-                                ) : (
-                                    <div className="text-center">
-                                        <span className="text-silent">No data found</span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </Card>
+                        </Card>}
                 </Block>
-
-
-
             </Content>
         </React.Fragment>
     );

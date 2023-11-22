@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "reactstrap";
+import { Alert, Card } from "reactstrap";
 import {
     Block,
     Col,
@@ -48,20 +48,10 @@ export const DashboardAnalytics = () => {
 
 
     useEffect(() => {
-        if (error) {
-            setTimeout(() => {
-                dispatch(errorChecker());
-            }, 2000);
-        }
-        if (walletError) {
-            setTimeout(() => {
-                dispatch(errorChecker(walletError));
-            }, 2000);
-        }
         if (fetchError) {
             console.log(`Binance API Error: ${fetchError}`);
         }
-    }, [error, fetchError, walletError]);
+    }, [fetchError]);
 
 
     let activeWallets = 0;
@@ -82,6 +72,11 @@ export const DashboardAnalytics = () => {
 
     return (
         <Block>
+            {walletError &&
+                <Alert color="danger">
+                    Wallet Summary API Error: {walletError}
+                </Alert>
+            }
             <div className="d-flex top-cards justify-content-start">
                 <Col md="4" lg="4" xxl="4" className="p-md-1">
                     <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
@@ -102,6 +97,10 @@ export const DashboardAnalytics = () => {
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Inactive:</label>
                                     <p>{wallet ? wallet?.length - activeWallets : 0}</p>
+                                </div>
+                                <div className="d-flex justify-content-between">
+                                    <label className="font-weight-bolder mb-0">Locked:</label>
+                                    <p>{0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">IDRT:</label>

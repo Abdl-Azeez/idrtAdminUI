@@ -147,7 +147,7 @@ export const fetchTransactionAddressOutError = (error) => {
 export const fetchOrphan = (payload) => {
   return {
     type: FETCH_ORPHAN_TRANSACTION,
-    payload: { payload },
+    payload: payload,
   };
 };
 

@@ -59,7 +59,7 @@ const Transaction = (state = initialState, action) => {
     case FETCH_TRANSACTIONS:
       state = {
         ...state,
-        transactions: null,
+        // transactions: null,
         transactionError: null,
         loading: true,
         message: null,
@@ -100,7 +100,7 @@ const Transaction = (state = initialState, action) => {
     case FETCH_TRANSACTION_ADDRESS:
       state = {
         ...state,
-        transactionAddress: null,
+        // transactionAddress: null,
         transactionError: null,
         loading: true,
         message: null,
@@ -110,7 +110,7 @@ const Transaction = (state = initialState, action) => {
     case FETCH_TRANSACTION_ADDRESS_OUT:
       state = {
         ...state,
-        transactionAddressOut: null,
+        // transactionAddressOut: null,
         transactionError: null,
         loading: true,
         message: null,

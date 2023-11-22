@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Icon from "../icon/Icon";
 import classNames from "classnames";
 
 export const Block = ({ className, size, ...props }) => {
@@ -56,7 +55,7 @@ export const BackTo = ({ className, link, icon, ...props }) => {
   return (
     <div className="nk-block-head-sub">
       <Link className={classes} to={process.env.PUBLIC_URL + link}>
-        <Icon name={icon} />
+        {/* <Icon name={icon} /> */}
         <span>{props.children}</span>
       </Link>
     </div>

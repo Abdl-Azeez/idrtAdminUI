@@ -4,7 +4,7 @@ import { QueryReallignment } from '../utils/Utils';
 
 export const GetTransactionsService = () => {
     const http = new HttpService();
-    let url = `transactions/alltransactions`;
+    let url = `transactions/allTransactions`;
     return http.getData(url);
 };
 
@@ -23,7 +23,6 @@ export const GetUserTransactionService = (id) => {
 export const GetTransactionAddressService = (query) => {
     const http = new HttpService();
     let url
-    console.log(query)
     if (query.type === 'in') {
         url = `transactions/incomingByWallet/${query.walletAddress}?perPage=${query.perPage}&page=${query.page}`;
     }
@@ -33,15 +32,21 @@ export const GetTransactionAddressService = (query) => {
     return http.getData(url);
 };
 
-export const GetOrphanTransactionService = () => {
+export const GetOrphanTransactionService = (query) => {
     const http = new HttpService();
-    let url = `transactions/orphan`;
+    let url = `transactions/allOrphanTransactions`;
+
+    if (query) {
+        let queryParams = QueryReallignment(query);
+        url = `${url}?${queryParams}`;
+    }
+
     return http.getData(url);
 };
 
 export const GetOrphanLogService = () => {
     const http = new HttpService();
-    let url = `transactions/orphanhistory`;
+    let url = `orphan/getOrphanHistory`;
     return http.getData(url);
 };
 

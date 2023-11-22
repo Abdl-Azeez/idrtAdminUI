@@ -11,6 +11,7 @@ import Head from "../layout/head/Head";
 import IncomingWalletTnx from "../components/partials/table-partials/Wallet/IncomingTnx.js";
 import OutgoingWalletTnx from "../components/partials/table-partials/Wallet/OutgoingTnx.js";
 import { Button } from "reactstrap";
+import WalletHistory from "../components/partials/table-partials/Wallet/WalletHistory.js";
 
 
 
@@ -63,6 +64,7 @@ const Wallets = () => {
                 </BlockHead>
                 <IncomingWalletTnx walletAddress={walletAddress} />
                 <OutgoingWalletTnx walletAddress={walletAddress} />
+                <WalletHistory Id={walletAddress} />
             </Content>
 
         </React.Fragment>

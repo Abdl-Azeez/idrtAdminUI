@@ -18,30 +18,31 @@ import { fetchWalletHistoryError, fetchWalletHistory } from "../../../../store/a
 import { useSelector, useDispatch } from "react-redux";
 
 
-const WalletHistory = ({ walletAddress }) => {
+const WalletHistory = ({ Id, type = "wallet" }) => {
     const { walletHistory, walletError } = useSelector((state) => state.Wallet);
-    const [data, setData] = useState(walletHistory?.outgoingTxns || []);
+    const [data, setData] = useState(walletHistory || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
 
     // Changing state value when searching name
     useEffect(() => {
-        dispatch(fetchWalletHistoryError());
-        if (walletAddress) {
-            dispatch(fetchWalletHistory({
-                walletAddress,
-                page: currentPage, perPage: itemPerPage,
-                type: 'out'
-            }));
+        if (Id) {
+            dispatch(fetchWalletHistory(
+                { Id, type }
+            ));
         }
-    }, [walletAddress, currentPage]);
+    }, [Id, currentPage, dispatch, type]);
 
+
+    useEffect(() => {
+        dispatch(fetchWalletHistoryError());
+    }, []);
 
     // Changing state value when searching name
     useEffect(() => {
-        if (walletHistory?.outgoingTxns) {
-            setData(walletHistory?.outgoingTxns)
+        if (walletHistory) {
+            setData(walletHistory)
         }
     }, [walletHistory]);
 
@@ -50,7 +51,7 @@ const WalletHistory = ({ walletAddress }) => {
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = walletHistory?.outgoingTxns?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = walletHistory?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -60,20 +61,13 @@ const WalletHistory = ({ walletAddress }) => {
 
 
             <Block>
-                <div className="d-flex flex-column">
-                    {walletError &&
-                        <Alert color="danger">
-                            {walletError}
-                        </Alert>
-                    }
-                </div>
                 {walletHistory &&
                     <Card className="card-bordered card-stretch">
                         <div className="card-inner-group">
                             <div className="card-inner">
                                 <div className="card-title-group">
                                     <div className="card-title">
-                                        <h5 className="title">Outgoing Transactions</h5>
+                                        <h5 className="title">Wallet History</h5>
                                     </div>
 
                                 </div>
@@ -83,78 +77,54 @@ const WalletHistory = ({ walletAddress }) => {
                                     <thead>
                                         <tr className="tb-tnx-head">
                                             <th className="tb-tnx-id">
-                                                <span className="">User</span>
+                                                <span className="">ID</span>
                                             </th>
                                             <th className="">
-                                                <span>Date</span>
+                                                <span>Attached At</span>
                                             </th>
                                             <th className="">
-                                                <span>Transaction Hash</span>
+                                                <span>Detached At</span>
                                             </th>
                                             <th className="">
-                                                <span className="">From Wallet</span>
+                                                <span className="">User ID</span>
                                             </th>
                                             <th className="">
-                                                <span className="">To Wallet</span>
+                                                <span className="">Wallet ID</span>
                                             </th>
-                                            <th className="">
-                                                <span className="">Gas Fee</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Amount</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Currency</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Orphan Tnx</span>
-                                            </th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {data?.length > 0
                                             ? data?.map((item) => {
                                                 return (
-                                                    <tr key={item.txnHash} className="">
+                                                    <tr key={item.id} className="">
                                                         <td className="tb-tnx font-weight-bold">
-                                                            <span className="text-success">{item.username}</span>
+                                                            <span className="text-success">{item.id}</span>
                                                         </td>
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                <div>{moment(item?.attachedAt).format("DD/MM/YYYY")}</div>
                                                                 <div className="badge badge-secondary font-size-10">
                                                                     {" "}
-                                                                    {moment(item?.createdAt).format("hh:mm A")}
+                                                                    {moment(item?.attachedAt).format("hh:mm A")}
                                                                 </div>
                                                             </span>
                                                         </td>
                                                         <td className="">
-                                                            <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
+                                                            <span className="date">
+                                                                <div>{moment(item?.detachedAt).format("DD/MM/YYYY")}</div>
+                                                                <div className="badge badge-secondary font-size-10">
+                                                                    {" "}
+                                                                    {moment(item?.detachedAt).format("hh:mm A")}
+                                                                </div>
+                                                            </span>
                                                         </td>
                                                         <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
+                                                            <div className="text-truncate font-weight-bolder">{item?.userId}</div>
                                                         </td>
                                                         <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
+                                                            <div className="text-truncate font-weight-bolder">{item?.walletId}</div>
                                                         </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.gasFee}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{(item?.amount / 100).toLocaleString()}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.currencySymbol}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
-                                                        </td>
-
-
-
                                                     </tr>
                                                 );
                                             })
@@ -167,7 +137,7 @@ const WalletHistory = ({ walletAddress }) => {
                                     <PaginationComponent
                                         noDown
                                         itemPerPage={itemPerPage}
-                                        totalItems={walletHistory?.totalCount}
+                                        totalItems={walletHistory?.length}
                                         paginate={paginate}
                                         currentPage={currentPage}
                                     />

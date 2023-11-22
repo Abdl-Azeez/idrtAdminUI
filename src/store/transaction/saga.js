@@ -83,7 +83,6 @@ function* fetchOutgoingTnxHandler({ payload }) {
 
 function* fetchTransactionAddressHandler({ payload }) {
   try {
-    // console.log(payload)
     const response = yield call(GetTransactionAddressService, payload);
     yield put(fetchTransactionAddressSuccessful(response.data));
   } catch (error) {
@@ -93,7 +92,6 @@ function* fetchTransactionAddressHandler({ payload }) {
 
 function* fetchTransactionAddressOutHandler({ payload }) {
   try {
-    // console.log(payload)
     const response = yield call(GetTransactionAddressService, payload);
     yield put(fetchTransactionAddressOutSuccessful(response.data));
   } catch (error) {
@@ -119,9 +117,9 @@ function* fetchUserTransactionsHandler({ payload }) {
   }
 }
 
-function* fetchOrphanHandler() {
+function* fetchOrphanHandler({ payload }) {
   try {
-    const response = yield call(GetOrphanTransactionService);
+    const response = yield call(GetOrphanTransactionService, payload);
     yield put(fetchOrphanSuccessful(response.data));
   } catch (error) {
     console.log(error);

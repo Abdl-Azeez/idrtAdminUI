@@ -4,7 +4,8 @@ import { QueryReallignment } from '../utils/Utils';
 
 export const MerchantService = () => {
     const http = new HttpService();
-    let url = `merchant/${JSON.parse(localStorage.getItem("idrtUsername"))}`;
+    // let url = `merchant/${JSON.parse(localStorage.getItem("idrtUsername"))}`;
+    let url = `merchant`;
 
     return http.getData(url);
 };

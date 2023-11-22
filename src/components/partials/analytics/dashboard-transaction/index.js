@@ -3,7 +3,7 @@ import Transaction from "./Transaction";
 import Fees from "./Fees";
 import TransactionTable from "./TransactionTable";
 import IDRT_TXN from "./Idrt_tnx";
-import { Card } from "reactstrap";
+import { Alert, Card } from "reactstrap";
 import {
     Block,
     Row,
@@ -21,14 +21,6 @@ const TnxAnalytics = ({ timeFrame, date }) => {
     useEffect(() => {
         dispatch(fetchTransaction('dashboardStats'));
     }, [dispatch]);
-
-    useEffect(() => {
-        if (transactionError) {
-            setTimeout(() => {
-                dispatch(errorChecker(transactionError));
-            }, 2000);
-        }
-    }, [transactionError]);
 
     const dateRange = () => {
         if (timeFrame === 'today') {
@@ -105,7 +97,7 @@ const TnxAnalytics = ({ timeFrame, date }) => {
                 if (date.startDate && date.endDate) {
                     return transaction?.filter((transaction) => {
                         const transactionDate = new Date(transaction?.date);
-                        return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
+                        return transactionDate >= new Date(date.startDate) && transactionDate <= new Date(date.endDate);
                     });
                 }
                 // If start date or end date is not set, return all transaction
@@ -122,7 +114,11 @@ const TnxAnalytics = ({ timeFrame, date }) => {
 
     return (
         <React.Fragment>
-
+            {transactionError &&
+                <Alert color="danger">
+                    Transactions API Error: {transactionError}
+                </Alert>
+            }
 
             <Row className="g-gs py-4">
                 <Col md="12" lg="12" xxl="12">

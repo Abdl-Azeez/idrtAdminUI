@@ -20,14 +20,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 const OutgoingWalletTnx = ({ walletAddress }) => {
     const { transactionAddressOut, transactionError } = useSelector((state) => state.Transaction);
-    const [data, setData] = useState(transactionAddressOut?.outgoingTxns || []);
+    const [data, setData] = useState(transactionAddressOut?.data || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
 
     // Changing state value when searching name
     useEffect(() => {
-        dispatch(fetchTransactionAddressError());
         if (walletAddress) {
             dispatch(fetchTransactionAddressOut({
                 walletAddress,
@@ -37,11 +36,15 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
         }
     }, [walletAddress, currentPage]);
 
+    useEffect(() => {
+        dispatch(fetchTransactionAddressError());
+    }, []);
+
 
     // Changing state value when searching name
     useEffect(() => {
-        if (transactionAddressOut?.outgoingTxns) {
-            setData(transactionAddressOut?.outgoingTxns)
+        if (transactionAddressOut?.data) {
+            setData(transactionAddressOut?.data)
         }
     }, [transactionAddressOut]);
 
@@ -50,7 +53,7 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = transactionAddressOut?.outgoingTxns?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = transactionAddressOut?.data?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -63,7 +66,7 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                 <div className="d-flex flex-column">
                     {transactionError &&
                         <Alert color="danger">
-                            {transactionError}
+                            Transaction API Error: {transactionError}
                         </Alert>
                     }
                 </div>
@@ -82,18 +85,16 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                 <table className="table w-100 d-table table-hover table-responsive">
                                     <thead>
                                         <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
+                                            {/* <th className="tb-tnx-id">
                                                 <span className="">User</span>
-                                            </th>
+                                            </th> */}
                                             <th className="">
                                                 <span>Date</span>
                                             </th>
                                             <th className="">
                                                 <span>Transaction Hash</span>
                                             </th>
-                                            <th className="">
-                                                <span className="">From Wallet</span>
-                                            </th>
+
                                             <th className="">
                                                 <span className="">To Wallet</span>
                                             </th>
@@ -119,9 +120,9 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                             ? data?.map((item) => {
                                                 return (
                                                     <tr key={item.txnHash} className="">
-                                                        <td className="tb-tnx font-weight-bold">
+                                                        {/* <td className="tb-tnx font-weight-bold">
                                                             <span className="text-success">{item.username}</span>
-                                                        </td>
+                                                        </td> */}
                                                         <td className="">
                                                             <span className="date">
                                                                 <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
@@ -134,9 +135,7 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                                         <td className="">
                                                             <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
                                                         </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
-                                                        </td>
+
                                                         <td className="">
                                                             <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
                                                         </td>
@@ -167,7 +166,7 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                     <PaginationComponent
                                         noDown
                                         itemPerPage={itemPerPage}
-                                        totalItems={transactionAddressOut?.totalCount}
+                                        totalItems={transactionAddressOut?.totalItems}
                                         paginate={paginate}
                                         currentPage={currentPage}
                                     />

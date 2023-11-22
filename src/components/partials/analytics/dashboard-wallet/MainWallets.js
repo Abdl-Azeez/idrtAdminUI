@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem } from "reactstrap";
+import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem, Alert } from "reactstrap";
 import { DataTableRow, DataTableItem } from "../../../Component";
 import { loadMerchant, fetchWalletBalance, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,16 +19,16 @@ const MainWallets = () => {
     }, [dispatch]);
 
 
-    const merchantWallet = merchants?.configs?.find((merchants) => {
+    const merchantWallet = merchants && merchants[0]?.configs?.find((merchants) => {
         return merchants.key === 'merchantWallet'
     })
 
-    const commissionWallet = merchants?.configs?.find((merchants) => {
+    const commissionWallet = merchants && merchants[0]?.configs?.find((merchants) => {
         return merchants.key === 'commissionWallet'
     })
 
 
-    const bnbWallet = merchants?.configs?.find((merchants) => {
+    const bnbWallet = merchants && merchants[0]?.configs?.find((merchants) => {
         return merchants.key === 'bnbWallet'
     })
 
@@ -59,17 +59,15 @@ const MainWallets = () => {
         }
     }, [bnbWallet, commissionWallet, dispatch, merchantWallet]);
 
-    useEffect(() => {
-        if (merchantsError) {
-            setTimeout(() => {
-                dispatch(errorChecker(merchantsError));
-            }, 2000);
-        }
-    }, [merchantsError]);
 
 
     return (
         <React.Fragment>
+            {merchantsError &&
+                <Alert color="danger">
+                    Merchant Address API Error: {merchantsError}
+                </Alert>
+            }
             <div className="nk-tb-list is-loose traffic-channel-table">
 
 

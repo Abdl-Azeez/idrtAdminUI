@@ -89,7 +89,7 @@ const Wallet = (state = initialState, action) => {
         ...state,
         wallet: null,
         walletBalance: null,
-        walletHistory: null,
+        // walletHistory: null,
         loading: false,
         message: null,
         walletError: action.payload,

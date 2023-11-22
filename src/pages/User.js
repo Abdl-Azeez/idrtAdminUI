@@ -16,14 +16,16 @@ import moment from "moment";
 import { Alert, Button, Card } from "reactstrap";
 import { fetchUserTransactionsError, fetchUserTransactions, fetchWalletHistory } from "../store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import WalletHistory from "../components/partials/table-partials/Wallet/WalletHistory";
 
 const User = () => {
     const [searchText, setSearchText] = useState("");
-    const { userTransaction, walletHistory, userTransactionError, walletError } = useSelector((state) => state.Transaction);
+    const { userTransaction, userTransactionError } = useSelector((state) => state.Transaction);
+    const { walletBalance, walletError } = useSelector((state) => state.Wallet);
     const [userID, setUserID] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [data, setData] = useState(userTransaction?.incomingTxns);
+    const [data, setData] = useState(userTransaction?.data);
 
     const dispatch = useDispatch();
 
@@ -39,19 +41,21 @@ const User = () => {
 
     // Changing state value when searching name
     useEffect(() => {
-        dispatch(fetchUserTransactionsError());
         if (userID) {
             dispatch(fetchUserTransactions(userID));
-            // dispatch(fetchWalletHistory(userID));
         }
     }, [userID]);
+
+    useEffect(() => {
+        dispatch(fetchUserTransactionsError());
+    }, []);
 
 
     // Changing state value when searching name
     useEffect(() => {
-        if (userTransaction?.incomingTxns) {
+        if (userTransaction?.data) {
 
-            setData(userTransaction?.incomingTxns)
+            setData(userTransaction?.data)
         }
 
     }, [userTransaction]);
@@ -61,7 +65,7 @@ const User = () => {
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    let currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+    let currentItems = userTransaction?.data?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -102,15 +106,15 @@ const User = () => {
                 </BlockHead>
 
                 <Block >
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column mb-3">
                         {userTransactionError &&
                             <Alert color="danger">
-                                {userTransactionError}
+                                User Transaction API Error:  {userTransactionError}
                             </Alert>
                         }
                         {walletError &&
                             <Alert color="danger">
-                                {walletError}
+                                Wallet API Error: {walletError}
                             </Alert>
                         }
                     </div>
@@ -217,11 +221,11 @@ const User = () => {
                                     </table>
                                 </div>
                                 <div className="card-inner">
-                                    {currentItems?.length > 0 ? (
+                                    {data?.length > 0 ? (
                                         <PaginationComponent
                                             noDown
                                             itemPerPage={itemPerPage}
-                                            totalItems={data?.length}
+                                            totalItems={userTransaction?.totalItems}
                                             paginate={paginate}
                                             currentPage={currentPage}
                                         />
@@ -235,16 +239,9 @@ const User = () => {
                         </Card>
                     }
 
-                    {/* {walletHistory &&
-                        <PreviewCard>
-                            <ReactDataTable
-                                data={walletHistory}
-                                columns={dataTableColumns2}
-                                pagination
-                                className="nk-tb-list"
-                            />
-                        </PreviewCard>
-                    } */}
+                    <div className="mt-5">
+                        <WalletHistory Id={userID} type={'user'} />
+                    </div>
                 </Block>
             </Content>
         </React.Fragment>

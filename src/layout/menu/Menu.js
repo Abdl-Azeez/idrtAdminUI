@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import menu from "./OptionData";
 import { NavLink, Link } from "react-router-dom";
-import Icon from "../../components/icon/Icon";
+// import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
 
 const MenuHeading = ({ heading }) => {
@@ -151,7 +151,7 @@ const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, mobileView, 
         >
           {icon ? (
             <span className="nk-menu-icon">
-              <Icon name={icon} />
+              {/* <Icon name={icon} /> */}
             </span>
           ) : null}
           <span className="nk-menu-text">{text}</span>
@@ -164,7 +164,7 @@ const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, mobileView, 
         >
           {icon ? (
             <span className="nk-menu-icon">
-              <Icon name={icon} />
+              {/* <Icon name={icon} /> */}
             </span>
           ) : null}
           <span className="nk-menu-text">{text}</span>
@@ -195,7 +195,7 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
         >
           {icon ? (
             <span className="nk-menu-icon">
-              <Icon name={icon} />
+              {/* <Icon name={icon} /> */}
             </span>
           ) : null}
           <span className="nk-menu-text">{text}</span>
@@ -220,7 +220,7 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
         <li className={menuItemClass}>
           <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
             <span className="nk-menu-icon">
-              <Icon name="dashlite-alt" />
+              {/* <Icon name="dashlite-alt" /> */}
             </span>
             <span className="nk-menu-text">Main Dashboard</span>
           </Link>
@@ -228,7 +228,7 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
         <li className={menuItemClass}>
           <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
             <span className="nk-menu-icon">
-              <Icon name="layers-fill" />
+              {/* <Icon name="layers-fill" /> */}
             </span>
             <span className="nk-menu-text">All Components</span>
           </Link>

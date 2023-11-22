@@ -169,92 +169,15 @@ const Homepage = () => {
         {/* Transaction Analytics And Charts */}
         <TnxAnalytics timeFrame={timeFrame} date={date} />
 
+        {/* ORPHAN TRANSACTIONS */}
+        <OrphanTnx />
 
-        {/* <Row className="g-gs py-4">
-          <Col lg="6" xxl="6">
-            <BlockHead size="sm" className="d-flex justify-content-between">
-              <div className="nk-block-between">
-                <BlockHeadContent>
-                  <BlockTitle page tag="h3">
-                    TOP 5 WALLETS
-                  </BlockTitle>
-                </BlockHeadContent>
-              </div>
-            </BlockHead>
-            <Block>
-
-              <Card className="h-100">
-                <Wallets />
-              </Card>
-
-
-            </Block>
-          </Col>
-
-        </Row> */}
-        <BlockHead size="sm" className="d-flex justify-content-between pb-2 pt-5">
-          <div className="nk-block-between">
-            <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                ORPHAN TRANSACTIONS
-              </BlockTitle>
-            </BlockHeadContent>
-          </div>
-        </BlockHead>
-        <Block>
-          <Row className="g-gs">
-            <Col lg="12" xxl="12">
-              <Card className="h-100">
-                <OrphanTnx />
-              </Card>
-
-            </Col>
-          </Row>
-
-        </Block>
+        {/* LATEST INCOMING TRANSACTIONS */}
         <LatestTrans />
 
 
 
 
-        {/* <Col xxl="12">
-          <div className="d-flex pt-5" style={{ gap: '5px' }}>
-            <Col>
-              <BlockHead size="sm" className="d-flex justify-content-between">
-                <div className="nk-block-between">
-                  <BlockHeadContent>
-                    <BlockTitle page tag="h3">
-                      Users
-                    </BlockTitle>
-                  </BlockHeadContent>
-                </div>
-              </BlockHead>
-              <Block>
-                <Card className="h-100">
-                  <Users />
-                  <Button size="sm" className="btn-light font-size-10 text-center"><span>VIEW ALL</span></Button>
-                </Card>
-              </Block>
-            </Col>
-            <Col>
-              <BlockHead size="sm" className="d-flex justify-content-between">
-                <div className="nk-block-between">
-                  <BlockHeadContent>
-                    <BlockTitle page tag="h3">
-                      User Address
-                    </BlockTitle>
-                  </BlockHeadContent>
-                </div>
-              </BlockHead>
-              <Block>
-                <Card className="h-100">
-                  <UserAddress />
-                  <Button size="sm" className="btn-light font-size-10 text-center"><span>VIEW ALL</span></Button>
-                </Card>
-              </Block>
-            </Col>
-          </div>
-        </Col> */}
         <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
           <ModalHeader toggle={() => setShowModal(false)}>
             Date Filter

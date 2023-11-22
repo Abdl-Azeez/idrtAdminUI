@@ -6,30 +6,22 @@ import {
   BlockHeadContent,
   BlockTitle, DataTableRow, DataTableItem, Row, Col
 } from "../../../Component";
-import { fetchTransactions, errorChecker } from "../../../../store/actions";
+import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const LatestTrans = () => {
-  const { transactions, transactionError } = useSelector((state) => state.Transaction);
+  const { incomingTnx, transactionError } = useSelector((state) => state.Transaction);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTransactions());
+    dispatch(fetchIncomingTnx({ page: 1, perPage: 5 }));
   }, [dispatch]);
-
-  useEffect(() => {
-    if (transactionError) {
-      setTimeout(() => {
-        dispatch(errorChecker(transactionError));
-      }, 2000);
-    }
-  }, [transactionError]);
 
   return (
     <React.Fragment>
-      {transactions?.incomingTxns?.length > 0 &&
+      {incomingTnx?.data?.length > 0 &&
         <>
           <BlockHead size="sm" className="d-flex justify-content-between pt-5">
             <div className="nk-block-between">
@@ -45,15 +37,15 @@ const LatestTrans = () => {
               <Col lg="12" xxl="12">
                 <Card className="h-100">
                   <div className="nk-tb-list is-loose traffic-channel-table">
-                    {transactions && transactions?.incomingTxns?.map((item, i) => {
+                    {incomingTnx && incomingTnx?.data?.map((item, i) => {
                       if (i <= 5) {
                         return (
                           <DataTableItem className="nk-tb-item L" key={item.txnHash} >
                             <DataTableRow className="nk-tb-channel">
                               {/* <span className="tb-lead">{item.channel}</span> */}
                               <div className="d-flex flex-column">
-                                <span className="tb-lead">ID</span>
-                                <span>{item.userId?.substring(0, 7)}</span>
+                                <span className="tb-lead">User</span>
+                                <span>{item.username}</span>
                               </div>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-sessions">
@@ -92,12 +84,12 @@ const LatestTrans = () => {
                                 <span className="font-weight-bolder">{`${item.amount / 100} ${item.currencySymbol}`}</span>
                               </div>
                             </DataTableRow>
-                            {/* <DataTableRow className="nk-tb-prev-sessions">
-                <div className="d-flex flex-column" style={{ gap: '15px' }}>
-                  <span className="tb-lead">Transaction Fee (BNB)</span>
-                  <span className="font-weight-bolder">{item.fee}</span>
-                </div>
-              </DataTableRow> */}
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div className="d-flex flex-column" style={{ gap: '15px' }}>
+                                <span className="tb-lead">Gas Fee</span>
+                                <span className="font-weight-bolder">{item.gasFee}</span>
+                              </div>
+                            </DataTableRow>
                             <DataTableRow className="nk-tb-prev-sessions">
                               <div className="d-flex flex-column" style={{ gap: '15px' }}>
                                 <span className="tb-lead">Orphan Tnx</span>
@@ -110,12 +102,12 @@ const LatestTrans = () => {
                       }
                       return null
                     })}
-                    <Link to='/transactions'>
-                      <Button size="sm" color="" className="btn-light font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
-                    </Link>
+
                   </div>
                 </Card>
-
+                <Link to='/transactions'>
+                  <Button size="sm" color="" className="btn-light font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
+                </Link>
               </Col>
             </Row>
 

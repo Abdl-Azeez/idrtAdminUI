@@ -26,7 +26,7 @@ const Merchant = (state = initialState, action) => {
     case UPDATE_MERCHANT:
       state = {
         ...state,
-        merchants: null,
+        // merchants: null,
         merchantsError: null,
         loading: true,
         message: null,

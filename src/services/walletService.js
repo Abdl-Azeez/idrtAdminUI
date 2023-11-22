@@ -14,9 +14,16 @@ export const WalletBalanceService = (address) => {
     return http.getData(url);
 };
 
-export const WalletHistoryService = (id) => {
+export const WalletHistoryService = (query) => {
     const http = new HttpService();
-    let url = `wallethistory/${id}`;
+    let url
+
+    if (query.type === 'user') {
+        url = `wallet/assignHistoryByUser/${query.Id}`;
+    }
+    else {
+        url = `wallet/assignHistoryByWallet/${query.Id}`;
+    }
     return http.getData(url);
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-    Card,
+    Card, Alert
 } from "reactstrap";
 import {
     BlockBetween,
@@ -8,7 +8,6 @@ import {
     BlockHead,
     BlockHeadContent,
     BlockTitle,
-    Icon,
     Block,
     PaginationComponent,
 } from "../../../Component";
@@ -92,7 +91,7 @@ const IncomingTnx = ({ }) => {
                                 <li>
                                     <div className="form-control-wrap">
                                         <div className="form-icon form-icon-right">
-                                            <Icon name="search"></Icon>
+                                            {/* <Icon name="search"></Icon> */}
                                         </div>
                                         <input
                                             type="text"
@@ -110,6 +109,11 @@ const IncomingTnx = ({ }) => {
                 </BlockHead>
 
                 <Block>
+                    {transactionError &&
+                        <Alert color="danger">
+                            Transaction API Error: {transactionError}
+                        </Alert>
+                    }
                     <Card className="card-bordered card-stretch">
                         <div className="card-inner-group">
                             <div className="card-inner">
@@ -223,8 +227,7 @@ const IncomingTnx = ({ }) => {
                     </Card>
                 </Block>
 
-                {/* clp6mcwfc000bqp0siri5tzoe
-                0x0002 */}
+
             </Content>
         </React.Fragment>
     );

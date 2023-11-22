@@ -3,7 +3,6 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
 import { publicRoutesData } from "./route/Index";
-import { Toast as CustomToast } from "./components/Component";
 import { Spinner } from "reactstrap";
 import { RedirectAs404 } from "./utils/Utils";
 import Layout from "./layout/Index";
@@ -29,7 +28,7 @@ const App = () => {
 
   return (
     <div>
-      <CustomToast type={toastType} message={toastMessage} show={error} />
+      {/* <CustomToast type={toastType} message={toastMessage} show={error} /> */}
       {Auth.isAuthenticated !== null ? (
         <>
           <Switch>

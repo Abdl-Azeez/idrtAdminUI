@@ -54,10 +54,10 @@ export const fetchWalletBalanceError = (error) => {
   };
 };
 
-export const fetchWalletHistory = (id) => {
+export const fetchWalletHistory = (payload) => {
   return {
     type: FETCH_WALLET_HISTORY,
-    payload: id,
+    payload
   };
 };
 

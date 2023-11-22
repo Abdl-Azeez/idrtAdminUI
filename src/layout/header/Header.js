@@ -2,9 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import Toggle from "../sidebar/Toggle";
 import Logo from "../logo/Logo";
-import User from "./dropdown/user/User";
-import Notification from "./dropdown/notification/Notification";
-import HeaderSearch from "../header-search/HeaderSearch";
+// import HeaderSearch from "../header-search/HeaderSearch";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -39,9 +37,7 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
           <div className="nk-header-brand d-xl-none">
             <Logo />
           </div>
-          <div className="nk-header-search ml-3 ml-xl-0">
-            <HeaderSearch />
-          </div>
+
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
 

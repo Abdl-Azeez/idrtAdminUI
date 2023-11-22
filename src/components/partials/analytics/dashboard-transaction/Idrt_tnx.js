@@ -1,8 +1,5 @@
 import React from "react";
-import { Icon, TooltipComponent } from "../../../Component.js";
 import { IDRTLineChart, TransactionLineChart } from "../../charts/analytics/AnalyticsCharts.js";
-import { DefaultSalesStatistics } from "../../charts/default/DefaultCharts.js";
-import { LineChart } from "../../charts/default/Charts.js";
 import { formatNumber } from "../../../../utils/Utils.js";
 import moment from "moment";
 
@@ -100,13 +97,13 @@ const IDRT_TXN = ({ dateRange, data }) => {
           <p>IDRT Net for {dateRange()}.</p>
         </div>
         <div className="card-tools">
-          <TooltipComponent
+          {/* <TooltipComponent
             iconClass="card-hint"
             icon="help"
             direction="left"
             id="Tooltip-users"
             text="Users of this month"
-          ></TooltipComponent>
+          ></TooltipComponent> */}
         </div>
       </div>
       <div className="analytic-au">

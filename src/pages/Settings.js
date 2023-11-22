@@ -12,42 +12,54 @@ import {
 } from "../components/Component";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
-import { fetchMerchant, updateMerchant, errorChecker, fetchMerchantError } from "../store/actions";
+import { fetchMerchant, updateMerchant, errorChecker, fetchMerchantError, loadMerchant } from "../store/actions";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
 const Settings = () => {
+    const { merchants, merchantsError, message } = useSelector((state) => state.Merchant);
     const [searchText, setSearchText] = useState("");
-    const [userName, setUserName] = useState(null);
+    const [userName, setUserName] = useState('');
     const [updatedFields, setUpdatedFields] = useState({});
     const [data, setData] = useState(null);
-    const { merchant, merchantError, message } = useSelector((state) => state.Merchant);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // if (userName) {
+        //     dispatch(fetchMerchant(userName));
+        // }
+        dispatch(loadMerchant());
+    }, [dispatch]);
+
+    useEffect(() => {
         dispatch(fetchMerchantError())
-        if (userName) {
-            dispatch(fetchMerchant(userName));
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        if (merchants) {
+            setUserName(merchants[0]?.name);
         }
-    }, [userName, dispatch]);
+    }, [merchants]);
 
     useEffect(() => {
 
         if (message) {
             setTimeout(() => {
-                dispatch(fetchMerchant(userName));
+                // dispatch(fetchMerchant(userName));
+                dispatch(loadMerchant());
             }, 2000);
         }
     }, [message]);
 
     useEffect(() => {
-        if (merchantError) {
+        if (merchantsError) {
             setTimeout(() => {
-                dispatch(errorChecker(merchantError));
+                dispatch(errorChecker(merchantsError));
             }, 2000);
         }
-    }, [merchantError]);
+    }, [merchantsError]);
 
     // onChange function for searching name
     const onSearchChange = (e) => {
@@ -68,6 +80,7 @@ const Settings = () => {
         }
     };
 
+    console.log(userName)
     // TODO: SEND ONLY THE UPDATED FIELD
     return (
         <React.Fragment>
@@ -75,9 +88,9 @@ const Settings = () => {
             <Content>
                 <Col md={7}>
                     <BlockHead size="sm" width="sm">
-                        {merchantError &&
+                        {merchantsError &&
                             <Alert color="danger">
-                                {merchantError}
+                                {merchantsError}
                             </Alert>
                         }
 
@@ -92,7 +105,7 @@ const Settings = () => {
                                 <BlockTitle page>Settings</BlockTitle>
                             </BlockHeadContent>
                             <BlockHeadContent>
-                                <ul className="nk-block-tools g-3">
+                                {/* <ul className="nk-block-tools g-3">
                                     <li>
                                         <div className="form-control-wrap d-flex align-items-center">
 
@@ -109,19 +122,43 @@ const Settings = () => {
                                             </Button>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> */}
                             </BlockHeadContent>
                         </BlockBetween>
                     </BlockHead>
                 </Col>
 
                 <Block className="pt-3">
-                    {merchant && (
+                    {merchants && (
                         <Col md={7}>
                             <PreviewAltCard>
                                 <form className="gy-3 form-settings" onSubmit={handleSubmit(onFormSubmit)}>
-                                    {merchant.configs &&
-                                        merchant.configs.map((config) => (
+                                    <Row className="g-3 align-center">
+                                        <Col lg="5">
+                                            <FormGroup>
+                                                <label className="form-label" htmlFor={userName}>
+                                                    Name
+                                                </label>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col lg="7">
+                                            <FormGroup>
+                                                <div className={`form-control-wrap `}>
+                                                    <input
+                                                        type="text"
+                                                        name={'userName'}
+                                                        className={`form-control`}
+                                                        id={'UserName'}
+                                                        value={merchants[0]?.name}
+                                                        readOnly
+                                                    />
+
+                                                </div>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    {merchants[0]?.configs &&
+                                        merchants[0]?.configs.map((config) => (
                                             <div className="g-3" key={config.id}>
                                                 <Row className="g-3 align-center">
                                                     <Col lg="5">
@@ -142,7 +179,7 @@ const Settings = () => {
                                                                     {...register(config.key)}
                                                                     defaultValue={config.value || ''}
                                                                     onChange={(e) => {
-                                                                        const updatedConfigs = merchant.configs.map((c) =>
+                                                                        const updatedConfigs = merchants[0]?.configs.map((c) =>
                                                                             c.key === config.key ? { ...c, value: e.target.value } : c
                                                                         );
                                                                         setData(updatedConfigs);

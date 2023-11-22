@@ -1,8 +1,6 @@
 import React from "react";
-import { TimeOnSiteData, NewUsersData, PageviewsData, BounceRateData } from "../../charts/analytics/AnalyticsData";
 import { TransactionLineChart, WPCharts } from "../../charts/analytics/AnalyticsCharts";
-import { StoreVisitorsChart } from "../../charts/e-commerce/EcomCharts";
-import { Icon, PreviewAltCard, TooltipComponent } from "../../../Component";
+import { PreviewAltCard } from "../../../Component";
 import { Col, Row } from "reactstrap";
 import moment from "moment";
 
@@ -101,13 +99,13 @@ const Fees = ({ dateRange, data }) => {
                 <p>The fees for {dateRange()}.</p>
               </div>
               <div className="card-tools">
-                <TooltipComponent
+                {/* <TooltipComponent
                   iconClass="card-hint"
                   icon="help"
                   direction="left"
                   id="tooltip-perfomance"
                   text="Performance of this month"
-                ></TooltipComponent>
+                ></TooltipComponent> */}
               </div>
             </div>
             <div className="analytic-wp">
@@ -145,13 +143,13 @@ const Fees = ({ dateRange, data }) => {
                 <h6 className="title">Commission Fees (IDRT)</h6>
               </div>
               <div className="card-tools">
-                <TooltipComponent
+                {/* <TooltipComponent
                   iconClass="card-hint"
                   icon="help"
                   direction="left"
                   id="tooltip-perfomance"
                   text="Performance of this month"
-                ></TooltipComponent>
+                ></TooltipComponent> */}
               </div>
             </div>
             <div className="analytic-wp">

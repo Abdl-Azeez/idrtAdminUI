@@ -3,13 +3,6 @@ import Content from "../../../../layout/content/Content.js";
 import Head from "../../../../layout/head/Head.js";
 import {
     Block,
-    BlockBetween,
-    BlockDes,
-    BlockHead,
-    BlockHeadContent,
-    BlockTitle,
-    Icon,
-    Col,
     PaginationComponent,
 } from "../../../Component.js";
 import moment from "moment";
@@ -21,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 const IncomingWalletTnx = ({ walletAddress }) => {
     const { transactionAddress, transactionError } = useSelector((state) => state.Transaction);
     const { walletBalance, walletError } = useSelector((state) => state.Wallet);
-    const [data, setData] = useState(transactionAddress?.incomingTxns || []);
+    const [data, setData] = useState(transactionAddress?.data || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
@@ -30,7 +23,6 @@ const IncomingWalletTnx = ({ walletAddress }) => {
 
     // Changing state value when searching name
     useEffect(() => {
-        dispatch(fetchTransactionAddressError());
         if (walletAddress) {
             dispatch(fetchTransactionAddress({
                 walletAddress,
@@ -41,11 +33,15 @@ const IncomingWalletTnx = ({ walletAddress }) => {
         }
     }, [walletAddress, currentPage]);
 
+    useEffect(() => {
+        dispatch(fetchTransactionAddressError());
+    }, []);
+
 
     // Changing state value when searching name
     useEffect(() => {
-        if (transactionAddress?.incomingTxns) {
-            setData(transactionAddress?.incomingTxns)
+        if (transactionAddress?.data) {
+            setData(transactionAddress?.data)
         }
     }, [transactionAddress]);
 
@@ -54,7 +50,7 @@ const IncomingWalletTnx = ({ walletAddress }) => {
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = transactionAddress?.incomingTxns?.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = transactionAddress?.data?.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change Page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -66,15 +62,15 @@ const IncomingWalletTnx = ({ walletAddress }) => {
 
 
             <Block>
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column mb-3">
                     {transactionError &&
                         <Alert color="danger">
-                            {transactionError}
+                            Transaction API Error: {transactionError}
                         </Alert>
                     }
                     {walletError &&
                         <Alert color="danger">
-                            {walletError}
+                            Wallet API Error: {walletError}
                         </Alert>
                     }
                 </div>
@@ -181,7 +177,7 @@ const IncomingWalletTnx = ({ walletAddress }) => {
                                     <PaginationComponent
                                         noDown
                                         itemPerPage={itemPerPage}
-                                        totalItems={transactionAddress?.totalCount}
+                                        totalItems={transactionAddress?.totalItems}
                                         paginate={paginate}
                                         currentPage={currentPage}
                                     />

@@ -8,7 +8,6 @@ import {
     BlockHead,
     BlockHeadContent,
     BlockTitle,
-    Icon,
     Block,
     PaginationComponent,
 } from "../../../Component";
@@ -92,7 +91,7 @@ const OutgoingTnx = ({ }) => {
                                 <li>
                                     <div className="form-control-wrap">
                                         <div className="form-icon form-icon-right">
-                                            <Icon name="search"></Icon>
+                                            {/* <Icon name="search"></Icon> */}
                                         </div>
                                         <input
                                             type="text"
@@ -110,6 +109,7 @@ const OutgoingTnx = ({ }) => {
                 </BlockHead>
 
                 <Block>
+
                     <Card className="card-bordered card-stretch">
                         <div className="card-inner-group">
                             <div className="card-inner">
@@ -124,9 +124,9 @@ const OutgoingTnx = ({ }) => {
                                 <table className="table w-100 d-table table-hover table-responsive">
                                     <thead>
                                         <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
+                                            {/* <th className="tb-tnx-id">
                                                 <span className="">User</span>
-                                            </th>
+                                            </th> */}
                                             <th className="">
                                                 <span>Date</span>
                                             </th>
@@ -161,9 +161,9 @@ const OutgoingTnx = ({ }) => {
                                             ? data?.map((item) => {
                                                 return (
                                                     <tr key={item.txnHash} className="">
-                                                        <td className="tb-tnx font-weight-bold">
+                                                        {/* <td className="tb-tnx font-weight-bold">
                                                             <span className="text-success">{item.username}</span>
-                                                        </td>
+                                                        </td> */}
                                                         <td className="">
                                                             <span className="date">
                                                                 <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>

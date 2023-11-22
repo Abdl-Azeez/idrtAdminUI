@@ -13,7 +13,7 @@ import Settings from "../pages/Settings";
 
 const Pages = () => {
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   });
 
   return (
