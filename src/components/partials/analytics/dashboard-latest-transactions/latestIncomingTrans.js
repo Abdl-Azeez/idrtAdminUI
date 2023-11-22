@@ -6,22 +6,22 @@ import {
   BlockHeadContent,
   BlockTitle, DataTableRow, DataTableItem, Row, Col
 } from "../../../Component";
-import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
+import { fetchTransactions, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const LatestTrans = () => {
-  const { incomingTnx, transactionError } = useSelector((state) => state.Transaction);
+const LatestIncomingTrans = () => {
+  const { transactions, transactionError } = useSelector((state) => state.Transaction);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchIncomingTnx({ page: 1, perPage: 5 }));
+    dispatch(fetchTransactions({ limit: 5 }));
   }, [dispatch]);
 
   return (
     <React.Fragment>
-      {incomingTnx?.data?.length > 0 &&
+      {transactions?.latestIncomingTransactions?.length > 0 &&
         <>
           <BlockHead size="sm" className="d-flex justify-content-between pt-5">
             <div className="nk-block-between">
@@ -37,7 +37,7 @@ const LatestTrans = () => {
               <Col lg="12" xxl="12">
                 <Card className="h-100">
                   <div className="nk-tb-list is-loose traffic-channel-table">
-                    {incomingTnx && incomingTnx?.data?.map((item, i) => {
+                    {transactions && transactions?.latestIncomingTransactions?.map((item, i) => {
                       if (i <= 5) {
                         return (
                           <DataTableItem className="nk-tb-item L" key={item.txnHash} >
@@ -116,4 +116,4 @@ const LatestTrans = () => {
     </React.Fragment>
   );
 };
-export default LatestTrans;
+export default LatestIncomingTrans;

@@ -2,9 +2,9 @@ import HttpService from "./HttpService";
 import { QueryReallignment } from '../utils/Utils';
 
 
-export const GetTransactionsService = () => {
+export const GetTransactionsService = (query) => {
     const http = new HttpService();
-    let url = `transactions/allTransactions`;
+    let url = `transactions/latestTransactions?limit=${query.limit}`;
     return http.getData(url);
 };
 

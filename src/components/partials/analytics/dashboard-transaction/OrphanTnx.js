@@ -43,51 +43,77 @@ const OrphanTnx = () => {
                                 <Card className="h-100">
                                     {orphanTnx?.data?.length > 0 ?
                                         <div className="nk-tb-list is-loose traffic-channel-table">
-                                            <DataTableHead className="text-center">
-                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">ID</DataTableRow>
+                                            <DataTableHead className="">
+                                                {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">ID</DataTableRow> */}
                                                 <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Date</DataTableRow>
-                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From</DataTableRow>
-                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To</DataTableRow>
-                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount IDRT</DataTableRow>
-                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Transaction Hash</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From Wallet</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To Wallet</DataTableRow>
+
+
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Currency</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Gas Fee</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Commission</DataTableRow>
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Orphan Tnx</DataTableRow>
+
+
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Callback Status</DataTableRow>
+                                                {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow> */}
                                             </DataTableHead>
                                             {orphanTnx?.data?.map((item, i) => {
                                                 if (i <= 5) {
                                                     return (
                                                         <DataTableItem className="nk-tb-item L" key={item.txnHash}>
-                                                            <DataTableRow className="nk-tb-channel">
-                                                                {/* <span className="tb-lead">{item.channel}</span> */}
+                                                            {/* <DataTableRow className="nk-tb-channel">
                                                                 <div>{item.id}</div>
-                                                            </DataTableRow>
+                                                            </DataTableRow> */}
                                                             <DataTableRow className="nk-tb-sessions">
                                                                 <div>
                                                                     {" "}
                                                                     <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="badge badge-soft-secondary font-size-10">
+                                                                    <div className="badge badge-secondary font-size-10">
                                                                         {" "}
                                                                         {moment(item?.createdAt).format("hh:mm A")}
                                                                     </div>
                                                                 </div>
                                                             </DataTableRow>
                                                             <DataTableRow className="nk-tb-prev-sessions">
-                                                                <div>{item.fromAddress}</div>
+                                                                <div className="text-truncate" style={{ maxWidth: '150px' }}>{item.txnHash}</div>
                                                             </DataTableRow>
                                                             <DataTableRow className="nk-tb-prev-sessions">
-                                                                <div>{item.walletId} </div>
+                                                                <div className="text-truncate" style={{ maxWidth: '150px' }} >{item.fromAddress}</div>
+                                                            </DataTableRow>
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div className="text-truncate" style={{ maxWidth: '150px' }}>{item.walletId} </div>
                                                             </DataTableRow>
                                                             <DataTableRow className="nk-tb-prev-sessions">
                                                                 <div>{`${item.amount / 100}`}</div>
                                                             </DataTableRow>
-
-                                                            <DataTableRow className="nk-tb-sessions">
-                                                                <div className="d-flex justify-content-center">
-                                                                    <input type="text" style={{ borderRight: "none" }} />
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div>{item.currencySymbol} </div>
+                                                            </DataTableRow>
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div>{item.gasFee} </div>
+                                                            </DataTableRow>
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div>{item.commission / 100} </div>
+                                                            </DataTableRow>
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div>{item.isOrphanTxn ? 'Yes' : 'No'} </div>
+                                                            </DataTableRow>
+                                                            <DataTableRow className="nk-tb-prev-sessions">
+                                                                <div>{item.callbackStatus} </div>
+                                                            </DataTableRow>
+                                                            {/* <DataTableRow className="nk-tb-sessions">
+                                                                <div className="d-flex justify-content-center" style={{ width: '150px' }}>
+                                                                    <input type="text" style={{ borderRight: "none", width: '100px' }} />
 
                                                                     <Button size="sm" color="danger" style={{ right: "10px" }}>
                                                                         Submit
                                                                     </Button>
                                                                 </div>
-                                                            </DataTableRow>
+                                                            </DataTableRow> */}
                                                         </DataTableItem>
                                                     );
                                                 }

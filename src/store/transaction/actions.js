@@ -39,7 +39,7 @@ import {
 export const fetchTransactions = (payload) => {
   return {
     type: FETCH_TRANSACTIONS,
-    payload: { payload },
+    payload: payload,
   };
 };
 

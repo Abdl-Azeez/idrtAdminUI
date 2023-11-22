@@ -55,13 +55,23 @@ export const DashboardAnalytics = () => {
 
 
     let activeWallets = 0;
+    let lockedWallets = 0;
     if (wallet) {
         wallet?.forEach((wallet) => {
             if (wallet.lastAssignedAt !== null) {
                 activeWallets++;
             }
         })
+
+        wallet?.forEach((wallet) => {
+            if (wallet.isLocked) {
+                lockedWallets++;
+            }
+        })
     }
+
+
+
 
     const totalBalance = wallet?.reduce((sum, wallet) => {
         if (wallet.balances && wallet.balances.balance) {
@@ -69,6 +79,8 @@ export const DashboardAnalytics = () => {
         }
         return sum;
     }, 0);
+
+
 
     return (
         <Block>
@@ -100,7 +112,7 @@ export const DashboardAnalytics = () => {
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Locked:</label>
-                                    <p>{0}</p>
+                                    <p>{wallet ? lockedWallets : 0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">IDRT:</label>

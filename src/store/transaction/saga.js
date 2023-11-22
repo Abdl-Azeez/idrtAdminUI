@@ -51,9 +51,9 @@ import {
   GetUserTransactionService
 } from "../../services/transactionService";
 
-function* fetchTransactionsHandler() {
+function* fetchTransactionsHandler({ payload }) {
   try {
-    const response = yield call(GetTransactionsService);
+    const response = yield call(GetTransactionsService, payload);
     yield put(fetchTransactionsSuccessful(response.data));
   } catch (error) {
     console.log(error);

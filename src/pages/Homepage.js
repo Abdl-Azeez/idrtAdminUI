@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
-import Wallets from "../components/partials/analytics/dashboard-wallet/Wallet";
-import LatestTrans from "../components/partials/analytics/dashboard-latest-transactions/latestTrans";
 import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
 
 import {
@@ -10,17 +8,16 @@ import {
   BlockHead,
   BlockHeadContent,
   BlockTitle,
-  Icon,
   Row,
   Col,
 } from "../components/Component";
 import MainWallets from "../components/partials/analytics/dashboard-wallet/MainWallets";
-import Users from "../components/partials/analytics/dashboard-users/Users";
-import UserAddress from "../components/partials/analytics/dashboard-users/UserAddress";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+
 import OrphanTnx from "../components/partials/analytics/dashboard-transaction/OrphanTnx";
 import { DashboardAnalytics } from "../components/partials/analytics/dashboard-analytics";
 import TnxAnalytics from "../components/partials/analytics/dashboard-transaction";
+import LatestIncomingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestIncomingTrans";
+import LatestOutgoingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestOutgoingTrans";
 
 const Homepage = () => {
   const [timeFrame, setSelectedTimeFrame] = useState("1month");
@@ -173,7 +170,10 @@ const Homepage = () => {
         <OrphanTnx />
 
         {/* LATEST INCOMING TRANSACTIONS */}
-        <LatestTrans />
+        <LatestIncomingTrans />
+
+        {/* LATEST OUTGOING TRANSACTIONS */}
+        <LatestOutgoingTrans />
 
 
 
