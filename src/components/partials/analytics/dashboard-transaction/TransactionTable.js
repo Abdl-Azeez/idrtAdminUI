@@ -83,7 +83,7 @@ const TransactionTable = ({ data }) => {
                         <span>{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</span>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalTnxOut ? (totalTnxOut / 2).toLocaleString() : 0}</span>
+                        <span>{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</span>
                     </DataTableRow>
 
                 </DataTableItem>
