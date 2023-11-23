@@ -23,7 +23,7 @@ const OrphanTnx = () => {
     useEffect(() => {
         dispatch(fetchOrphan({ page: 1, perPage: 5 }));
     }, [dispatch]);
-    console.log(orphanTnx)
+
     return (
         <React.Fragment>
             {orphanTnx &&

@@ -3,15 +3,15 @@ import { DataTableHead, DataTableRow, DataTableItem } from "../../../Component";
 
 const TransactionTable = ({ data }) => {
     const totalTnxIn = data?.reduce((sum, data) => {
-        if (data && data.noOfInTxn) {
-            return sum + Number(data.noOfInTxn);
+        if (data && data.inCount) {
+            return sum + Number(data.inCount);
         }
         return sum;
     }, 0);
 
     const totalTnxOut = data?.reduce((sum, data) => {
-        if (data && data.noOfOutTxn) {
-            return sum + Number(data.noOfOutTxn);
+        if (data && data.outCount) {
+            return sum + Number(data.outCount);
         }
         return sum;
     }, 0);

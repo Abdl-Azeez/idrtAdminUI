@@ -9,11 +9,11 @@ const Fees = ({ dateRange, data }) => {
 
   const sortDate = (data) => {
     if (data?.length > 0) {
-      data?.sort((a, b) => new Date(a.date) - new Date(b.date));
+      data?.sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
       const midIndex = Math.floor(data.length / 2);
-      const earliestDate = data[0].date;
-      const midDate = data[midIndex].date;
-      const latestDate = data[data.length - 1].date;
+      const earliestDate = data[0].transactionDate;
+      const midDate = data[midIndex].transactionDate;
+      const latestDate = data[data.length - 1].transactionDate;
 
       return { earliestDate, midDate, latestDate };
     }
@@ -23,7 +23,7 @@ const Fees = ({ dateRange, data }) => {
     return data?.map(entry => entry.outGasFee / 1000000000000000000);
   }
   const getAllDate = (data) => {
-    return data?.map(entry => moment(entry.date).format('DD MMM, YYYY'));
+    return data?.map(entry => moment(entry.transactionDate).format('DD MMM, YYYY'));
   }
 
 

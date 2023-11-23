@@ -6,7 +6,7 @@ const Footer = () => {
     <div className="nk-footer">
       <div className="container-fluid">
         <div className="nk-footer-wrap">
-          <div className="nk-footer-copyright"> &copy; 2022 IDRT.</div>
+          <div className="nk-footer-copyright"> &copy; {new Date().getFullYear()} IDRT.</div>
           <div className="nk-footer-links">
             <ul className="nav nav-sm">
               <li className="nav-item">

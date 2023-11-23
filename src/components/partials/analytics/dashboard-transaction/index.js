@@ -53,7 +53,7 @@ const TnxAnalytics = ({ timeFrame, date }) => {
         switch (timeFrame) {
             case 'today':
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= startOfDay;
                 });
 
@@ -61,7 +61,7 @@ const TnxAnalytics = ({ timeFrame, date }) => {
                 const sevenDaysAgo = new Date(currentDate);
                 sevenDaysAgo.setDate(currentDate.getDate() - 7);
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= sevenDaysAgo;
                 });
 
@@ -69,13 +69,13 @@ const TnxAnalytics = ({ timeFrame, date }) => {
                 const oneMonthAgo = new Date(currentDate);
                 oneMonthAgo.setMonth(currentDate.getMonth() - 1);
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= oneMonthAgo;
                 });
 
             case 'monthToDate':
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
                 });
 
@@ -83,20 +83,20 @@ const TnxAnalytics = ({ timeFrame, date }) => {
                 const oneYearAgo = new Date(currentDate);
                 oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= oneYearAgo;
                 });
 
             case 'yearToDate':
                 return transaction?.filter((transaction) => {
-                    const transactionDate = new Date(transaction?.date);
+                    const transactionDate = new Date(transaction?.transactionDate);
                     return transactionDate >= new Date(currentDate.getFullYear(), 0, 1);
                 });
 
             case 'customRange':
                 if (date.startDate && date.endDate) {
                     return transaction?.filter((transaction) => {
-                        const transactionDate = new Date(transaction?.date);
+                        const transactionDate = new Date(transaction?.transactionDate);
                         return transactionDate >= new Date(date.startDate) && transactionDate <= new Date(date.endDate);
                     });
                 }
@@ -111,7 +111,7 @@ const TnxAnalytics = ({ timeFrame, date }) => {
 
     const filteredTransactions = filterTransactions();
 
-
+    console.log(filteredTransactions)
     return (
         <React.Fragment>
             {transactionError &&

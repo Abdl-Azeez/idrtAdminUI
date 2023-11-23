@@ -48,7 +48,7 @@ const OutgoingTnx = ({ }) => {
         if (outgoingTnx) {
             if (onSearchText !== "") {
                 const filteredObject = outgoingTnx?.data.filter((item) => {
-                    return item.username.toLowerCase().includes(onSearchText.toLowerCase());
+                    return item.txnHash.toLowerCase().includes(onSearchText.toLowerCase());
                 });
                 setData([...filteredObject]);
             } else {
@@ -97,7 +97,7 @@ const OutgoingTnx = ({ }) => {
                                             type="text"
                                             className="form-control"
                                             id="default-04"
-                                            placeholder="Search by User name"
+                                            placeholder="Search by Tnx Hash"
                                             onChange={(e) => onFilterChange(e)}
                                         />
                                     </div>

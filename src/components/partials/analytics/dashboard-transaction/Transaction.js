@@ -7,26 +7,26 @@ import moment from "moment";
 const Transaction = ({ dateRange, data }) => {
 
   const totalTnxIn = data?.reduce((sum, data) => {
-    if (data && data.noOfInTxn) {
-      return sum + Number(data.noOfInTxn);
+    if (data && data.inCount) {
+      return sum + Number(data.inCount);
     }
     return sum;
   }, 0);
 
   const totalTnxOut = data?.reduce((sum, data) => {
-    if (data && data.noOfOutTxn) {
-      return sum + Number(data.noOfOutTxn);
+    if (data && data.outCount) {
+      return sum + Number(data.outCount);
     }
     return sum;
   }, 0);
 
   const sortDate = (data) => {
     if (data?.length > 0) {
-      data.sort((a, b) => new Date(a?.date) - new Date(b?.date));
+      data.sort((a, b) => new Date(a?.transactionDate) - new Date(b?.transactionDate));
       const midIndex = Math.floor(data.length / 2);
-      const earliestDate = data[0].date;
-      const midDate = data[midIndex].date;
-      const latestDate = data[data.length - 1].date;
+      const earliestDate = data[0].transactionDate;
+      const midDate = data[midIndex].transactionDate;
+      const latestDate = data[data.length - 1].transactionDate;
 
       return { earliestDate, midDate, latestDate };
     }
@@ -34,13 +34,13 @@ const Transaction = ({ dateRange, data }) => {
   }
 
   const getAllNoOfInTxn = (data) => {
-    return data?.map(entry => entry.noOfInTxn);
+    return data?.map(entry => entry.inCount);
   }
   const getAllNoOfOutTxn = (data) => {
-    return data?.map(entry => entry.noOfOutTxn);
+    return data?.map(entry => entry.outCount);
   }
   const getAllDate = (data) => {
-    return data?.map(entry => moment(entry.date).format('DD MMM, YYYY'));
+    return data?.map(entry => moment(entry.transactionDate).format('DD MMM, YYYY'));
   }
 
   let analyticData = {
@@ -88,6 +88,8 @@ const Transaction = ({ dateRange, data }) => {
       },
     ],
   };
+
+  console.log(getAllNoOfInTxn(data))
   return (
     <React.Fragment>
       <div className="card-title-group pb-3 g-2">

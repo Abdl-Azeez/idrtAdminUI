@@ -50,7 +50,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           }}
           href="#first"
         >
-          {/* <Icon name="chevrons-left" /> */}
+          <i className="fa-solid fa-angles-left"></i>
         </PaginationLink>
       </PaginationItem>
       <PaginationItem disabled={currentPage - 1 === 0 ? true : false}>
@@ -62,7 +62,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           }}
           href="#prev"
         >
-          {/* <Icon name="chevron-left" /> */}
+          <i className="fa-solid fa-angle-left"></i>
         </PaginationLink>
       </PaginationItem>
       {paginationItms.map((item) => {
@@ -90,7 +90,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           }}
           href="#next"
         >
-          {/* <Icon name="chevron-right" /> */}
+          <i className="fa-solid fa-angle-right"></i>
         </PaginationLink>
       </PaginationItem>
       <PaginationItem disabled={pageNumbers[pageNumbers.length - 1] === currentPage}>
@@ -102,7 +102,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           }}
           href="#last"
         >
-          {/* <Icon name="chevrons-right" /> */}
+          <i className="fa-solid fa-angles-right"></i>
         </PaginationLink>
       </PaginationItem>
     </Pagination>
