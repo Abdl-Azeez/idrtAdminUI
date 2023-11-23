@@ -17,6 +17,7 @@ const initialState = {
   loading: false,
   walletBalance: null,
   walletHistory: null,
+  walletBalanceError: null,
 };
 
 const Wallet = (state = initialState, action) => {
@@ -35,7 +36,7 @@ const Wallet = (state = initialState, action) => {
     case FETCH_WALLET_HISTORY:
       state = {
         ...state,
-        walletHistory: null,
+        // walletHistory: null,
         walletError: null,
         loading: true,
         message: null,
@@ -83,16 +84,27 @@ const Wallet = (state = initialState, action) => {
       break;
 
     case FETCH_WALLET_HISTORY_ERROR:
-    case FETCH_WALLET_BALANCE_ERROR:
     case FETCH_WALLET_ERROR:
       state = {
         ...state,
         wallet: null,
         walletBalance: null,
-        // walletHistory: null,
+        walletBalanceError: null,
+        walletHistory: null,
         loading: false,
         message: null,
         walletError: action.payload,
+      };
+      break;
+
+    case FETCH_WALLET_BALANCE_ERROR:
+      state = {
+        ...state,
+        wallet: null,
+        walletBalance: null,
+        loading: false,
+        message: null,
+        walletBalanceError: action.payload,
       };
       break;
 

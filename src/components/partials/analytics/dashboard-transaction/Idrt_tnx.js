@@ -18,6 +18,34 @@ const IDRT_TXN = ({ dateRange, data }) => {
     return sum;
   }, 0);
 
+  const calculateStepSize = (data) => {
+    if (!data || data.length === 0) {
+      return null;
+    }
+
+    let maxCount = -Infinity;
+
+    data.forEach((transaction) => {
+      const inAmount = parseInt(transaction.inAmount / 100);
+      const outAmount = parseInt(transaction.outAmount / 100);
+
+      if (inAmount > maxCount) {
+        maxCount = inAmount;
+      }
+
+      if (outAmount > maxCount) {
+        maxCount = outAmount;
+      }
+    });
+
+    // Calculate the step size to have 4 rows on the y-axis
+    const stepSize = Math.ceil(maxCount / 3);
+
+    return stepSize;
+  };
+
+  const stepSize = calculateStepSize(data);
+
   const sortDate = (data) => {
     if (data?.length > 0) {
       data.sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
@@ -93,7 +121,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
     <React.Fragment>
       <div className="card-title-group align-start pb-3 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">IDRT Transfers</h6>
+          <h6 className="title">Transaction Amount (IDRT)</h6>
           <p>IDRT Net for {dateRange()}.</p>
         </div>
         <div className="card-tools">
@@ -131,7 +159,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
           </div>
         </div>
         <div className="analytic-au-ck">
-          {data && <IDRTLineChart data={analyticData} />}
+          {data && <IDRTLineChart data={analyticData} stepSize={stepSize} />}
 
         </div>
         <div className="chart-label-group ml-5">

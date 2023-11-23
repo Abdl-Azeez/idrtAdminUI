@@ -19,13 +19,59 @@ const Fees = ({ dateRange, data }) => {
     }
     return null
   }
+
+  const calculateStepSizeForOutGas = (data) => {
+    if (!data || data.length === 0) {
+      return null;
+    }
+    let maxOutGas = -Infinity;
+    data.forEach((transaction) => {
+      const outGas = parseInt(transaction.outGasFee / 1000000000000000000);
+      if (outGas > maxOutGas) {
+        maxOutGas = outGas;
+      }
+    });
+
+    // Calculate the step size to ensure 4 rows on the y-axis
+    const desiredRowCount = 4;
+    const stepSize = Math.ceil(maxOutGas / (desiredRowCount - 1));
+
+    return stepSize;
+  };
+
+  const outGasStepSize = calculateStepSizeForOutGas(data);
+
+  const calculateStepSizeForCom = (data) => {
+    if (!data || data.length === 0) {
+      return null;
+    }
+
+    let maxOutGas = -Infinity;
+
+    data.forEach((transaction) => {
+      const inCommission = parseInt(transaction.inCommission / 100);
+
+      if (inCommission > maxOutGas) {
+        maxOutGas = inCommission;
+      }
+    });
+
+    // Calculate the step size to ensure 4 rows on the y-axis
+    const desiredRowCount = 4;
+    const stepSize = Math.ceil(maxOutGas / (desiredRowCount - 1));
+
+    return stepSize;
+  };
+
+  const comStepSize = calculateStepSizeForCom(data);
+
+
   const getAllNoOfGasOut = (data) => {
     return data?.map(entry => entry.outGasFee / 1000000000000000000);
   }
   const getAllDate = (data) => {
     return data?.map(entry => moment(entry.transactionDate).format('DD MMM, YYYY'));
   }
-
 
   const getAllNoOfInCom = (data) => {
     return data?.map(entry => entry.inCommission / 100);
@@ -93,10 +139,9 @@ const Fees = ({ dateRange, data }) => {
       <Row>
         <Col md={6}>
           <PreviewAltCard className="h-100">
-            <div className="card-title-group align-start pb-2 g-2">
+            <div className="card-title-group align-start pt-3 pb-2 g-2">
               <div className="card-title card-title-sm">
-                <h6 className="title">Transaction Fees (BNB)</h6>
-                <p>The fees for {dateRange()}.</p>
+                <h6 className="title">Commission (IDRT)</h6>
               </div>
               <div className="card-tools">
                 {/* <TooltipComponent
@@ -106,6 +151,34 @@ const Fees = ({ dateRange, data }) => {
                   id="tooltip-perfomance"
                   text="Performance of this month"
                 ></TooltipComponent> */}
+              </div>
+            </div>
+            <div className="analytic-wp">
+              <div className="analytic-wp-group g-3">
+                <div className="analytic-data analytic-wp-data w-100">
+                  <div className="analytic-wp-graph w-100">
+                    <div className="analytic-wp-ck h-100">
+                      {data &&
+                        <TransactionLineChart data={ComData} stepSize={comStepSize} />}
+                    </div>
+                  </div>
+
+                </div>
+                <div className="chart-label-group ml-5">
+                  <div className="chart-label">{moment(sortDate(data)?.earliestDate).format('DD MMM, YYYY')}</div>
+                  <div className="chart-label d-none d-sm-block">{moment(sortDate(data)?.midDate).format('DD MMM, YYYY')}</div>
+                  <div className="chart-label"> {moment(sortDate(data)?.latestDate).format('DD MMM, YYYY')}</div>
+                </div>
+              </div>
+            </div>
+          </PreviewAltCard>
+        </Col>
+        <Col md={6}>
+          <PreviewAltCard className="h-100">
+            <div className="card-title-group align-start pb-2 g-2">
+              <div className="card-title card-title-sm">
+                <h6 className="title">Transaction Fees (BNB)</h6>
+                <p>The fees for {dateRange()}.</p>
               </div>
             </div>
             <div className="analytic-wp">
@@ -119,48 +192,6 @@ const Fees = ({ dateRange, data }) => {
                     </div>
                   </div>
 
-                  {/* <div className="analytic-wp-text d-none">
-              <div className="amount amount-sm">5,000</div>
-              <div className="change up">
-                <Icon name="arrow-long-up"></Icon>4.5%
-              </div>
-              <div className="subtitle">vs. last month</div>
-            </div> */}
-                </div>
-                <div className="chart-label-group ml-5">
-                  <div className="chart-label">{moment(sortDate(data)?.earliestDate).format('DD MMM, YYYY')}</div>
-                  <div className="chart-label d-none d-sm-block">{moment(sortDate(data)?.midDate).format('DD MMM, YYYY')}</div>
-                  <div className="chart-label"> {moment(sortDate(data)?.latestDate).format('DD MMM, YYYY')}</div>
-                </div>
-              </div>
-            </div>
-          </PreviewAltCard>
-        </Col>
-        <Col md={6}>
-          <PreviewAltCard className="h-100">
-            <div className="card-title-group align-start pt-3 pb-2 g-2">
-              <div className="card-title card-title-sm">
-                <h6 className="title">Commission Fees (IDRT)</h6>
-              </div>
-              <div className="card-tools">
-                {/* <TooltipComponent
-                  iconClass="card-hint"
-                  icon="help"
-                  direction="left"
-                  id="tooltip-perfomance"
-                  text="Performance of this month"
-                ></TooltipComponent> */}
-              </div>
-            </div>
-            <div className="analytic-wp">
-              <div className="analytic-wp-group g-3">
-                <div className="analytic-data analytic-wp-data w-100">
-                  <div className="analytic-wp-graph w-100">
-                    <div className="analytic-wp-ck h-100">
-                      {data &&
-                        <TransactionLineChart data={ComData} stepSize={1000000} />}
-                    </div>
-                  </div>
 
                 </div>
                 <div className="chart-label-group ml-5">
@@ -172,6 +203,7 @@ const Fees = ({ dateRange, data }) => {
             </div>
           </PreviewAltCard>
         </Col>
+
       </Row>
     </React.Fragment>
   );

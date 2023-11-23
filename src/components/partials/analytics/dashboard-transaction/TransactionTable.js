@@ -77,51 +77,50 @@ const TransactionTable = ({ data }) => {
 
                 <DataTableItem className="nk-tb-item" >
                     <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <span>No. of Transactions</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions ">
-                        <span>{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</span>
+                        <div style={{ width: '350px' }}>No. of Transactions</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</span>
+                        <div style={{ width: '300px' }}>{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</div>
+                    </DataTableRow>
+                    <DataTableRow className="nk-tb-sessions">
+                        <div style={{ width: '300px' }}>{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
                 <DataTableItem className="nk-tb-item" >
                     <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <span>IDRT</span>
+                        <div>Transaction Amount (IDRT)</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</span>
+                        <div style={{ width: '300px' }}>{totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</span>
+                        <div style={{ width: '300px' }}>{totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
                 <DataTableItem className="nk-tb-item" >
                     <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <span>Commssion</span>
+                        <div>Commssion (IDRT)</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalCommissionIn ? (totalCommissionIn / 100)?.toLocaleString() : 0}</span>
+                        <div style={{ width: '300px' }}>{totalCommissionIn ? (totalCommissionIn / 100)?.toLocaleString() : 0}</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalCommissionOut ? (totalCommissionOut / 100)?.toLocaleString() : 0}</span>
+                        <div style={{ width: '300px' }}>{totalCommissionOut ? (totalCommissionOut / 100)?.toLocaleString() : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
 
                 <DataTableItem className="nk-tb-item" >
                     <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <span>Transaction Fee</span>
+                        <div>Transaction Fee (BNB)</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalFeeIn ? (totalFeeIn / 1000000000000000000)?.toLocaleString() : 0}</span>
+                        <div style={{ width: '300px' }}>{totalFeeIn ? (totalFeeIn / 1000000000000000000)?.toLocaleString() : 0}</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <span>{totalFeeOut ? ((totalFeeOut / 1000000000000000000)?.toLocaleString()) : 0} BNB</span>
-
+                        <div style={{ width: '300px' }}>{totalFeeOut ? ((totalFeeOut / 1000000000000000000)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>

@@ -36,8 +36,10 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
 
 
     useEffect(() => {
-        dispatch(fetchWalletHistoryError());
-    }, []);
+        if (!Id) {
+            dispatch(fetchWalletHistoryError());
+        }
+    }, [dispatch, Id]);
 
     // Changing state value when searching name
     useEffect(() => {
@@ -103,19 +105,29 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
                                                         </td>
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.attachedAt).format("DD/MM/YYYY")}</div>
-                                                                <div className="badge badge-secondary font-size-10">
+
+                                                                <div className="d-flex">
                                                                     {" "}
-                                                                    {moment(item?.attachedAt).format("hh:mm A")}
+                                                                    <div>{moment(item?.attachedAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
+                                                                        {" "}
+                                                                        {moment(item?.attachedAt).format("HH:mm ")}
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                         </td>
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.detachedAt).format("DD/MM/YYYY")}</div>
-                                                                <div className="badge badge-secondary font-size-10">
+
+                                                                <div className="d-flex">
                                                                     {" "}
-                                                                    {moment(item?.detachedAt).format("hh:mm A")}
+                                                                    <div>{moment(item?.detachedAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
+                                                                        {" "}
+                                                                        {moment(item?.detachedAt).format("HH:mm ")}
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                         </td>

@@ -21,10 +21,8 @@ import {
   DataTableItem,
   DataTableTitle,
 } from "../components/table/DataTable";
-import Sidebar from "./sidebar/Sidebar";
 
 export {
-  Sidebar,
   Button,
   Block,
   BlockContent,

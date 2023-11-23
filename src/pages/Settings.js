@@ -82,6 +82,7 @@ const Settings = () => {
 
     console.log(userName)
     // TODO: SEND ONLY THE UPDATED FIELD
+
     return (
         <React.Fragment>
             <Head title="Settings"></Head>
@@ -102,7 +103,7 @@ const Settings = () => {
 
                         <BlockBetween>
                             <BlockHeadContent>
-                                <BlockTitle page>Settings</BlockTitle>
+                                <BlockTitle tag="h2" className="fw-normal">Settings</BlockTitle>
                             </BlockHeadContent>
                             <BlockHeadContent>
                                 {/* <ul className="nk-block-tools g-3">
@@ -128,7 +129,7 @@ const Settings = () => {
                     </BlockHead>
                 </Col>
 
-                <Block className="pt-3">
+                <Block className="pt-4">
                     {merchants && (
                         <Col md={7}>
                             <PreviewAltCard>

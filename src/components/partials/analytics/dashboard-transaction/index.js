@@ -111,7 +111,6 @@ const TnxAnalytics = ({ timeFrame, date }) => {
 
     const filteredTransactions = filterTransactions();
 
-    console.log(filteredTransactions)
     return (
         <React.Fragment>
             {transactionError &&

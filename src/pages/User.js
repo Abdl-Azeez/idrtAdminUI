@@ -44,20 +44,20 @@ const User = () => {
         if (userID) {
             dispatch(fetchUserTransactions(userID));
         }
-    }, [userID]);
+    }, [dispatch, userID, currentPage]);
 
     useEffect(() => {
-        dispatch(fetchUserTransactionsError());
-    }, []);
+        if (!userID) {
+            dispatch(fetchUserTransactionsError());
+        }
+    }, [dispatch, userID]);
 
 
     // Changing state value when searching name
     useEffect(() => {
         if (userTransaction?.data) {
-
             setData(userTransaction?.data)
         }
-
     }, [userTransaction]);
 
 
@@ -81,32 +81,34 @@ const User = () => {
                                 User
                             </BlockTitle>
                         </BlockHeadContent>
-                        <BlockHeadContent>
-                            <ul className="nk-block-tools g-3">
-                                <li>
-                                    <div className="form-control-wrap d-flex align-items-center">
+                        {/* <BlockHeadContent>
 
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="default-04"
-                                            placeholder="Search User ID"
-                                            style={{ width: '400px' }}
-                                            onChange={(e) => onSearchChange(e)}
-                                        />
-                                        <Button size="sm" color="secondary" style={{ right: '70px' }} onClick={handleSearch}>
-                                            Search
-                                        </Button>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </BlockHeadContent>
+                        </BlockHeadContent> */}
                     </BlockBetween>
                 </BlockHead>
+                <div className="d-flex justify-content-center position-relative" style={{ height: `${userTransaction ? 'auto' : '400px'} `, top: `${userTransaction ? '-70px' : 'auto'} ` }}>
+                    <ul className="nk-block-tools g-3">
+                        <li>
+                            <div className="form-control-wrap d-flex align-items-center">
 
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="default-04"
+                                    placeholder="Search User ID"
+                                    style={{ width: '400px' }}
+                                    onChange={(e) => onSearchChange(e)}
+                                />
+                                <Button size="sm" color="secondary" style={{ right: '70px' }} onClick={handleSearch}>
+                                    Search
+                                </Button>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
                 <Block >
-                    <div className="d-flex flex-column mb-3">
+                    <div className="d-flex flex-column">
                         {userTransactionError &&
                             <Alert color="danger">
                                 User Transaction API Error:  {userTransactionError}
@@ -119,7 +121,7 @@ const User = () => {
                         }
                     </div>
                     {userTransaction &&
-                        <Card className="card-bordered card-stretch">
+                        <Card className="card-bordered card-stretch position-relative" style={{ top: `${userTransaction ? '-25px' : 'auto'} ` }}>
                             <div className="card-inner-group">
                                 <div className="card-inner">
                                     <div className="card-title-group">
@@ -174,14 +176,18 @@ const User = () => {
                                                     return (
                                                         <tr key={item.txnHash} className="">
                                                             <td className="tb-tnx font-weight-bold">
-                                                                <div className="text-success text-truncate" style={{ maxWidth: '100px' }}>{item.userId}</div>
+                                                                <div className="text-success text-truncate" style={{ maxWidth: '100px' }}>{item.username}</div>
                                                             </td>
                                                             <td className="">
                                                                 <span className="date">
-                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="badge badge-secondary font-size-10">
+                                                                    <div className="d-flex">
                                                                         {" "}
-                                                                        {moment(item?.createdAt).format("hh:mm A")}
+                                                                        <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                        <div className="mx-1">-</div>
+                                                                        <div className="">
+                                                                            {" "}
+                                                                            {moment(item?.createdAt).format("HH:mm ")}
+                                                                        </div>
                                                                     </div>
                                                                 </span>
                                                             </td>

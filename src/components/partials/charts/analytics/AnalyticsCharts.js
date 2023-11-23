@@ -164,7 +164,7 @@ export const TransferBarChart = () => {
 };
 
 
-export const IDRTLineChart = ({ data }) => {
+export const IDRTLineChart = ({ data, stepSize = 50 }) => {
   return (
     <Line
       className="analytics-line-large"
@@ -204,7 +204,7 @@ export const IDRTLineChart = ({ data }) => {
                 fontSize: 12,
                 fontColor: "#9eaecf",
                 padding: 8,
-                stepSize: 1000000,
+                stepSize,
               },
               gridLines: {
                 color: "rgba(82, 100, 132, 0.2)",

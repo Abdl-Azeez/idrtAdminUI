@@ -1,6 +1,7 @@
 /* Dashboard */
 .top-cards {
   flex-wrap: nowrap !important;
+  margin-left: -30px;
 }
 .logo-dark {
   width: 150px;
@@ -27,5 +28,5 @@
 }
 
 .updated-field {
-    border: 2px solid #5bc0de; /* Add your desired style for updated fields */
+  border: 2px solid #5bc0de; /* Add your desired style for updated fields */
 }

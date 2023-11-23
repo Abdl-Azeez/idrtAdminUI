@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
     Card, Alert
 } from "reactstrap";
@@ -42,6 +42,11 @@ const IncomingTnx = ({ }) => {
         }
     }, [transactionError]);
 
+    useLayoutEffect(() => {
+        if (currentPage === 1) {
+            window.scrollTo(0, 0);
+        }
+    });
 
     // Changing state value when searching name
     useEffect(() => {
@@ -81,10 +86,10 @@ const IncomingTnx = ({ }) => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle page>Transactions</BlockTitle>
-                            <BlockDes className="text-soft">
+                            <BlockTitle tag="h2" className="fw-normal">Transactions</BlockTitle>
+                            {/* <BlockDes className="text-soft">
                                 <p>You have {incomingTnx?.totalItems} Incoming Transactions.</p>
-                            </BlockDes>
+                            </BlockDes> */}
                         </BlockHeadContent>
                         <BlockHeadContent>
                             <ul className="nk-block-tools g-3">
@@ -170,10 +175,14 @@ const IncomingTnx = ({ }) => {
                                                         </td>
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                <div className="badge badge-secondary font-size-10">
+                                                                <div className="d-flex">
                                                                     {" "}
-                                                                    {moment(item?.createdAt).format("hh:mm A")}
+                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
+                                                                        {" "}
+                                                                        {moment(item?.createdAt).format("HH:mm ")}
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                         </td>

@@ -94,6 +94,9 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                             <th className="">
                                                 <span>Transaction Hash</span>
                                             </th>
+                                            <th className="">
+                                                <span className="">From Wallet</span>
+                                            </th>
 
                                             <th className="">
                                                 <span className="">To Wallet</span>
@@ -125,10 +128,14 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                                         </td> */}
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                <div className="badge badge-secondary font-size-10">
+                                                                <div className="d-flex">
                                                                     {" "}
-                                                                    {moment(item?.createdAt).format("hh:mm A")}
+                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
+                                                                        {" "}
+                                                                        {moment(item?.createdAt).format("HH:mm ")}
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                         </td>
@@ -138,6 +145,9 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
 
                                                         <td className="">
                                                             <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
+                                                        </td>
+                                                        <td className="">
+                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.comx001}</div>
                                                         </td>
                                                         <td className="tb-info">
                                                             <span className="">{item?.gasFee}</span>

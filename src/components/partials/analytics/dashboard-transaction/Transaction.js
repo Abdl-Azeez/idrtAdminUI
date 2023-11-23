@@ -20,6 +20,35 @@ const Transaction = ({ dateRange, data }) => {
     return sum;
   }, 0);
 
+  const calculateStepSize = (data) => {
+    if (!data || data.length === 0) {
+      return null;
+    }
+
+    let maxCount = -Infinity;
+
+    data.forEach((transaction) => {
+      const inCount = parseInt(transaction.inCount);
+      const outCount = parseInt(transaction.outCount);
+
+      if (inCount > maxCount) {
+        maxCount = inCount;
+      }
+
+      if (outCount > maxCount) {
+        maxCount = outCount;
+      }
+    });
+
+    // Calculate the step size to have 4 rows on the y-axis
+    const stepSize = Math.ceil(maxCount / 3);
+
+    return stepSize;
+  };
+
+  const stepSize = calculateStepSize(data);
+
+
   const sortDate = (data) => {
     if (data?.length > 0) {
       data.sort((a, b) => new Date(a?.transactionDate) - new Date(b?.transactionDate));
@@ -89,12 +118,11 @@ const Transaction = ({ dateRange, data }) => {
     ],
   };
 
-  console.log(getAllNoOfInTxn(data))
   return (
     <React.Fragment>
       <div className="card-title-group pb-3 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">Transactions</h6>
+          <h6 className="title">No. of Transactions</h6>
           <p>Total Number of transactions for {dateRange()}</p>
         </div>
 
@@ -126,7 +154,7 @@ const Transaction = ({ dateRange, data }) => {
         </div>
         <div className="analytic-ov-ck">
           {data &&
-            <TransactionLineChart data={analyticData} />}
+            <TransactionLineChart data={analyticData} stepSize={stepSize} />}
         </div>
         <div className="chart-label-group ml-5">
           <div className="chart-label">{moment(sortDate(data)?.earliestDate).format('DD MMM, YYYY')}</div>

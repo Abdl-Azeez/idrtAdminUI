@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { DropdownToggle, DropdownMenu, UncontrolledDropdown, DropdownItem, Alert } from "reactstrap";
-import { DataTableRow, DataTableItem } from "../../../Component";
+import { Card, DropdownMenu, UncontrolledDropdown, DropdownItem, Alert } from "reactstrap";
+import { DataTableRow, DataTableItem, Row, Col, BlockHead, BlockHeadContent, BlockTitle, Block } from "../../../Component";
 import { loadMerchant, fetchWalletBalance, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import { DashboardAnalytics } from "../dashboard-analytics";
 
 
 const MainWallets = () => {
@@ -68,44 +70,75 @@ const MainWallets = () => {
                     Merchant Address API Error: {merchantsError}
                 </Alert>
             }
-            <div className="nk-tb-list is-loose traffic-channel-table">
+            <Row className="g-gs pb-4">
+                <Col lg="12" xxl="12">
+                    <BlockHead size="sm" className="d-flex justify-content-between">
+                        <div className="nk-block-between w-100">
+                            <BlockHeadContent>
+                                <BlockTitle page tag="h3">
+                                    MAIN WALLETS
+                                </BlockTitle>
+                            </BlockHeadContent>
+                            <div className="d-flex pos-rel" style={{ right: '50px' }}>
+                                Last Updated:
+                                <div className="d-flex ml-2" style={{ textWrap: 'nowrap' }}>
+                                    <p className="mr-2 mb-0">{`Date: ${moment().format('L')}`}</p>
+                                    <p className="mb-0">{`Time: ${moment().format('h:mm:ss a')}`}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </BlockHead>
+                    <Row>
+                        <Col lg="8" xxl="8">
+                            {/* <Block> */}
+                            <Card className="h-100 justify-content-center">
 
+                                <div className="nk-tb-list is-loose traffic-channel-table">
+                                    <DataTableItem className="nk-tb-item py-1" >
+                                        <DataTableRow className="nk-tb-channel">
+                                            <span>Merchant Wallet</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions text-info">
+                                            <span>{merchantWallet?.value}</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
+                                            {merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0} IDRT
+                                        </DataTableRow>
+                                    </DataTableItem>
+                                    <DataTableItem className="nk-tb-item py-1" >
+                                        <DataTableRow className="nk-tb-channel">
+                                            <span>Commission Fee Wallet</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions text-info">
+                                            <span>{commissionWallet?.value}</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
+                                            {commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}  IDRT
+                                        </DataTableRow>
+                                    </DataTableItem>
+                                    <DataTableItem className="nk-tb-item py-1" >
+                                        <DataTableRow className="nk-tb-channel">
+                                            <span>BNB Vault Wallet</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions text-info">
+                                            <span>{bnbWallet?.value}</span>
+                                        </DataTableRow>
+                                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
+                                            {bnbWalletResponse ? (bnbWalletResponse[1]?.balance / 1000000000000000000)?.toLocaleString() : 0} BNB
+                                        </DataTableRow>
+                                    </DataTableItem>
 
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel">
-                        <span>Merchant Wallet</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions text-info">
-                        <span>{merchantWallet?.value}</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        {merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0} IDRT
-                    </DataTableRow>
-                </DataTableItem>
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel">
-                        <span>Commission Fee Wallet</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions text-info">
-                        <span>{commissionWallet?.value}</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        {commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}  IDRT
-                    </DataTableRow>
-                </DataTableItem>
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel">
-                        <span>BNB Vault Wallet</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions text-info">
-                        <span>{bnbWallet?.value}</span>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        {bnbWalletResponse ? (bnbWalletResponse[1]?.balance / 1000000000000000000)?.toLocaleString() : 0} BNB
-                    </DataTableRow>
-                </DataTableItem>
+                                </div>
+                            </Card>
+                            {/* </Block> */}
+                        </Col>
+                        <Col lg="4" xxl="4">
+                            <DashboardAnalytics />
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
 
-            </div>
         </React.Fragment>
     );
 };

@@ -70,9 +70,6 @@ export const DashboardAnalytics = () => {
         })
     }
 
-
-
-
     const totalBalance = wallet?.reduce((sum, wallet) => {
         if (wallet.balances && wallet.balances.balance) {
             return sum + Number(wallet.balances.balance);
@@ -89,8 +86,37 @@ export const DashboardAnalytics = () => {
                     Wallet Summary API Error: {walletError}
                 </Alert>
             }
-            <div className="d-flex top-cards justify-content-start">
-                <Col md="4" lg="4" xxl="4" className="p-md-1">
+            <div className="top-cards justify-content-start col-md-12">
+                <Col className="mb-1">
+                    <Card className="p-1 d-flex justify-content-center shadow-none h-100">
+                        <div className="d-flex">
+                            <div className="d-flex align-items-center">
+                                <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px', marginLeft: '0.74rem', marginRight: '0.74rem' }}>Exchange Rate</p>
+
+                            </div>
+                            <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
+                                <div className="d-flex justify-content-between">
+                                    <div>
+                                        <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
+
+                                    <p className="mr-3">
+                                        {bnbRate ? bnbRate?.price : '0'}
+                                    </p>
+
+                                </div>
+                                <div className="d-flex justify-content-between">
+                                    <div>
+                                        <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
+                                    <p className="mr-3">
+                                        {idrtRate ? idrtRate?.price : '0'}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </Col>
+                <Col className="">
                     <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
                         <div className="d-flex">
                             <div className="d-flex align-items-center">
@@ -100,23 +126,23 @@ export const DashboardAnalytics = () => {
                             <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Total:</label>
-                                    <p>{wallet ? wallet?.length : 0}</p>
+                                    <p className="mr-3">{wallet ? wallet?.length : 0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Active:</label>
-                                    <p>{wallet ? activeWallets : 0}</p>
+                                    <p className="mr-3">{wallet ? activeWallets : 0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Inactive:</label>
-                                    <p>{wallet ? wallet?.length - activeWallets : 0}</p>
+                                    <p className="mr-3">{wallet ? wallet?.length - activeWallets : 0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">Locked:</label>
-                                    <p>{wallet ? lockedWallets : 0}</p>
+                                    <p className="mr-3">{wallet ? lockedWallets : 0}</p>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <label className="font-weight-bolder mb-0">IDRT:</label>
-                                    <p>{totalBalance ? (totalBalance / 1000000000000000000)?.toLocaleString() : 0} </p>
+                                    <p className="mr-3">{totalBalance ? (totalBalance / 1000000000000000000)?.toLocaleString() : 0} </p>
                                 </div>
                             </div>
                         </div>
@@ -124,54 +150,6 @@ export const DashboardAnalytics = () => {
                     </Card>
                 </Col>
 
-                <Col md="7" lg="7" xxl="7" className="p-0 d-flex flex-column">
-                    <div className="text-center">-----Last Updated-----</div>
-                    {/* <hr /> */}
-                    <div className="d-flex h-100">
-                        <Col md="6" lg="6" xxl="6" className="p-md-1">
-                            <Card className="p-1 d-flex align-items-center justify-content-center shadow-none h-100 ">
-                                <div className="d-flex flex-column">
-                                    <div className="d-flex" style={{ textWrap: 'nowrap' }}>
-                                        <p className="mr-2 mb-0">[{`Date: ${moment().format('L')}`}</p>
-                                        <p className="mb-0">{`Time: ${moment().format('h:mm:ss a')}`}]</p>
-                                    </div>
-                                    <div>Timezone: {moment().format("Z")} hours UTC</div>
-                                </div>
-                            </Card>
-                        </Col>
-                        <Col md="6" lg="6" xxl="6" className="p-md-1">
-                            <Card className="p-1 d-flex justify-content-center shadow-none h-100">
-                                <div className="d-flex">
-                                    <div className="d-flex align-items-center">
-                                        <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Exchange Rate</p>
-
-                                    </div>
-                                    <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                                        <div className="d-flex justify-content-between">
-                                            <div>
-                                                <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
-
-                                            <p>
-                                                {bnbRate ? bnbRate?.price : '0'}
-                                            </p>
-
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <div>
-                                                <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
-
-
-                                            <p>
-                                                {idrtRate ? idrtRate?.price : '0'}
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </Card>
-                        </Col>
-                    </div>
-                </Col>
 
             </div>
         </Block>

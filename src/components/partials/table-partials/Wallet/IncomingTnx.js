@@ -4,6 +4,11 @@ import Head from "../../../../layout/head/Head.js";
 import {
     Block,
     PaginationComponent,
+    BlockBetween,
+    BlockDes,
+    BlockHead,
+    BlockHeadContent,
+    BlockTitle,
 } from "../../../Component.js";
 import moment from "moment";
 import { Alert, Button, Card } from "reactstrap";
@@ -11,16 +16,26 @@ import { fetchTransactionAddressError, fetchWalletBalance, fetchTransactionAddre
 import { useSelector, useDispatch } from "react-redux";
 
 
-const IncomingWalletTnx = ({ walletAddress }) => {
+const IncomingWalletTnx = ({ updateAddress }) => {
     const { transactionAddress, transactionError } = useSelector((state) => state.Transaction);
-    const { walletBalance, walletError } = useSelector((state) => state.Wallet);
+    const { walletBalance, walletBalanceError } = useSelector((state) => state.Wallet);
     const [data, setData] = useState(transactionAddress?.data || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
+    const [searchText, setSearchText] = useState("");
+    const [walletAddress, setAddress] = useState(null);
     const dispatch = useDispatch();
 
+    const onSearchChange = (e) => {
+        setSearchText(e.target.value);
+    };
 
-
+    const handleSearch = () => {
+        if (searchText !== "") {
+            setAddress(searchText)
+            updateAddress(searchText)
+        }
+    }
     // Changing state value when searching name
     useEffect(() => {
         if (walletAddress) {
@@ -57,7 +72,38 @@ const IncomingWalletTnx = ({ walletAddress }) => {
 
     return (
         <React.Fragment>
-            <Head title="Wallets"></Head>
+            <BlockHead size="sm">
+                <BlockBetween>
+                    <BlockHeadContent>
+                        <BlockTitle tag="h2" className="fw-normal">Wallets</BlockTitle>
+
+                    </BlockHeadContent>
+                    {/* <BlockHeadContent>
+                           
+                        </BlockHeadContent> */}
+                </BlockBetween>
+            </BlockHead>
+            <div className="d-flex justify-content-center position-relative" style={{ height: `${transactionAddress ? 'auto' : '400px'} `, top: `${transactionAddress ? '-70px' : 'auto'} ` }}>
+                <ul className="nk-block-tools g-3">
+                    <li>
+                        <div className="form-control-wrap d-flex align-items-center">
+
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="default-04"
+                                placeholder="Search Wallet Address"
+                                style={{ width: '400px' }}
+                                onChange={(e) => onSearchChange(e)}
+                            />
+                            <Button size="sm" color="secondary" style={{ right: '70px' }} onClick={handleSearch}>
+                                Search
+                            </Button>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
 
 
 
@@ -68,14 +114,14 @@ const IncomingWalletTnx = ({ walletAddress }) => {
                             Transaction API Error: {transactionError}
                         </Alert>
                     }
-                    {walletError &&
+                    {walletBalanceError &&
                         <Alert color="danger">
-                            Wallet API Error: {walletError}
+                            Wallet Balance API Error: {walletBalanceError}
                         </Alert>
                     }
                 </div>
                 {transactionAddress &&
-                    <Card className="card-bordered card-stretch">
+                    <Card className="card-bordered card-stretch position-relative" style={{ top: `${transactionAddress ? '-25px' : 'auto'} ` }}>
                         <div className="card-inner-group">
                             <div className="card-inner">
                                 <div className="card-title-group">
@@ -134,10 +180,16 @@ const IncomingWalletTnx = ({ walletAddress }) => {
                                                         </td>
                                                         <td className="">
                                                             <span className="date">
-                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                <div className="badge badge-secondary font-size-10">
+
+
+                                                                <div className="d-flex">
                                                                     {" "}
-                                                                    {moment(item?.createdAt).format("hh:mm A")}
+                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
+                                                                        {" "}
+                                                                        {moment(item?.createdAt).format("HH:mm ")}
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                         </td>

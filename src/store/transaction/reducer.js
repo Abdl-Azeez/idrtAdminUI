@@ -69,7 +69,7 @@ const Transaction = (state = initialState, action) => {
     case FETCH_USER_TRANSACTIONS:
       state = {
         ...state,
-        userTransaction: null,
+        // userTransaction: null,
         userTransactionError: null,
         loading: true,
         message: null,

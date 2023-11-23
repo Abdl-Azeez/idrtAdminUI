@@ -71,10 +71,10 @@ const OrphanLog = () => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle page>Orphan Log</BlockTitle>
-                            <BlockDes className="text-soft">
+                            <BlockTitle tag="h2" className="fw-normal">Orphan Log</BlockTitle>
+                            {/* <BlockDes className="text-soft">
                                 <p>You have {orphanLog?.length} Orphan Logs.</p>
-                            </BlockDes>
+                            </BlockDes> */}
                         </BlockHeadContent>
                         <BlockHeadContent>
                             <ul className="nk-block-tools g-3">
@@ -145,10 +145,14 @@ const OrphanLog = () => {
                                                             </td>
                                                             <td className="">
                                                                 <span className="date">
-                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="badge badge-secondary font-size-10">
+                                                                    <div className="d-flex">
                                                                         {" "}
-                                                                        {moment(item?.createdAt).format("hh:mm A")}
+                                                                        <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                                                                        <div className="mx-1">-</div>
+                                                                        <div className="">
+                                                                            {" "}
+                                                                            {moment(item?.createdAt).format("HH:mm ")}
+                                                                        </div>
                                                                     </div>
                                                                 </span>
                                                             </td>

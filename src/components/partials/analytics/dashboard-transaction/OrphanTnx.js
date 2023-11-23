@@ -59,7 +59,7 @@ const OrphanTnx = () => {
 
 
                                                 <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Callback Status</DataTableRow>
-                                                {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow> */}
+                                                <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow>
                                             </DataTableHead>
                                             {orphanTnx?.data?.map((item, i) => {
                                                 if (i <= 5) {
@@ -69,12 +69,13 @@ const OrphanTnx = () => {
                                                                 <div>{item.id}</div>
                                                             </DataTableRow> */}
                                                             <DataTableRow className="nk-tb-sessions">
-                                                                <div>
+                                                                <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="badge badge-secondary font-size-10">
+                                                                    <div className="mx-1">-</div>
+                                                                    <div className="">
                                                                         {" "}
-                                                                        {moment(item?.createdAt).format("hh:mm A")}
+                                                                        {moment(item?.createdAt).format("HH:mm ")}
                                                                     </div>
                                                                 </div>
                                                             </DataTableRow>
@@ -105,15 +106,15 @@ const OrphanTnx = () => {
                                                             <DataTableRow className="nk-tb-prev-sessions">
                                                                 <div>{item.callbackStatus} </div>
                                                             </DataTableRow>
-                                                            {/* <DataTableRow className="nk-tb-sessions">
+                                                            <DataTableRow className="nk-tb-sessions">
                                                                 <div className="d-flex justify-content-center" style={{ width: '150px' }}>
                                                                     <input type="text" style={{ borderRight: "none", width: '100px' }} />
 
-                                                                    <Button size="sm" color="danger" style={{ right: "10px" }}>
+                                                                    <Button size="sm" color="primary" style={{ right: "10px" }}>
                                                                         Submit
                                                                     </Button>
                                                                 </div>
-                                                            </DataTableRow> */}
+                                                            </DataTableRow>
                                                         </DataTableItem>
                                                     );
                                                 }

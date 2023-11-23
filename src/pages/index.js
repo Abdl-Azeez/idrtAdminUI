@@ -39,30 +39,15 @@ const Homepage = () => {
     <React.Fragment>
       <Head title="Dashboard" />
       <Content>
-        <DashboardAnalytics />
-        <Row className="g-gs py-4">
-          <Col lg="7" xxl="7">
+        {/* <DashboardAnalytics /> */}
 
-            {/* MAIN WALLETS */}
-            <BlockHead size="sm" className="d-flex justify-content-between">
-              <div className="nk-block-between">
-                <BlockHeadContent>
-                  <BlockTitle page tag="h3">
-                    MAIN WALLETS
-                  </BlockTitle>
-                </BlockHeadContent>
-              </div>
-            </BlockHead>
-            <Block>
-              <Card className="h-100">
-                <MainWallets />
-              </Card>
-            </Block>
-          </Col>
-        </Row>
+        {/* MAIN WALLETS */}
+
+        <MainWallets />
+
 
         {/* IDRT Transactions Overview */}
-        <BlockHead size="sm" className="d-flex justify-content-between">
+        <BlockHead size="sm" className="d-flex justify-content-between pt-3">
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -70,7 +55,7 @@ const Homepage = () => {
               </BlockTitle>
             </BlockHeadContent>
           </div>
-          <div className="card-tools shrink-0 d-none d-sm-block">
+          <div className="card-tools shrink-0 d-none d-sm-block mr-5">
             <ul className="nav nav-switch-s2 nav-tabs bg-white">
               <li className="nav-item">
                 <a

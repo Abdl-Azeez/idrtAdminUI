@@ -31,7 +31,9 @@ const Sidebar = ({ fixed, theme, className, sidebarToggle, mobileView, ...props 
     <div className={classes}>
       <div className="nk-sidebar-element nk-sidebar-head">
         <div className="nk-sidebar-brand">
-          <Logo />
+          {/* <Logo /> */}
+          <h5 className="title">IDRT Payment GateWay</h5>
+
         </div>
         <div className="nk-menu-trigger mr-n2">
           <Toggle className="nk-nav-toggle nk-quick-nav-icon d-xl-none mr-n2" icon="arrow-left" click={sidebarToggle} />
