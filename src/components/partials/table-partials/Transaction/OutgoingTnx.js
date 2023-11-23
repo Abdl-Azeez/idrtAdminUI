@@ -17,7 +17,7 @@ import moment from "moment";
 import Content from "../../../../layout/content/Content";
 
 
-const OutgoingTnx = ({ }) => {
+const OutgoingTnx = ({ updatePageNumber }) => {
     const { outgoingTnx, transactionError } = useSelector((state) => state.Transaction);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
@@ -65,11 +65,11 @@ const OutgoingTnx = ({ }) => {
     };
 
 
-    useLayoutEffect(() => {
-        if (currentPage > 1) {
-            window.scrollTo(0, 750);
-        }
-    });
+    useEffect(() => {
+
+        updatePageNumber(false)
+
+    }, [currentPage, updatePageNumber]);
 
     // Get current list, pagination
     const indexOfLastItem = currentPage * itemPerPage;
@@ -166,15 +166,15 @@ const OutgoingTnx = ({ }) => {
                                                 return (
                                                     <tr key={item.txnHash} className="">
                                                         {/* <td className="tb-tnx font-weight-bold">
-                                                            <span className="text-success">{item.username}</span>
+                                                            <span>{item.username}</span>
                                                         </td> */}
                                                         <td className="">
                                                             <span className="date">
                                                                 <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="mx-1">-</div>
-                                                                    <div className="">
+
+                                                                    <div className="ml-2">
                                                                         {" "}
                                                                         {moment(item?.createdAt).format("HH:mm ")}
                                                                     </div>

@@ -7,13 +7,21 @@ import moment from "moment";
 const Fees = ({ dateRange, data }) => {
 
 
+  const dateFormat = (inputDateString) => {
+
+    const year = inputDateString.substring(0, 4);
+    const month = inputDateString.substring(4, 6);
+    const day = inputDateString.substring(6, 8);
+
+    return `${year}-${month}-${day}`;
+  }
   const sortDate = (data) => {
     if (data?.length > 0) {
-      data?.sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
+      data.sort((a, b) => new Date(dateFormat(a?.transactionDate)) - new Date(dateFormat(b?.transactionDate)));
       const midIndex = Math.floor(data.length / 2);
-      const earliestDate = data[0].transactionDate;
-      const midDate = data[midIndex].transactionDate;
-      const latestDate = data[data.length - 1].transactionDate;
+      const earliestDate = dateFormat(data[0].transactionDate);
+      const midDate = dateFormat(data[midIndex].transactionDate);
+      const latestDate = dateFormat(data[data.length - 1].transactionDate);
 
       return { earliestDate, midDate, latestDate };
     }
@@ -70,7 +78,7 @@ const Fees = ({ dateRange, data }) => {
     return data?.map(entry => entry.outGasFee / 1000000000000000000);
   }
   const getAllDate = (data) => {
-    return data?.map(entry => moment(entry.transactionDate).format('DD MMM, YYYY'));
+    return data?.map(entry => moment(dateFormat(entry.transactionDate)).format('DD MMM, YYYY'));
   }
 
   const getAllNoOfInCom = (data) => {

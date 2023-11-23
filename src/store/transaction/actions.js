@@ -79,10 +79,10 @@ export const fetchTransactionError = (error) => {
   };
 };
 
-export const fetchUserTransactions = (id) => {
+export const fetchUserTransactions = (payload) => {
   return {
     type: FETCH_USER_TRANSACTIONS,
-    payload: id,
+    payload,
   };
 };
 

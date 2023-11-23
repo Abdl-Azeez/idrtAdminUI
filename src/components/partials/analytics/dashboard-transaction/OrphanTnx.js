@@ -72,8 +72,8 @@ const OrphanTnx = () => {
                                                                 <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="mx-1">-</div>
-                                                                    <div className="">
+
+                                                                    <div className="ml-2">
                                                                         {" "}
                                                                         {moment(item?.createdAt).format("HH:mm ")}
                                                                     </div>

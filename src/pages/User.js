@@ -42,7 +42,7 @@ const User = () => {
     // Changing state value when searching name
     useEffect(() => {
         if (userID) {
-            dispatch(fetchUserTransactions(userID));
+            dispatch(fetchUserTransactions({ id: userID, page: currentPage, perPage: itemPerPage }));
         }
     }, [dispatch, userID, currentPage]);
 
@@ -51,7 +51,7 @@ const User = () => {
             dispatch(fetchUserTransactionsError());
         }
     }, [dispatch, userID]);
-
+    console.log(currentPage)
 
     // Changing state value when searching name
     useEffect(() => {
@@ -176,7 +176,7 @@ const User = () => {
                                                     return (
                                                         <tr key={item.txnHash} className="">
                                                             <td className="tb-tnx font-weight-bold">
-                                                                <div className="text-success text-truncate" style={{ maxWidth: '100px' }}>{item.username}</div>
+                                                                <div className="text-truncate" style={{ maxWidth: '100px' }}>{item.username}</div>
                                                             </td>
                                                             <td className="">
                                                                 <span className="date">

@@ -101,7 +101,7 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
                                                 return (
                                                     <tr key={item.id} className="">
                                                         <td className="tb-tnx font-weight-bold">
-                                                            <span className="text-success">{item.id}</span>
+                                                            <span>{item.id}</span>
                                                         </td>
                                                         <td className="">
                                                             <span className="date">

@@ -14,9 +14,9 @@ export const GetEachTransactionService = (id) => {
     return http.getData(url);
 };
 
-export const GetUserTransactionService = (id) => {
+export const GetUserTransactionService = (query) => {
     const http = new HttpService();
-    let url = `transactions/byUser/${id}`;
+    let url = `transactions/byUser/${query.id}?perPage=${query.perPage}&page=${query.page}`;
     return http.getData(url);
 };
 

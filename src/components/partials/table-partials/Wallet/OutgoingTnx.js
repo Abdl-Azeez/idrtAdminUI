@@ -124,15 +124,15 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                                 return (
                                                     <tr key={item.txnHash} className="">
                                                         {/* <td className="tb-tnx font-weight-bold">
-                                                            <span className="text-success">{item.username}</span>
+                                                            <span>{item.username}</span>
                                                         </td> */}
                                                         <td className="">
                                                             <span className="date">
                                                                 <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="mx-1">-</div>
-                                                                    <div className="">
+
+                                                                    <div className="ml-2">
                                                                         {" "}
                                                                         {moment(item?.createdAt).format("HH:mm ")}
                                                                     </div>
