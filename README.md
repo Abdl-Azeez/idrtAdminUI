@@ -31,7 +31,8 @@ Running the Project:
 - Run the command: `npm start` or `npm run start`.
 
 **Detailed Installation Process:**
-**React Quick Start:**
+
+- **React Quick Start:**
 
 1.  Make sure Node and npm package manager is installed, please check
     the version by the command **_node -v_**
