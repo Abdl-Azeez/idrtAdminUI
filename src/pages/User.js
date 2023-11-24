@@ -72,13 +72,13 @@ const User = () => {
 
     return (
         <React.Fragment>
-            <Head title="User" />
+            <Head title="Users" />
             <Content>
                 <BlockHead size="lg">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle tag="h2" className="fw-normal">
-                                User
+                                Users
                             </BlockTitle>
                         </BlockHeadContent>
                         {/* <BlockHeadContent>
@@ -201,12 +201,11 @@ const User = () => {
                                                                 <div className="text-truncate font-weight-bolder" style={{ maxWidth: '150px' }}>{item?.walletId}</div>
                                                             </td>
                                                             <td className="tb-info">
-                                                                <div className="text-truncate" style={{ maxWidth: '150px' }}>{(item?.amount / 100).toLocaleString()}</div>
-                                                            </td>
-                                                            <td className="tb-info">
                                                                 <span className="">{item?.gasFee}</span>
                                                             </td>
-
+                                                            <td className="tb-info">
+                                                                <div className="text-truncate" style={{ maxWidth: '150px' }}>{(item?.amount / 100).toLocaleString()}</div>
+                                                            </td>
                                                             <td className="tb-info">
                                                                 <span className="">{item?.currencySymbol}</span>
                                                             </td>

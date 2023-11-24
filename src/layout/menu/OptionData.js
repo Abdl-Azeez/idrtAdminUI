@@ -6,8 +6,8 @@ const menu = [
   },
   {
     icon: "user-list-fill",
-    text: "User",
-    link: "/user",
+    text: "Users",
+    link: "/users",
   },
   {
     icon: "share-alt",

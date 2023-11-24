@@ -162,9 +162,9 @@ const IncomingWalletTnx = ({ updateAddress }) => {
                                             <th className="">
                                                 <span className="">Currency</span>
                                             </th>
-                                            <th className="">
+                                            {/* <th className="">
                                                 <span className="">Orphan Tnx</span>
-                                            </th>
+                                            </th> */}
 
 
 
@@ -211,9 +211,9 @@ const IncomingWalletTnx = ({ updateAddress }) => {
                                                         <td className="tb-info">
                                                             <span className="">{item?.currencySymbol}</span>
                                                         </td>
-                                                        <td className="tb-info">
+                                                        {/* <td className="tb-info">
                                                             <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
-                                                        </td>
+                                                        </td> */}
 
 
 

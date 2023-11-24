@@ -21,7 +21,7 @@ const Pages = () => {
       <Switch>
 
         <Route exact path={`/`} component={Homepage}></Route>
-        <Route exact path={`/user`} component={User}></Route>
+        <Route exact path={`/users`} component={User}></Route>
         <Route exact path={`/wallets`} component={Wallets}></Route>
         <Route exact path={`/transactions`} component={Transactions}></Route>
         <Route exact path={`/orphan_log`} component={OrphanLog}></Route>

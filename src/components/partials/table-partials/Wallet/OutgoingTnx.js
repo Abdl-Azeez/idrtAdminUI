@@ -110,9 +110,9 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                             <th className="">
                                                 <span className="">Currency</span>
                                             </th>
-                                            <th className="">
+                                            {/* <th className="">
                                                 <span className="">Orphan Tnx</span>
-                                            </th>
+                                            </th> */}
 
 
 
@@ -147,7 +147,7 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                                             <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
                                                         </td>
                                                         <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.comx001}</div>
+                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.toAddress}</div>
                                                         </td>
                                                         <td className="tb-info">
                                                             <span className="">{item?.gasFee}</span>
@@ -158,9 +158,9 @@ const OutgoingWalletTnx = ({ walletAddress }) => {
                                                         <td className="tb-info">
                                                             <span className="">{item?.currencySymbol}</span>
                                                         </td>
-                                                        <td className="tb-info">
+                                                        {/* <td className="tb-info">
                                                             <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
-                                                        </td>
+                                                        </td> */}
 
 
 
