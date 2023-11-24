@@ -191,7 +191,7 @@ const OutgoingTnx = ({ updatePageNumber }) => {
                                                             <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.toAddress}</div>
                                                         </td>
                                                         <td className="tb-info">
-                                                            <span className="">{item?.gasFee}</span>
+                                                            <span className="">{item?.gasFee ? item?.gasFee / 1000000000000000000 : 0}</span>
                                                         </td>
                                                         <td className="tb-info">
                                                             <span className="">{(item?.amount / 100).toLocaleString()}</span>
