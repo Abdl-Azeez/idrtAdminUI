@@ -109,8 +109,8 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
                                                                 <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.attachedAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="mx-1">-</div>
-                                                                    <div className="">
+                                                                    {/* <div className="mx-1">-</div> */}
+                                                                    <div className="ml-2">
                                                                         {" "}
                                                                         {moment(item?.attachedAt).format("HH:mm ")}
                                                                     </div>
@@ -123,8 +123,8 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
                                                                 <div className="d-flex">
                                                                     {" "}
                                                                     <div>{moment(item?.detachedAt).format("DD/MM/YYYY")}</div>
-                                                                    <div className="mx-1">-</div>
-                                                                    <div className="">
+                                                                    {/* <div className="mx-1">-</div> */}
+                                                                    <div className="ml-2">
                                                                         {" "}
                                                                         {moment(item?.detachedAt).format("HH:mm ")}
                                                                     </div>
