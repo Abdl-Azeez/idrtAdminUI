@@ -57,7 +57,7 @@ const Fees = ({ dateRange, data }) => {
     let maxOutGas = -Infinity;
 
     data.forEach((transaction) => {
-      const inCommission = parseInt(transaction.inCommission / 100);
+      const inCommission = parseInt(transaction.inCommission / 1000000);
 
       if (inCommission > maxOutGas) {
         maxOutGas = inCommission;
@@ -82,7 +82,7 @@ const Fees = ({ dateRange, data }) => {
   }
 
   const getAllNoOfInCom = (data) => {
-    return data?.map(entry => entry.inCommission / 100);
+    return data?.map(entry => entry.inCommission / 1000000);
   }
 
 

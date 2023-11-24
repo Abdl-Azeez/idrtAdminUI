@@ -85,7 +85,7 @@ const LatestOutgoingTrans = () => {
                                 <div>{item.currencySymbol} </div>
                               </DataTableRow>
                               <DataTableRow className="nk-tb-prev-sessions">
-                                <div>{item.gasFee} </div>
+                                <div>{item.gasFee ? item?.gasFee / 1000000000000000000 : 0} </div>
                               </DataTableRow>
                               {/* <DataTableRow className="nk-tb-prev-sessions">
                                 <div>{item.commission / 100} </div>

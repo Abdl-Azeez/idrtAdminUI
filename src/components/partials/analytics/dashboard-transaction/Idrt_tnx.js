@@ -26,8 +26,8 @@ const IDRT_TXN = ({ dateRange, data }) => {
     let maxCount = -Infinity;
 
     data.forEach((transaction) => {
-      const inAmount = parseInt(transaction.inAmount / 100);
-      const outAmount = parseInt(transaction.outAmount / 100);
+      const inAmount = parseInt(transaction.inAmount / 1000000);
+      const outAmount = parseInt(transaction.outAmount / 1000000);
 
       if (inAmount > maxCount) {
         maxCount = inAmount;
@@ -68,11 +68,11 @@ const IDRT_TXN = ({ dateRange, data }) => {
   }
 
   const getAllIDRT_In = (data) => {
-    return data?.map(entry => entry.inAmount / 100);
+    return data?.map(entry => entry.inAmount / 1000000);
 
   }
   const getAllIDRT_Out = (data) => {
-    return data?.map(entry => entry.outAmount / 100);
+    return data?.map(entry => entry.outAmount / 1000000);
   }
   const getAllDate = (data) => {
     return data?.map(entry => moment(dateFormat(entry.transactionDate)).format('DD MMM, YYYY'));
