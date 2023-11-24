@@ -117,10 +117,10 @@ const TransactionTable = ({ data }) => {
                         <div>Transaction Fee (BNB)</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalFeeIn ? (totalFeeIn / 1000000000000000000)?.toLocaleString() : 0}</div>
+                        <div style={{ width: '300px' }}>{totalFeeIn ? (totalFeeIn / 1000000000000000000)?.toFixed(5) : 0}</div>
                     </DataTableRow>
                     <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalFeeOut ? ((totalFeeOut / 1000000000000000000)?.toLocaleString()) : 0}</div>
+                        <div style={{ width: '300px' }}>{totalFeeOut ? ((totalFeeOut / 1000000000000000000)?.toFixed(5)) : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
