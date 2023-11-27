@@ -80,7 +80,6 @@ const Settings = () => {
         }
     };
 
-    console.log(userName)
     // TODO: SEND ONLY THE UPDATED FIELD
 
     return (

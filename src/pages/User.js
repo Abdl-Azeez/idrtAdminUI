@@ -51,7 +51,7 @@ const User = () => {
             dispatch(fetchUserTransactionsError());
         }
     }, [dispatch, userID]);
-    console.log(currentPage)
+
 
     // Changing state value when searching name
     useEffect(() => {
