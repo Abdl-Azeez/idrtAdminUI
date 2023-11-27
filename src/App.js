@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import PrivateRoute from "./route/PrivateRoute";
 import PublicRoute from "./route/PublicRoute";
-import { publicRoutesData } from "./route/Index";
+import { publicRoutesData } from "./route/index";
 import { Spinner } from "reactstrap";
 import { RedirectAs404 } from "./utils/Utils";
-import Layout from "./layout/Index";
+import Layout from "./layout";
 import { useSelector, useDispatch } from "react-redux";
 import { generalToastError, errorChecker } from "./store/actions";
 
