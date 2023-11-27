@@ -10,6 +10,7 @@ import {
   FETCH_ORPHAN_LOG,
   FETCH_INCOMING_TRANSACTION,
   FETCH_OUTGOING_TRANSACTION,
+  MAP_ORPHAN,
 } from "./actionTypes";
 
 import {
@@ -38,6 +39,9 @@ import {
 
   fetchOutgoingTransactionSuccessful,
   fetchOutgoingTransactionError,
+
+  mapOrphanSuccessful,
+  mapOrphanError
 } from "./actions";
 
 import {
@@ -48,7 +52,8 @@ import {
   GetOrphanLogService,
   GetIncomingTnxService,
   GetOutgoingTnxService,
-  GetUserTransactionService
+  GetUserTransactionService,
+  MapOrphanService
 } from "../../services/transactionService";
 
 function* fetchTransactionsHandler({ payload }) {
@@ -137,7 +142,14 @@ function* fetchOrphanLogHandler() {
   }
 }
 
-
+function* mapOrphanHandler({ payload }) {
+  try {
+    const response = yield call(MapOrphanService, payload);
+    yield put(mapOrphanSuccessful(response.data));
+  } catch (error) {
+    yield put(mapOrphanError(error?.response?.data?.message));
+  }
+}
 
 export function* watchFetchTransactions() {
   yield takeEvery(FETCH_TRANSACTIONS, fetchTransactionsHandler);
@@ -175,6 +187,10 @@ export function* watchFetchOutgoingTnx() {
   yield takeEvery(FETCH_OUTGOING_TRANSACTION, fetchOutgoingTnxHandler);
 }
 
+export function* watchMapOrphan() {
+  yield takeEvery(MAP_ORPHAN, mapOrphanHandler);
+}
+
 function* TransactionsSaga() {
   yield all([
     fork(watchFetchTransactions),
@@ -185,7 +201,8 @@ function* TransactionsSaga() {
     fork(watchFetchIncomingTnx),
     fork(watchFetchOutgoingTnx),
     fork(watchFetchUserTransactions),
-    fork(watchFetchTransactionAddressOut)
+    fork(watchFetchTransactionAddressOut),
+    fork(watchMapOrphan)
   ]);
 }
 

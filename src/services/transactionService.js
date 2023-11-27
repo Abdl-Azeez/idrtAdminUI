@@ -70,3 +70,9 @@ export const GetOutgoingTnxService = (query) => {
     }
     return http.getData(url);
 };
+
+export const MapOrphanService = (payload) => {
+    const http = new HttpService();
+    const url = "orphan/mapOrphan";
+    return http.postData(payload, url);
+};

@@ -34,6 +34,10 @@ import {
   FETCH_OUTGOING_TRANSACTION,
   FETCH_OUTGOING_TRANSACTION_SUCCESSFUL,
   FETCH_OUTGOING_TRANSACTION_ERROR,
+
+  MAP_ORPHAN,
+  MAP_ORPHAN_SUCCESSFUL,
+  MAP_ORPHAN_ERROR,
 } from "./actionTypes";
 
 export const fetchTransactions = (payload) => {
@@ -225,6 +229,27 @@ export const fetchOutgoingTransactionSuccessful = (payload) => {
 export const fetchOutgoingTransactionError = (error) => {
   return {
     type: FETCH_OUTGOING_TRANSACTION_ERROR,
+    payload: error,
+  };
+};
+
+export const mapOrphan = (payload) => {
+  return {
+    type: MAP_ORPHAN,
+    payload: { payload },
+  };
+};
+
+export const mapOrphanSuccessful = (payload) => {
+  return {
+    type: MAP_ORPHAN_SUCCESSFUL,
+    payload: payload,
+  };
+};
+
+export const mapOrphanError = (error) => {
+  return {
+    type: MAP_ORPHAN_ERROR,
     payload: error,
   };
 };

@@ -34,6 +34,10 @@ import {
   FETCH_OUTGOING_TRANSACTION,
   FETCH_OUTGOING_TRANSACTION_SUCCESSFUL,
   FETCH_OUTGOING_TRANSACTION_ERROR,
+
+  MAP_ORPHAN,
+  MAP_ORPHAN_SUCCESSFUL,
+  MAP_ORPHAN_ERROR,
 } from "./actionTypes";
 
 const initialState = {
@@ -50,6 +54,7 @@ const initialState = {
   outgoingTnx: null,
   userTransaction: null,
   userTransactionError: null,
+  mapOrphanError: null
 };
 
 const Transaction = (state = initialState, action) => {
@@ -80,10 +85,11 @@ const Transaction = (state = initialState, action) => {
     case FETCH_ORPHAN_TRANSACTION:
       state = {
         ...state,
-        orphanTnx: null,
+        // orphanTnx: null,
         transactionError: null,
         loading: true,
         message: null,
+        mapOrphanError: null
       };
       break;
 
@@ -92,6 +98,16 @@ const Transaction = (state = initialState, action) => {
         ...state,
         orphanLog: null,
         transactionError: null,
+        loading: true,
+        message: null,
+      };
+      break;
+
+    case MAP_ORPHAN:
+      state = {
+        ...state,
+        orphanLog: null,
+        mapOrphanError: null,
         loading: true,
         message: null,
       };
@@ -177,6 +193,16 @@ const Transaction = (state = initialState, action) => {
       };
       break;
 
+    case MAP_ORPHAN_SUCCESSFUL:
+      state = {
+        ...state,
+        orphanLog: action.payload,
+        message: "Transaction mapped successfully",
+        loading: false,
+        mapOrphanError: null,
+      };
+      break;
+
     case FETCH_TRANSACTION_SUCCESSFUL:
       state = {
         ...state,
@@ -238,6 +264,15 @@ const Transaction = (state = initialState, action) => {
         orphanTnx: null,
         transactionAddressOut: null,
         transactionError: action.payload,
+      };
+      break;
+
+
+    case MAP_ORPHAN_ERROR:
+      state = {
+        ...state,
+        mapOrphanError: action.payload,
+        message: null,
       };
       break;
 

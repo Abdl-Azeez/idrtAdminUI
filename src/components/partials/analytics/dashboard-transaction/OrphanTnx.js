@@ -11,18 +11,34 @@ import {
     DataTableHead,
     DataTableBody,
 } from "../../../Component";
-import { Card, Button } from "reactstrap";
-import { fetchOrphan } from "../../../../store/actions";
+import { Card, Button, Alert } from "reactstrap";
+import { fetchOrphan, mapOrphan } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 
 const OrphanTnx = () => {
-    const { orphanTnx } = useSelector((state) => state.Transaction);
+    const { orphanTnx, message, mapOrphanError } = useSelector((state) => state.Transaction);
+    const [orphanUser, setOrphanUser] = useState('');
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchOrphan({ page: 1, perPage: 5 }));
     }, [dispatch]);
+
+    const handleOrphanMap = (txnHash) => {
+        if (orphanUser) {
+            let data = { txnHash, userId: orphanUser }
+            dispatch(mapOrphan(data))
+        }
+    }
+    useEffect(() => {
+        if (message || mapOrphanError) {
+            setTimeout(() => {
+                dispatch(fetchOrphan({ page: 1, perPage: 5 }));
+            }, 2000);
+        }
+
+    }, [dispatch, mapOrphanError, message])
 
     return (
         <React.Fragment>
@@ -36,6 +52,19 @@ const OrphanTnx = () => {
                                 </BlockTitle>
                             </BlockHeadContent>
                         </div>
+                        {message || mapOrphanError ?
+                            <div className="d-flex flex-column mb-3">
+                                {message &&
+                                    <Alert color="success"> {message}
+                                    </Alert>
+                                }
+                                {mapOrphanError &&
+                                    <Alert color="danger">
+                                        Map Orphan API Error: {mapOrphanError}
+                                    </Alert>
+                                }
+                            </div>
+                            : null}
                     </BlockHead>
                     <Block>
                         <Row className="g-gs">
@@ -106,11 +135,11 @@ const OrphanTnx = () => {
                                                             <DataTableRow className="nk-tb-prev-sessions">
                                                                 <div>{item.callbackStatus} </div>
                                                             </DataTableRow>
-                                                            <DataTableRow className="nk-tb-sessions">
+                                                            <DataTableRow className="orphanTxn nk-tb-sessions">
                                                                 <div className="d-flex justify-content-center" style={{ width: '150px' }}>
-                                                                    <input type="text" style={{ borderRight: "none", width: '100px' }} />
+                                                                    <input type="text" style={{ borderRight: "none", width: '100px' }} onChange={(e) => { setOrphanUser(e.target.value) }} />
 
-                                                                    <Button size="sm" color="primary" style={{ right: "10px" }}>
+                                                                    <Button size="sm" color="primary" onClick={() => handleOrphanMap(item.txnHash)}>
                                                                         Submit
                                                                     </Button>
                                                                 </div>

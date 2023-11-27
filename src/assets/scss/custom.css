@@ -6,11 +6,24 @@
 .logo-dark {
   width: 150px;
 }
-@media only screen and (max-width: 1650px) {
-  .top-cards {
-    /* width: max-content !important; */
-  }
+
+.orphanTxn input:focus {
+  outline: none;
 }
+
+.orphanTxn input {
+  border: 1px solid #ccc;
+  /* padding: 8px;  */
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.orphanTxn button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 @media only screen and (max-width: 1200px) {
   .nk-header-fixed + .nk-content {
     margin-top: 100px !important;

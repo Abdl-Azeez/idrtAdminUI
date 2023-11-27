@@ -2,7 +2,7 @@ import React, { Suspense, useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { RedirectAs404 } from "../utils/Utils";
 import Login from "../pages/auth/Login";
-import Homepage from "../pages/index";
+import Homepage from "../pages/Index";
 import Transactions from "../pages/Transactions";
 import User from "../pages/User";
 import Wallets from "../pages/Wallets";
