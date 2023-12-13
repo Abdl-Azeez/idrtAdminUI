@@ -23,6 +23,7 @@ function* loginUser({ payload: { user, history } }) {
     // console.log(user);
     localStorage.setItem("idrtToken", JSON.stringify(response.data));
     localStorage.setItem("idrtUsername", JSON.stringify(user.name));
+    localStorage.setItem("idrtRole", JSON.stringify(user.role));
     document.cookie = JSON.stringify(response.data.access_token);
     yield put(loginUserSuccessful(response.data));
     // history.push("/");
@@ -37,6 +38,7 @@ function* logoutUser({ payload: { history } }) {
 
     localStorage.removeItem("idrtToken");
     localStorage.removeItem("idrtUsername");
+    localStorage.removeItem("idrtRole");
     yield put(logoutUserSuccess());
     history.push("/login");
   } catch (error) {

@@ -8,6 +8,8 @@ import User from "../pages/User";
 import Wallets from "../pages/Wallets";
 import OrphanLog from "../pages/OrphanLog";
 import Settings from "../pages/Settings";
+import Merchants from "../pages/Merchants";
+import Agents from "../pages/Agents";
 
 
 
@@ -21,6 +23,8 @@ const Pages = () => {
       <Switch>
 
         <Route exact path={`/`} component={Homepage}></Route>
+        <Route exact path={`/merchants`} component={Merchants}></Route>
+        <Route exact path={`/agents`} component={Agents}></Route>
         <Route exact path={`/users`} component={User}></Route>
         <Route exact path={`/wallets`} component={Wallets}></Route>
         <Route exact path={`/transactions`} component={Transactions}></Route>

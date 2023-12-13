@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from "react";
-import menu from "./OptionData";
+import adminMenuData from "./adminMenuData";
+import agentMenuData from "./agentMenuData";
+import merchantMenuData from "./merchantMenuData";
 import { NavLink, Link } from "react-router-dom";
-// import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
+
+const getMenuData = (role) => {
+  switch (role) {
+    case "ADMIN":
+      return adminMenuData;
+    case "AGENT":
+      return agentMenuData;
+    // Add more cases for other roles if needed
+    default:
+      return merchantMenuData;
+  }
+};
 
 const MenuHeading = ({ heading }) => {
   return (
@@ -185,13 +198,13 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
     "nk-menu-item": true,
   });
 
-  if (data === menu) {
+  if (data === adminMenuData || data === agentMenuData || data === merchantMenuData) {
     return (
       <li className={menuItemClass}>
         <Link
           to={`${process.env.PUBLIC_URL}${link}`}
           className="nk-menu-link"
-          onClick={() => setMenuData([menu[index]])}
+          onClick={() => setMenuData([data[index]])}
         >
           {icon ? (
             <span className="nk-menu-icon">
@@ -259,17 +272,12 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
 };
 
 const Menu = ({ sidebarToggle, mobileView }) => {
-  const [data, setMenuData] = useState(menu);
+  const [data, setMenuData] = useState([]);
 
   useEffect(() => {
-    data.forEach((item, index) => {
-      if (item.panel) {
-        let found = item.subPanel.find((sPanel) => process.env.PUBLIC_URL + sPanel.link === window.location.pathname);
-        if (found) {
-          setMenuData([menu[index]]);
-        }
-      }
-    });
+    const role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null;
+    const menuData = getMenuData(role);
+    setMenuData(menuData);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

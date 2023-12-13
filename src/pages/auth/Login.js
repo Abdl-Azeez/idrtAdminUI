@@ -10,7 +10,7 @@ import {
 } from "../../components/Component";
 import Logo from "../../images/hotak.png";
 import LogoDark from "../../images/hotak.png";
-import { Form, FormGroup, Spinner, Alert } from "reactstrap";
+import { Form, FormGroup, Spinner, Alert, Label, Input } from "reactstrap";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
@@ -22,7 +22,8 @@ import { checkLogin } from "../../store/actions";
 const Login = () => {
   // const [loading, setLoading] = useState(false);
   const [passState, setPassState] = useState(false);
-  const [errorVal, setError] = useState("");
+  const [role, setRole] = useState("ADMIN");
+
 
   const navigate = useHistory();
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Login = () => {
 
   const onFormSubmit = (formData) => {
     if (formData.name && formData.password) {
+      formData.role = role
       // console.log(formData)
       dispatch(checkLogin(formData, navigate));
     }
@@ -114,6 +116,25 @@ const Login = () => {
                     className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
                   />
                   {errors.password && <span className="invalid">{errors.password.message}</span>}
+                </div>
+              </FormGroup>
+              <FormGroup className="mb-5">
+
+                <div className="form-label-group">
+                  <label className="form-label" htmlFor="role">
+                    Role
+                  </label>
+
+                </div>
+                <div className="form-control-wrap">
+                  <div className="form-control-select d-flex align-items-center">
+                    <Input type="select" name="role" id="role" bsSize="lg" onChange={(e) => setRole(e.target.value)}>
+                      <option value="ADMIN">Admin</option>
+                      <option value="AGENT">Agent</option>
+                      <option value="MERCHANT">Merchant</option>
+                    </Input>
+                    <i className="fa fa-angle-down position-absolute" style={{ right: '15px' }} aria-hidden="true"></i>
+                  </div>
                 </div>
               </FormGroup>
               <FormGroup>

@@ -250,6 +250,7 @@
 }
 .form-control-select{
     position: relative;
+    
     .form-control{
         appearance: none;
         -webkit-appearance: none;
@@ -270,32 +271,32 @@
             }
         }
     }
-    &:after{
-        font-family: $nk-dashlite-font;
-        content:$ni-chevron-down;
-        pointer-events: none;
-        position: absolute;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        @if($rtl==false){
-            right: 1px;
-        }
-        @if($rtl==true){
-            left: 1px;
-        }
-        top: 1px;
-        width: calc(#{$input-height} - 2px);
-        height: calc(#{$input-height} - 2px);
-        &.sm:after{
-            width: calc(#{$input-height-sm} - 2px);
-            height: calc(#{$input-height-sm} - 2px);
-        }
-        &.lg:after{
-            width: calc(#{$input-height-lg} - 2px);
-            height: calc(#{$input-height-lg} - 2px);
-        }
-    }
+    // &:after{
+    //     font-family: $nk-dashlite-font;
+    //     content:$ni-chevron-down;
+    //     pointer-events: none;
+    //     position: absolute;
+    //     display: inline-flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     @if($rtl==false){
+    //         right: 1px;
+    //     }
+    //     @if($rtl==true){
+    //         left: 1px;
+    //     }
+    //     top: 1px;
+    //     width: calc(#{$input-height} - 2px);
+    //     height: calc(#{$input-height} - 2px);
+    //     &.sm:after{
+    //         width: calc(#{$input-height-sm} - 2px);
+    //         height: calc(#{$input-height-sm} - 2px);
+    //     }
+    //     &.lg:after{
+    //         width: calc(#{$input-height-lg} - 2px);
+    //         height: calc(#{$input-height-lg} - 2px);
+    //     }
+    // }
 }
 
 textarea{

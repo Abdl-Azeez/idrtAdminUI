@@ -28,6 +28,7 @@ const Homepage = () => {
     startDate: new Date(),
 
   });
+  let role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null
 
 
   const handleTimeFrameChange = (value) => {
@@ -43,7 +44,7 @@ const Homepage = () => {
 
         {/* MAIN WALLETS */}
 
-        <MainWallets />
+        <MainWallets role={role} />
 
 
         {/* IDRT Transactions Overview */}
@@ -152,7 +153,9 @@ const Homepage = () => {
         <TnxAnalytics timeFrame={timeFrame} date={date} />
 
         {/* ORPHAN TRANSACTIONS */}
-        <OrphanTnx />
+        {role === "ADMIN" &&
+          <OrphanTnx />
+        }
 
         {/* LATEST INCOMING TRANSACTIONS */}
         <LatestIncomingTrans />
