@@ -16,16 +16,18 @@ import { Alert, Card } from "reactstrap";
 import { fetchOrphanLog } from "../store/actions.js";
 import { useSelector, useDispatch } from "react-redux";
 import { agentData } from "../components/table/TableData.js";
+import Autocomplete from "../components/Autocomplete/index.js";
 
 const Agents = () => {
     const [data, setData] = useState(agentData.data);
     const [onSearchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
+    const [selectedMerchant, setSelectedMerchant] = useState(null);
     const dispatch = useDispatch();
 
 
-
+    console.log(selectedMerchant)
 
     useEffect(() => {
         if (data) {
@@ -98,11 +100,8 @@ const Agents = () => {
                                         <div className="card-title">
                                             <h5 className="title">Agents</h5>
                                         </div>
-                                        <div className="">
-                                            <div>
-                                                <label>Merchants</label>
-                                                <input />
-                                            </div>
+                                        <div className="w-25">
+                                            <Autocomplete setMerchant={(e) => setSelectedMerchant(e)} />
                                         </div>
 
                                     </div>
@@ -135,8 +134,8 @@ const Agents = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {data?.length > 0
-                                                ? data?.map((item) => {
+                                            {currentItems?.length > 0
+                                                ? currentItems?.map((item) => {
                                                     return (
                                                         <tr key={item.id} className="">
                                                             <td className="tb-tnx font-weight-bold">

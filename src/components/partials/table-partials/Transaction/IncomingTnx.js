@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
-    Card, Alert
+    Card, Alert, Modal,
+    ModalHeader,
+    ModalBody,
+    FormGroup
 } from "reactstrap";
 import {
     BlockBetween,
@@ -10,11 +13,13 @@ import {
     BlockTitle,
     Block,
     PaginationComponent,
+    Button,
 } from "../../../Component";
 import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import Content from "../../../../layout/content/Content";
+import Autocomplete from "../../../Autocomplete";
 
 
 const IncomingTnx = ({ }) => {
@@ -24,8 +29,8 @@ const IncomingTnx = ({ }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const [data, setData] = useState(incomingTnx?.data);
-
-
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [selectedMerchant, setSelectedMerchant] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,7 +39,7 @@ const IncomingTnx = ({ }) => {
 
     }, [dispatch, currentPage]);
 
-
+    console.log(selectedMerchant)
 
     useEffect(() => {
         if (transactionError) {
@@ -88,23 +93,9 @@ const IncomingTnx = ({ }) => {
                             </BlockDes> */}
                         </BlockHeadContent>
                         <BlockHeadContent>
-                            <ul className="nk-block-tools g-3">
-                                <li>
-                                    <div className="form-control-wrap">
-                                        <div className="form-icon form-icon-right">
-                                            {/* <Icon name="search"></Icon> */}
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="default-04"
-                                            placeholder="Search by User name"
-                                            onChange={(e) => onFilterChange(e)}
-                                        />
-                                    </div>
-                                </li>
-
-                            </ul>
+                            <div className="mr-2">
+                                <Button size="sm" color="primary" onClick={() => setShowFilterModal(true)}>Filter By Merchant</Button>
+                            </div>
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
@@ -123,6 +114,22 @@ const IncomingTnx = ({ }) => {
                                         <h5 className="title">Incoming Transactions</h5>
                                     </div>
 
+                                    <ul className="nk-block-tools g-3">
+                                        <li>
+                                            <div className="form-control-wrap">
+                                                <div className="form-icon form-icon-right">
+                                                    {/* <Icon name="search"></Icon> */}
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="default-04"
+                                                    placeholder="Search by User name"
+                                                    onChange={(e) => onFilterChange(e)}
+                                                />
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <div className="card-inner p-0">
@@ -156,9 +163,6 @@ const IncomingTnx = ({ }) => {
                                             <th className="">
                                                 <span className="">Orphan Tnx</span>
                                             </th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -203,9 +207,6 @@ const IncomingTnx = ({ }) => {
                                                         <td className="tb-info">
                                                             <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
                                                         </td>
-
-
-
                                                     </tr>
                                                 );
                                             })
@@ -232,7 +233,22 @@ const IncomingTnx = ({ }) => {
                     </Card>
                 </Block>
 
-
+                <Modal
+                    isOpen={showFilterModal}
+                    toggle={() => setShowFilterModal(!showFilterModal)}
+                >
+                    <ModalHeader toggle={() => setShowFilterModal(false)}>
+                        Filter By Merchant
+                    </ModalHeader>
+                    <ModalBody>
+                        <FormGroup className='mb-4' style={{ zIndex: '999' }}>
+                            <Autocomplete setMerchant={(e) => setSelectedMerchant(e)} />
+                        </FormGroup>
+                        <button className='btn btn-success mr-2' type='submit' onClick={() => setShowFilterModal(false)}>
+                            Submit
+                        </button>
+                    </ModalBody>
+                </Modal>
             </Content>
         </React.Fragment>
     );

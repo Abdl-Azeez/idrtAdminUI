@@ -15,10 +15,10 @@ import moment from "moment";
 import { Alert, Card } from "reactstrap";
 import { fetchOrphanLog } from "../store/actions.js";
 import { useSelector, useDispatch } from "react-redux";
-import { transactionData } from "../components/table/TableData.js";
+import { merchantData } from "../components/table/TableData.js";
 
 const Merchants = () => {
-    const [data, setData] = useState(transactionData.data);
+    const [data, setData] = useState(merchantData.data);
     const [onSearchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
@@ -35,7 +35,7 @@ const Merchants = () => {
                 });
                 setData([...filteredObject]);
             } else {
-                setData(transactionData.data);
+                setData(merchantData.data);
             }
             // console.log(data)
         }
@@ -120,8 +120,8 @@ const Merchants = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {data?.length > 0
-                                                ? data?.map((item) => {
+                                            {currentItems?.length > 0
+                                                ? currentItems?.map((item) => {
                                                     return (
                                                         <tr key={item.id} className="">
                                                             <td className="tb-tnx font-weight-bold">

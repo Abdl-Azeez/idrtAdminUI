@@ -91,23 +91,7 @@ const OutgoingTnx = ({ updatePageNumber }) => {
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
-                            <ul className="nk-block-tools g-3 justify-content-end">
-                                <li>
-                                    <div className="form-control-wrap">
-                                        <div className="form-icon form-icon-right">
-                                            {/* <Icon name="search"></Icon> */}
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="default-04"
-                                            placeholder="Search by Tnx Hash"
-                                            onChange={(e) => onFilterChange(e)}
-                                        />
-                                    </div>
-                                </li>
 
-                            </ul>
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
@@ -121,7 +105,23 @@ const OutgoingTnx = ({ updatePageNumber }) => {
                                     <div className="card-title">
                                         <h5 className="title">Outgoing Transactions</h5>
                                     </div>
+                                    <ul className="nk-block-tools g-3 justify-content-end">
+                                        <li>
+                                            <div className="form-control-wrap">
+                                                <div className="form-icon form-icon-right">
+                                                    {/* <Icon name="search"></Icon> */}
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="default-04"
+                                                    placeholder="Search by Tnx Hash"
+                                                    onChange={(e) => onFilterChange(e)}
+                                                />
+                                            </div>
+                                        </li>
 
+                                    </ul>
                                 </div>
                             </div>
                             <div className="card-inner p-0">

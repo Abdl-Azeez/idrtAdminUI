@@ -6,13 +6,13 @@ const menu = [
   },
   {
     icon: "user-list-fill",
-    text: "Merchants",
-    link: "/merchants",
+    text: "Agents",
+    link: "/agents",
   },
   {
     icon: "user-list-fill",
-    text: "Agents",
-    link: "/agents",
+    text: "Merchants",
+    link: "/merchants",
   },
   {
     icon: "user-list-fill",

@@ -1,26 +1,4 @@
-export const basicData = {
-  header: ["#", "First", "Last", "Handle"],
-  data: [
-    {
-      id: "1",
-      first: "Mark",
-      last: "Otto",
-      handle: "@mdo",
-    },
-    {
-      id: "2",
-      first: "Jacob",
-      last: "Thornton",
-      handle: "@fat",
-    },
-    {
-      id: "3",
-      first: "Larry",
-      last: "the bird",
-      handle: "@twitter",
-    },
-  ],
-};
+
 
 export const transactionData = {
   header: ["#", "Bill for", "Issue Date", "Due date", "total", "status"],
@@ -80,6 +58,103 @@ export const transactionData = {
       total: "99.00",
       status: "Cancelled",
     },
+  ],
+};
+
+
+export const merchantData = {
+  data: [
+    {
+      id: "4947",
+      name: "Amelia Grant",
+      wallet: "0x1a2B3c4D5e6F7a8B9c0D1e2F3a4B5c6D7e8F9a",
+      balance: "345679100",
+    },
+    {
+      id: "4904",
+      name: "Kristen Hawkins",
+      wallet: "0xd34e2294289bc709D8d62Ae23235346279741066",
+      balance: "6377487700",
+    },
+    {
+      id: "4829",
+      name: "Tommy Vasquez",
+      wallet: "0xaBcDeF1234567890aBcDeF1234567890aBcDeF1234",
+      balance: "689165500",
+    },
+    {
+      id: "4830",
+      name: "Alejandro Haynes",
+      wallet: "0xAbCdEfAbCdEfAbCdEfAbCdEfAbCdEfAbCdEfAbC",
+      balance: "25165500",
+    },
+    {
+      id: "4840",
+      name: "Brooke Harmon",
+      wallet: "0xAbCdEf1234567890AbCdEf1234567890AbCdEf12",
+      balance: "1548800000",
+    },
+    {
+      id: "4901",
+      name: "Emily Turner",
+      wallet: "0xAbCdEf234567890aBcDeF234567890aBcDeF2345",
+      balance: "830150200",
+    },
+    {
+      id: "4955",
+      name: "Joshua Parks",
+      wallet: "0x6789AbCdEf1234567890AbCdEf1234567890AbCdE",
+      balance: "460990900",
+    },
+    {
+      id: "4966",
+      name: "Lila Mullins",
+      wallet: "0xAbCdEf3456789012AbCdEf3456789012AbCdEf345",
+      balance: "720300800",
+    },
+    {
+      id: "4977",
+      name: "Oliver Brooks",
+      wallet: "0xAbCdEf45678901234567890AbCdEf4567890123456",
+      balance: "890250600",
+    },
+    {
+      id: "4988",
+      name: "Ruby Jordan",
+      wallet: "0x3456AbCdEf123456AbCdEf123456AbCdEf123456",
+      balance: "321005400",
+    },
+    {
+      id: "5001",
+      name: "Sophia Bennett",
+      wallet: "0xAbCdEf5678901234567890123456789012345678",
+      balance: "430890200",
+    },
+    {
+      id: "5012",
+      name: "Aiden Daniels",
+      wallet: "0xAbCdEf6789012345678901234567890123456789",
+      balance: "820100300",
+    },
+    {
+      id: "5023",
+      name: "Zoe Perry",
+      wallet: "0x678901AbCdEf1234567890123456789012345678",
+      balance: "590230400",
+    },
+    {
+      id: "5034",
+      name: "Elijah Turner",
+      wallet: "0x567890AbCdEf1234567890123456789012345678",
+      balance: "360450500",
+    },
+    {
+      id: "5045",
+      name: "Scarlett Brown",
+      wallet: "0x4567890AbCdEf1234567890123456789012345678",
+      balance: "150670600",
+    },
+    // ... (add more merchants as needed)
   ],
 };
 
@@ -289,6 +364,11 @@ export const agentData = {
   ]
 
 }
+
+
+
+
+
 export const orderData = [
   {
     id: "#746F5K2",
