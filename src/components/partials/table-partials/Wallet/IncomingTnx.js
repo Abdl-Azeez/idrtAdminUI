@@ -23,7 +23,7 @@ const IncomingWalletTnx = ({ updateAddress }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const [searchText, setSearchText] = useState("");
-    const [walletAddress, setAddress] = useState(null);
+    const [walletAddress, setAddress] = useState("0x0001");
     const dispatch = useDispatch();
 
     const onSearchChange = (e) => {

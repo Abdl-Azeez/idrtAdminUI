@@ -17,7 +17,7 @@ import WalletHistory from "../components/partials/table-partials/Wallet/WalletHi
 
 const Wallets = () => {
 
-    const [walletAddress, setAddress] = useState(null);
+    const [walletAddress, setAddress] = useState("0x0001");
 
     const updateAddress = (address) => {
         setAddress(address)
