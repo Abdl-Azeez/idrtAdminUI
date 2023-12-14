@@ -5,6 +5,10 @@ import {
     ModalBody,
     FormGroup
 } from "reactstrap";
+import MaterialTable from 'material-table';
+import { createTheme, ThemeProvider } from '@mui/material';
+import TablePagination from '@mui/material/TablePagination';
+import { Add, ArrowDownward, Check, ChevronLeft, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, Search, ViewColumn } from '@mui/icons-material';
 import {
     BlockBetween,
     BlockDes,
@@ -28,18 +32,34 @@ const IncomingTnx = ({ }) => {
     const [onSearchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [data, setData] = useState(incomingTnx?.data);
-    const [showFilterModal, setShowFilterModal] = useState(false);
-    const [selectedMerchant, setSelectedMerchant] = useState(null);
+    const [data, setData] = useState([]);
+    const [total, setTotal] = useState(0);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchIncomingTnx({ page: currentPage, perPage: itemPerPage }));
         setData(incomingTnx?.data)
+    }, [dispatch, currentPage, itemPerPage]);
 
-    }, [dispatch, currentPage]);
+    useEffect(() => {
+        if (incomingTnx) {
+            setData(incomingTnx?.data)
+        }
+    }, [incomingTnx]);
 
-    console.log(selectedMerchant)
+    const theme = createTheme();
+    const columns = [
+        { title: 'User', field: 'username' },
+        { title: 'Date', field: 'createdAt' },
+        { title: 'Transaction Hash', field: 'txnHash' },
+        { title: 'From Wallet', field: 'fromAddress' },
+        { title: 'To Wallet', field: 'walletId' },
+        { title: 'Gas Fee', field: 'gasFee' },
+        { title: 'Amount', field: 'amount' },
+        { title: 'Currency', field: 'currencySymbol' },
+        { title: 'Orphan Txn', field: 'isOrphanTxn' }
+    ];
+
 
     useEffect(() => {
         if (transactionError) {
@@ -80,7 +100,14 @@ const IncomingTnx = ({ }) => {
 
     // Change Page
     const paginate = ((pageNumber) => { setCurrentPage(pageNumber) });
+    const handleChangePage = (event, newPage) => {
+        setCurrentPage(newPage);
+    };
 
+    const handleChangeRowsPerPage = (event) => {
+        setItemPerPage(+event.target.value);
+        // setCurrentPage(1);
+    };
     return (
         <React.Fragment>
             <Content>
@@ -93,9 +120,9 @@ const IncomingTnx = ({ }) => {
                             </BlockDes> */}
                         </BlockHeadContent>
                         <BlockHeadContent>
-                            <div className="mr-2">
+                            {/* <div className="mr-2">
                                 <Button size="sm" color="primary" onClick={() => setShowFilterModal(true)}>Filter By Merchant</Button>
-                            </div>
+                            </div> */}
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
@@ -106,134 +133,68 @@ const IncomingTnx = ({ }) => {
                             Transaction API Error: {transactionError}
                         </Alert>
                     }
-                    <Card className="card-bordered card-stretch">
-                        <div className="card-inner-group">
-                            <div className="card-inner">
-                                <div className="card-title-group">
-                                    <div className="card-title">
-                                        <h5 className="title">Incoming Transactions</h5>
-                                    </div>
-
-                                    <ul className="nk-block-tools g-3">
-                                        <li>
-                                            <div className="form-control-wrap">
-                                                <div className="form-icon form-icon-right">
-                                                    {/* <Icon name="search"></Icon> */}
-                                                </div>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="default-04"
-                                                    placeholder="Search by User name"
-                                                    onChange={(e) => onFilterChange(e)}
-                                                />
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="card-inner p-0">
-                                <table className="table w-100 d-table table-hover table-responsive">
-                                    <thead>
-                                        <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
-                                                <span className="">User</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Date</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Transaction Hash</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">From Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">To Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Gas Fee</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Amount</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Currency</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Orphan Tnx</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data?.length > 0
-                                            ? data?.map((item) => {
-                                                return (
-                                                    <tr key={item.txnHash} className="">
-                                                        <td className="tb-tnx font-weight-bold">
-                                                            <span>{item.username}</span>
-                                                        </td>
-                                                        <td className="">
-                                                            <span className="date">
-                                                                <div className="d-flex">
-                                                                    {" "}
-                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-
-                                                                    <div className="ml-2">
-                                                                        {" "}
-                                                                        {moment(item?.createdAt).format("HH:mm ")}
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.gasFee}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{(item?.amount / 100).toLocaleString()}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.currencySymbol}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                            : null}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="card-inner">
-                                {data?.length > 0 ? (
-                                    <PaginationComponent
-                                        noDown
-                                        itemPerPage={itemPerPage}
-                                        totalItems={incomingTnx?.totalItems}
-                                        paginate={paginate}
-                                        currentPage={currentPage}
-                                    />
-                                ) : (
-                                    <div className="text-center">
-                                        <span className="text-silent">No data found</span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </Card>
+                    <div className="p-0">
+                        <ThemeProvider theme={theme}>
+                            <MaterialTable
+                                title="Incoming Transactions"
+                                columns={columns}
+                                data={(query) =>
+                                    new Promise((resolve, reject) => {
+                                        // Assuming incomingTnx.data is an array of items
+                                        const dataSlice = incomingTnx.data.slice(query.page * query.pageSize, (query.page + 1) * query.pageSize);
+                                        resolve({
+                                            data: data,
+                                            page: query.page,
+                                            totalCount: incomingTnx.totalItems, // Assuming incomingTnx.total is the total count
+                                        });
+                                    })
+                                }
+                                options={{
+                                    filtering: true,
+                                    pagination: true,
+                                    pageSize: itemPerPage,
+                                    pageSizeOptions: [5, 10, 20],
+                                }}
+                                totalCount={total}
+                                onChangePage={(page) => setCurrentPage(page)}
+                                onChangeRowsPerPage={(pageSize) => {
+                                    setItemPerPage(pageSize);
+                                    setCurrentPage(1); // Reset to the first page when changing items per page
+                                }}
+                                icons={{
+                                    Add: Add,
+                                    Check: Check,
+                                    Clear: Clear,
+                                    Delete: DeleteOutline,
+                                    DetailPanel: ChevronRight,
+                                    Edit: Edit,
+                                    Export: SaveAlt,
+                                    Filter: FilterList,
+                                    FirstPage: FirstPage,
+                                    LastPage: LastPage,
+                                    NextPage: ChevronRight,
+                                    PreviousPage: ChevronLeft,
+                                    ResetSearch: Clear,
+                                    Search: Search,
+                                    SortArrow: ArrowDownward,
+                                    ThirdStateCheck: Remove,
+                                    ViewColumn: ViewColumn,
+                                }}
+                            />
+                            {/* <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={incomingTnx?.totalItems}
+                                rowsPerPage={itemPerPage}
+                                page={currentPage}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            /> */}
+                        </ThemeProvider>
+                    </div>
                 </Block>
 
-                <Modal
+                {/* <Modal
                     isOpen={showFilterModal}
                     toggle={() => setShowFilterModal(!showFilterModal)}
                 >
@@ -248,7 +209,7 @@ const IncomingTnx = ({ }) => {
                             Submit
                         </button>
                     </ModalBody>
-                </Modal>
+                </Modal> */}
             </Content>
         </React.Fragment>
     );

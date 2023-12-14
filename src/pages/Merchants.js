@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import MaterialTable from 'material-table';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { Add, ArrowDownward, Check, ChevronLeft, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, Search, ViewColumn } from '@mui/icons-material';
 import Content from "../layout/content/Content.js";
 import Head from "../layout/head/Head";
 import {
@@ -12,8 +15,7 @@ import {
     PaginationComponent,
 } from "../components/Component";
 import moment from "moment";
-import { Alert, Card } from "reactstrap";
-import { fetchOrphanLog } from "../store/actions.js";
+import { Card } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { merchantData } from "../components/table/TableData.js";
 
@@ -23,9 +25,14 @@ const Merchants = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
-
-
-
+    const theme = createTheme();
+    const columns = [
+        { title: 'ID', field: 'id' },
+        { title: 'Name', field: 'name' },
+        { title: 'Wallet', field: 'wallet' },
+        { title: 'Total Balance', field: 'balance' },
+        { title: 'Agent Name', field: 'agentName' }
+    ];
 
     useEffect(() => {
         if (data) {
@@ -90,7 +97,7 @@ const Merchants = () => {
 
                 <Block>
 
-                    {data &&
+                    {/* {data &&
                         <Card className="card-bordered card-stretch">
                             <div className="card-inner-group">
                                 <div className="card-inner">
@@ -143,6 +150,7 @@ const Merchants = () => {
                                                 : null}
                                         </tbody>
                                     </table>
+                                    
                                 </div>
                                 <div className="card-inner">
                                     {data.length > 0 ? (
@@ -160,7 +168,44 @@ const Merchants = () => {
                                     )}
                                 </div>
                             </div>
-                        </Card>}
+                        </Card>} */}
+                    <div className="p-0">
+                        <ThemeProvider theme={theme}>
+                            <MaterialTable
+                                title="Merchants"
+                                columns={columns}
+                                data={data}
+                                options={{
+                                    filtering: true,
+                                    pagination: true,
+                                    paginationType: 'stepped',
+                                    pageSize: 10,
+                                    sorting: true,
+                                    search: false,
+                                    toolbar: false
+                                }}
+                                icons={{
+                                    Add: Add,
+                                    Check: Check,
+                                    Clear: Clear,
+                                    Delete: DeleteOutline,
+                                    DetailPanel: ChevronRight,
+                                    Edit: Edit,
+                                    Export: SaveAlt,
+                                    Filter: FilterList,
+                                    FirstPage: FirstPage,
+                                    LastPage: LastPage,
+                                    NextPage: ChevronRight,
+                                    PreviousPage: ChevronLeft,
+                                    ResetSearch: Clear,
+                                    Search: Search,
+                                    SortArrow: ArrowDownward,
+                                    ThirdStateCheck: Remove,
+                                    ViewColumn: ViewColumn,
+                                }}
+                            />
+                        </ThemeProvider>
+                    </div>
                 </Block>
             </Content>
         </React.Fragment>

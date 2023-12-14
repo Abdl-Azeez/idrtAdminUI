@@ -83,7 +83,7 @@ const IncomingWalletTnx = ({ updateAddress }) => {
                         </BlockHeadContent> */}
                 </BlockBetween>
             </BlockHead>
-            <div className="d-flex justify-content-center position-relative" style={{ height: `${transactionAddress ? 'auto' : '400px'} `, top: `${transactionAddress ? '-70px' : 'auto'} ` }}>
+            {/* <div className="d-flex justify-content-center position-relative" style={{ height: `${transactionAddress ? 'auto' : '400px'} `, top: `${transactionAddress ? '-70px' : 'auto'} ` }}>
                 <ul className="nk-block-tools g-3">
                     <li>
                         <div className="form-control-wrap d-flex align-items-center">
@@ -103,7 +103,7 @@ const IncomingWalletTnx = ({ updateAddress }) => {
                     </li>
 
                 </ul>
-            </div>
+            </div> */}
 
 
 
@@ -120,127 +120,128 @@ const IncomingWalletTnx = ({ updateAddress }) => {
                         </Alert>
                     }
                 </div>
-                {transactionAddress &&
-                    <Card className="card-bordered card-stretch position-relative" style={{ top: `${transactionAddress ? '-25px' : 'auto'} ` }}>
-                        <div className="card-inner-group">
-                            <div className="card-inner">
-                                <div className="card-title-group">
-                                    <div className="card-title">
-                                        <h5 className="title">Incoming Transactions</h5>
-                                    </div>
-                                    <div className="card-title d-flex align-items-center">
-                                        <h5 className="title mr-2 mb-0">Balance Wallet: </h5>
-                                        <span>{walletBalance ? walletBalance[0]?.balance / 100 : 0}</span>
-                                    </div>
+                {/* {transactionAddress && */}
+                <Card className="card-bordered card-stretch position-relative" style={{ top: `${transactionAddress ? '-25px' : 'auto'} ` }}>
+                    <div className="card-inner-group">
+                        <div className="card-inner">
+                            <div className="card-title-group">
+                                <div className="card-title">
+                                    <h5 className="title">Incoming Transactions</h5>
+                                </div>
+                                <div className="card-title d-flex align-items-center">
+                                    <h5 className="title mr-2 mb-0">Balance Wallet: </h5>
+                                    <span>{walletBalance ? walletBalance[0]?.balance / 100 : 0}</span>
                                 </div>
                             </div>
-                            <div className="card-inner p-0">
-                                <table className="table w-100 d-table table-hover table-responsive">
-                                    <thead>
-                                        <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
-                                                <span className="">User</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Date</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Transaction Hash</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">From Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">To Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Gas Fee</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Amount</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Currency</span>
-                                            </th>
-                                            {/* <th className="">
+                        </div>
+                        <div className="card-inner p-0">
+                            <table className="table w-100 d-table table-hover table-responsive">
+                                <thead>
+                                    <tr className="tb-tnx-head">
+                                        <th className="tb-tnx-id">
+                                            <span className="">User</span>
+                                        </th>
+                                        <th className="">
+                                            <span>Date</span>
+                                        </th>
+                                        <th className="">
+                                            <span>Transaction Hash</span>
+                                        </th>
+                                        <th className="">
+                                            <span className="">From Wallet</span>
+                                        </th>
+                                        <th className="">
+                                            <span className="">To Wallet</span>
+                                        </th>
+                                        <th className="">
+                                            <span className="">Gas Fee</span>
+                                        </th>
+                                        <th className="">
+                                            <span className="">Amount</span>
+                                        </th>
+                                        <th className="">
+                                            <span className="">Currency</span>
+                                        </th>
+                                        {/* <th className="">
                                                 <span className="">Orphan Tnx</span>
                                             </th> */}
 
 
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data?.length > 0
-                                            ? data?.map((item) => {
-                                                return (
-                                                    <tr key={item.txnHash} className="">
-                                                        <td className="tb-tnx font-weight-bold">
-                                                            <span>{item.username}</span>
-                                                        </td>
-                                                        <td className="">
-                                                            <span className="date">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data?.length > 0
+                                        ? data?.map((item) => {
+                                            return (
+                                                <tr key={item.txnHash} className="">
+                                                    <td className="tb-tnx font-weight-bold">
+                                                        <span>{item.username}</span>
+                                                    </td>
+                                                    <td className="">
+                                                        <span className="date">
 
 
-                                                                <div className="d-flex">
+                                                            <div className="d-flex">
+                                                                {" "}
+                                                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+
+                                                                <div className="ml-2">
                                                                     {" "}
-                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-
-                                                                    <div className="ml-2">
-                                                                        {" "}
-                                                                        {moment(item?.createdAt).format("HH:mm ")}
-                                                                    </div>
+                                                                    {moment(item?.createdAt).format("HH:mm ")}
                                                                 </div>
-                                                            </span>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.gasFee}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{(item?.amount / 100).toLocaleString()}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.currencySymbol}</span>
-                                                        </td>
-                                                        {/* <td className="tb-info">
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                    <td className="">
+                                                        <div className="text-truncate" style={{ maxWidth: '200px' }}>{item?.txnHash}</div>
+                                                    </td>
+                                                    <td className="">
+                                                        <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.fromAddress}</div>
+                                                    </td>
+                                                    <td className="">
+                                                        <div className="text-truncate font-weight-bolder" style={{ maxWidth: '200px' }}>{item?.walletId}</div>
+                                                    </td>
+                                                    <td className="tb-info">
+                                                        <span className="">{item?.gasFee}</span>
+                                                    </td>
+                                                    <td className="tb-info">
+                                                        <span className="">{(item?.amount / 100).toLocaleString()}</span>
+                                                    </td>
+                                                    <td className="tb-info">
+                                                        <span className="">{item?.currencySymbol}</span>
+                                                    </td>
+                                                    {/* <td className="tb-info">
                                                             <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
                                                         </td> */}
 
 
 
-                                                    </tr>
-                                                );
-                                            })
-                                            : null}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="card-inner">
-                                {data.length > 0 ? (
-                                    <PaginationComponent
-                                        noDown
-                                        itemPerPage={itemPerPage}
-                                        totalItems={transactionAddress?.totalItems}
-                                        paginate={paginate}
-                                        currentPage={currentPage}
-                                    />
-                                ) : (
-                                    <div className="text-center">
-                                        <span className="text-silent">No data found</span>
-                                    </div>
-                                )}
-                            </div>
+                                                </tr>
+                                            );
+                                        })
+                                        : null}
+                                </tbody>
+                            </table>
                         </div>
-                    </Card>}
+                        <div className="card-inner">
+                            {data.length > 0 ? (
+                                <PaginationComponent
+                                    noDown
+                                    itemPerPage={itemPerPage}
+                                    totalItems={transactionAddress?.totalItems}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </Card>
+                {/* } */}
             </Block>
 
 
