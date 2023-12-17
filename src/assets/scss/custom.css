@@ -4,7 +4,7 @@
 .is-light .active > .nk-menu-link {
   background: #ebeef2;
 }
-.nk-menu-link .active {
+.nk-menu-link.active {
   background: #ebeef2;
 }
 .top-cards {
