@@ -4,7 +4,9 @@
 .is-light .active > .nk-menu-link {
   background: #ebeef2;
 }
-
+.nk-menu-link .active {
+  background: #ebeef2;
+}
 .top-cards {
   flex-wrap: nowrap !important;
   margin-left: -30px;
