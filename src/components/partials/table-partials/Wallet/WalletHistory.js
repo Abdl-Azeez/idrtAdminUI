@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Content from "../../../../layout/content/Content.js";
 import Head from "../../../../layout/head/Head.js";
+import MaterialTable from 'material-table';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { ArrowDownward, ChevronLeft, ChevronRight, FilterList, FirstPage, LastPage } from '@mui/icons-material';
 import {
     Block,
     BlockBetween,
@@ -20,7 +23,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 const WalletHistory = ({ Id, type = "wallet" }) => {
     const { walletHistory, walletError } = useSelector((state) => state.Wallet);
-    const [data, setData] = useState(walletHistory || []);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
@@ -41,127 +43,102 @@ const WalletHistory = ({ Id, type = "wallet" }) => {
         }
     }, [dispatch, Id]);
 
-    // Changing state value when searching name
-    useEffect(() => {
-        if (walletHistory) {
-            setData(walletHistory)
-        }
-    }, [walletHistory]);
+    const theme = createTheme();
+    const columns = [
+        { title: 'User', field: 'id' },
+        {
+            title: 'Attached At',
+            field: 'attachedAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.attachedAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.attachedAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        {
+            title: 'Detached At',
+            field: 'detachedAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.detachedAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.detachedAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        { title: 'User ID', field: 'userId' },
+        { title: 'Wallet ID', field: 'walletId' },
+    ];
 
 
-
-    // Get current list, pagination
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = walletHistory?.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Change Page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <React.Fragment>
 
 
             <Block>
-                {/* {walletHistory && */}
-                <Card className="card-bordered card-stretch">
-                    <div className="card-inner-group">
-                        <div className="card-inner">
-                            <div className="card-title-group">
-                                <div className="card-title">
-                                    <h5 className="title">Wallet History</h5>
-                                </div>
+                {walletHistory &&
+                    <div className="p-0">
+                        <ThemeProvider theme={theme}>
+                            <MaterialTable
+                                title="Wallet History"
+                                columns={columns}
+                                // data={query =>
+                                //     new Promise((resolve, reject) => {
+                                //         let url = `${process.env.REACT_APP_BASE_URL}/${type === 'user' ? 'wallet/assignHistoryByUser/' : 'wallet/assignHistoryByWallet/'}${Id}`
+                                //         url += 'perPage=' + query.pageSize
+                                //         url += '&page=' + (query.page + 1)
+                                //         query.filters.forEach((filter) => {
+                                //             url += `&${filter.column.field}=${filter.value}`;
+                                //         });
+                                //         fetch(url)
+                                //             .then(response => response.json())
+                                //             .then(result => {
+                                //                 resolve({
+                                //                     data: result.data,
+                                //                     page: result.page - 1,
+                                //                     totalCount: result.totalItems,
+                                //                 })
+                                //             })
+                                //     })
+                                // }
+                                data={walletHistory}
+                                options={{
+                                    filtering: true,
+                                    pagination: true,
+                                    pageSize: itemPerPage,
+                                    pageSizeOptions: [10, 25, 50, 100],
+                                    // initialPage: 1,
+                                    search: false
+                                }}
+                                onChangePage={(page) => { setCurrentPage(page); }}
+                                onChangeRowsPerPage={(pageSize) => {
+                                    setItemPerPage(pageSize);
+                                    setCurrentPage(1);
+                                }}
+                                icons={{
+                                    Filter: FilterList,
+                                    FirstPage: FirstPage,
+                                    LastPage: LastPage,
+                                    NextPage: ChevronRight,
+                                    PreviousPage: ChevronLeft,
+                                    SortArrow: ArrowDownward,
+                                }}
+                            />
 
-                            </div>
-                        </div>
-                        <div className="card-inner p-0">
-                            <table className="table w-100 d-table table-hover table-responsive">
-                                <thead>
-                                    <tr className="tb-tnx-head">
-                                        <th className="tb-tnx-id">
-                                            <span className="">ID</span>
-                                        </th>
-                                        <th className="">
-                                            <span>Attached At</span>
-                                        </th>
-                                        <th className="">
-                                            <span>Detached At</span>
-                                        </th>
-                                        <th className="">
-                                            <span className="">User ID</span>
-                                        </th>
-                                        <th className="">
-                                            <span className="">Wallet ID</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data?.length > 0
-                                        ? data?.map((item) => {
-                                            return (
-                                                <tr key={item.id} className="">
-                                                    <td className="tb-tnx font-weight-bold">
-                                                        <span>{item.id}</span>
-                                                    </td>
-                                                    <td className="">
-                                                        <span className="date">
-
-                                                            <div className="d-flex">
-                                                                {" "}
-                                                                <div>{moment(item?.attachedAt).format("DD/MM/YYYY")}</div>
-                                                                {/* <div className="mx-1">-</div> */}
-                                                                <div className="ml-2">
-                                                                    {" "}
-                                                                    {moment(item?.attachedAt).format("HH:mm ")}
-                                                                </div>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                    <td className="">
-                                                        <span className="date">
-
-                                                            <div className="d-flex">
-                                                                {" "}
-                                                                <div>{moment(item?.detachedAt).format("DD/MM/YYYY")}</div>
-                                                                {/* <div className="mx-1">-</div> */}
-                                                                <div className="ml-2">
-                                                                    {" "}
-                                                                    {moment(item?.detachedAt).format("HH:mm ")}
-                                                                </div>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                    <td className="">
-                                                        <div className="text-truncate font-weight-bolder">{item?.userId}</div>
-                                                    </td>
-                                                    <td className="">
-                                                        <div className="text-truncate font-weight-bolder">{item?.walletId}</div>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })
-                                        : null}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="card-inner">
-                            {data.length > 0 ? (
-                                <PaginationComponent
-                                    noDown
-                                    itemPerPage={itemPerPage}
-                                    totalItems={walletHistory?.length}
-                                    paginate={paginate}
-                                    currentPage={currentPage}
-                                />
-                            ) : (
-                                <div className="text-center">
-                                    <span className="text-silent">No data found</span>
-                                </div>
-                            )}
-                        </div>
+                        </ThemeProvider>
                     </div>
-                </Card>
-                {/* } */}
+                }
             </Block>
         </React.Fragment>
     );

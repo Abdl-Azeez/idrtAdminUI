@@ -100,8 +100,6 @@ const Wallet = (state = initialState, action) => {
     case FETCH_WALLET_BALANCE_ERROR:
       state = {
         ...state,
-        wallet: null,
-        walletBalance: null,
         loading: false,
         message: null,
         walletBalanceError: action.payload,

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Alert,
 } from "reactstrap";
 import MaterialTable from 'material-table';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { Add, ArrowDownward, Check, ChevronLeft, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, Search, ViewColumn } from '@mui/icons-material';
+import { ArrowDownward, ChevronLeft, ChevronRight, FilterList, FirstPage, LastPage } from '@mui/icons-material';
 import {
     BlockBetween,
     BlockHead,
@@ -128,23 +128,12 @@ const IncomingTnx = ({ }) => {
                                         setCurrentPage(1);
                                     }}
                                     icons={{
-                                        Add: Add,
-                                        Check: Check,
-                                        Clear: Clear,
-                                        Delete: DeleteOutline,
-                                        DetailPanel: ChevronRight,
-                                        Edit: Edit,
-                                        Export: SaveAlt,
                                         Filter: FilterList,
                                         FirstPage: FirstPage,
                                         LastPage: LastPage,
                                         NextPage: ChevronRight,
                                         PreviousPage: ChevronLeft,
-                                        ResetSearch: Clear,
-                                        Search: Search,
                                         SortArrow: ArrowDownward,
-                                        ThirdStateCheck: Remove,
-                                        ViewColumn: ViewColumn,
                                     }}
                                 />
 

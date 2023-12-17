@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MaterialTable from 'material-table';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { Add, ArrowDownward, Check, ChevronLeft, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, Search, ViewColumn } from '@mui/icons-material';
+import { ArrowDownward, ChevronLeft, ChevronRight, FilterList, FirstPage, LastPage } from '@mui/icons-material';
 import Content from "../layout/content/Content.js";
 import Head from "../layout/head/Head";
 import {
     Block,
     BlockBetween,
-    BlockDes,
     BlockHead,
     BlockHeadContent,
     BlockTitle,
     Button,
-    Icon,
-    PaginationComponent,
 } from "../components/Component";
-import moment from "moment";
-import { Card } from "reactstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { merchantData } from "../components/table/TableData.js";
 
 const Merchants = () => {
@@ -89,23 +84,12 @@ const Merchants = () => {
                                     toolbar: false
                                 }}
                                 icons={{
-                                    Add: Add,
-                                    Check: Check,
-                                    Clear: Clear,
-                                    Delete: DeleteOutline,
-                                    DetailPanel: ChevronRight,
-                                    Edit: Edit,
-                                    Export: SaveAlt,
                                     Filter: FilterList,
                                     FirstPage: FirstPage,
                                     LastPage: LastPage,
                                     NextPage: ChevronRight,
                                     PreviousPage: ChevronLeft,
-                                    ResetSearch: Clear,
-                                    Search: Search,
                                     SortArrow: ArrowDownward,
-                                    ThirdStateCheck: Remove,
-                                    ViewColumn: ViewColumn,
                                 }}
                             />
                         </ThemeProvider>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
+import MaterialTable from 'material-table';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { ArrowDownward, ChevronLeft, ChevronRight, FilterList, FirstPage, LastPage } from '@mui/icons-material';
 import {
     Block,
     BlockBetween,
@@ -19,7 +22,6 @@ import { useSelector, useDispatch } from "react-redux";
 import WalletHistory from "../components/partials/table-partials/Wallet/WalletHistory";
 
 const User = () => {
-    const [searchText, setSearchText] = useState("");
     const { userTransaction, userTransactionError } = useSelector((state) => state.Transaction);
     const { walletBalance, walletError } = useSelector((state) => state.Wallet);
     const [userID, setUserID] = useState('clp8hu68t0000ncvh03fi48pw');
@@ -29,15 +31,7 @@ const User = () => {
 
     const dispatch = useDispatch();
 
-    // onChange function for searching name
-    const onSearchChange = (e) => {
-        setSearchText(e.target.value);
-    };
-    const handleSearch = () => {
-        if (searchText !== "") {
-            setUserID(searchText)
-        }
-    }
+
 
     // Changing state value when searching name
     useEffect(() => {
@@ -61,14 +55,41 @@ const User = () => {
     }, [userTransaction]);
 
 
+    const theme = createTheme();
+    const columns = [
+        { title: 'ID', field: 'username' },
+        {
+            title: 'Date',
+            field: 'createdAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.createdAt).format("DD/MM/YYYY")}</div>
 
-    // Get current list, pagination
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    let currentItems = userTransaction?.data?.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Change Page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.createdAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        { title: 'Transaction Hash', field: 'txnHash' },
+        { title: 'From Wallet', field: 'fromAddress' },
+        { title: 'To Wallet', field: 'walletId' },
+        {
+            title: 'Gas Fee',
+            field: 'gasFee',
+            render: rowData => <span>{Number(rowData?.gasFee ? rowData?.gasFee / 1000000000000000000 : 0)}</span>,
+        },
+        {
+            title: 'Amount',
+            field: 'amount',
+            render: rowData => <span>{Number(rowData.amount / 100).toLocaleString()}</span>,
+        },
+        { title: 'Currency', field: 'currencySymbol' },
+        { title: 'Orphan Txn', field: 'isOrphanTxn' },
+        { title: 'CallBack Status', field: 'callbackStatus' },
+    ];
 
     return (
         <React.Fragment>
@@ -81,32 +102,10 @@ const User = () => {
                                 Users
                             </BlockTitle>
                         </BlockHeadContent>
-                        {/* <BlockHeadContent>
 
-                        </BlockHeadContent> */}
                     </BlockBetween>
                 </BlockHead>
-                {/* <div className="d-flex justify-content-center position-relative" style={{ height: `${userTransaction ? 'auto' : '400px'} `, top: `${userTransaction ? '-70px' : 'auto'} ` }}>
-                    <ul className="nk-block-tools g-3">
-                        <li>
-                            <div className="form-control-wrap d-flex align-items-center">
 
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="default-04"
-                                    placeholder="Search User ID"
-                                    style={{ width: '400px' }}
-                                    onChange={(e) => onSearchChange(e)}
-                                />
-                                <Button size="sm" color="secondary" style={{ right: '70px' }} onClick={handleSearch}>
-                                    Search
-                                </Button>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div> */}
                 <Block >
                     <div className="d-flex flex-column">
                         {userTransactionError &&
@@ -120,129 +119,57 @@ const User = () => {
                             </Alert>
                         }
                     </div>
-                    {/* {userTransaction && */}
-                    <Card className="card-bordered card-stretch position-relative" style={{ top: `${userTransaction ? '-25px' : 'auto'} ` }}>
-                        <div className="card-inner-group">
-                            <div className="card-inner">
-                                <div className="card-title-group">
-                                    <div className="card-title">
-                                        <h5 className="title">User Transactions</h5>
-                                    </div>
+                    {userTransaction &&
+                        <div className="p-0">
+                            <ThemeProvider theme={theme}>
+                                <MaterialTable
+                                    title="User Transactions"
+                                    columns={columns}
+                                    data={query =>
+                                        new Promise((resolve, reject) => {
+                                            let url = `${process.env.REACT_APP_BASE_URL}/transactions/byUser/${userID}?`
+                                            url += 'perPage=' + query.pageSize
+                                            url += '&page=' + (query.page + 1)
+                                            query.filters.forEach((filter) => {
+                                                url += `&${filter.column.field}=${filter.value}`;
+                                            });
+                                            fetch(url)
+                                                .then(response => response.json())
+                                                .then(result => {
+                                                    resolve({
+                                                        data: result.data,
+                                                        page: result.page - 1,
+                                                        totalCount: result.totalItems,
+                                                    })
+                                                })
+                                        })
+                                    }
+                                    options={{
+                                        filtering: true,
+                                        pagination: true,
+                                        pageSize: itemPerPage,
+                                        pageSizeOptions: [10, 25, 50, 100],
+                                        // initialPage: 1,
+                                        search: false
+                                    }}
+                                    onChangePage={(page) => { setCurrentPage(page); }}
+                                    onChangeRowsPerPage={(pageSize) => {
+                                        setItemPerPage(pageSize);
+                                        setCurrentPage(1);
+                                    }}
+                                    icons={{
+                                        Filter: FilterList,
+                                        FirstPage: FirstPage,
+                                        LastPage: LastPage,
+                                        NextPage: ChevronRight,
+                                        PreviousPage: ChevronLeft,
+                                        SortArrow: ArrowDownward,
+                                    }}
+                                />
 
-                                </div>
-                            </div>
-                            <div className="card-inner p-o">
-                                <table className="table w-100 d-table table-hover table-responsive">
-                                    <thead>
-                                        <tr className="tb-tnx-head">
-                                            <th className="tb-tnx-id">
-                                                <span className="">ID</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Date</span>
-                                            </th>
-                                            <th className="">
-                                                <span>Transaction Hash</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">From Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">To Wallet</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Gas Fee</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Amount</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Currency</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">Orphan Tnx</span>
-                                            </th>
-                                            <th className="">
-                                                <span className="">CallBack Status</span>
-                                            </th>
-
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data?.length > 0
-                                            ? data?.map((item) => {
-                                                return (
-                                                    <tr key={item.txnHash} className="">
-                                                        <td className="tb-tnx font-weight-bold">
-                                                            <div className="text-truncate" style={{ maxWidth: '100px' }}>{item.username}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <span className="date">
-                                                                <div className="d-flex">
-                                                                    {" "}
-                                                                    <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
-
-                                                                    <div className="ml-2">
-                                                                        {" "}
-                                                                        {moment(item?.createdAt).format("HH:mm ")}
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate" style={{ maxWidth: '150px' }}>{item?.txnHash}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '150px' }}>{item?.fromAddress}</div>
-                                                        </td>
-                                                        <td className="">
-                                                            <div className="text-truncate font-weight-bolder" style={{ maxWidth: '150px' }}>{item?.walletId}</div>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.gasFee}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <div className="text-truncate" style={{ maxWidth: '150px' }}>{(item?.amount / 100).toLocaleString()}</div>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.currencySymbol}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.isOrphanTxn ? 'Yes' : 'No'}</span>
-                                                        </td>
-                                                        <td className="tb-info">
-                                                            <span className="">{item?.callbackStatus}</span>
-                                                        </td>
-
-
-
-                                                    </tr>
-                                                );
-                                            })
-                                            : null}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="card-inner">
-                                {data?.length > 0 ? (
-                                    <PaginationComponent
-                                        noDown
-                                        itemPerPage={itemPerPage}
-                                        totalItems={userTransaction?.totalItems}
-                                        paginate={paginate}
-                                        currentPage={currentPage}
-                                    />
-                                ) : (
-                                    <div className="text-center">
-                                        <span className="text-silent">No data found</span>
-                                    </div>
-                                )}
-                            </div>
+                            </ThemeProvider>
                         </div>
-                    </Card>
-                    {/* } */}
+                    }
 
                     <div className="mt-5">
                         <WalletHistory Id={userID} type={'user'} />

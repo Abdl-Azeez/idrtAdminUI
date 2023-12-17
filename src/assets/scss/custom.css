@@ -1,4 +1,10 @@
 /* Dashboard */
+
+.is-light .nk-menu-link:hover,
+.is-light .active > .nk-menu-link {
+  background: #ebeef2;
+}
+
 .top-cards {
   flex-wrap: nowrap !important;
   margin-left: -30px;

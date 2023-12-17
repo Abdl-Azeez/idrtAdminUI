@@ -140,23 +140,12 @@ const Agents = () => {
                                 //     ),
                                 // }}
                                 icons={{
-                                    Add: Add,
-                                    Check: Check,
-                                    Clear: Clear,
-                                    Delete: DeleteOutline,
-                                    DetailPanel: ChevronRight,
-                                    Edit: Edit,
-                                    Export: SaveAlt,
                                     Filter: FilterList,
                                     FirstPage: FirstPage,
                                     LastPage: LastPage,
                                     NextPage: ChevronRight,
                                     PreviousPage: ChevronLeft,
-                                    ResetSearch: Clear,
-                                    Search: Search,
                                     SortArrow: ArrowDownward,
-                                    ThirdStateCheck: Remove,
-                                    ViewColumn: ViewColumn,
                                 }}
                             />
                         </ThemeProvider>
