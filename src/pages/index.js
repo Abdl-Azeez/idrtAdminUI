@@ -164,16 +164,11 @@ const Homepage = () => {
         }
 
         {/* LATEST INCOMING TRANSACTIONS */}
-        <Card className="px-3 py-3 mt-5">
-          <LatestIncomingTrans />
-        </Card>
-
+        <LatestIncomingTrans />
 
         {/* LATEST OUTGOING TRANSACTIONS */}
+        <LatestOutgoingTrans />
 
-        <Card className="px-3 py-3 mt-5">
-          <LatestOutgoingTrans />
-        </Card>
 
 
 

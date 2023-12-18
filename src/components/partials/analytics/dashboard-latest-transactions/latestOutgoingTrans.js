@@ -18,7 +18,7 @@ const LatestOutgoingTrans = () => {
   return (
     <React.Fragment>
       {transactions?.latestOutgoingTransactions &&
-        <div>
+        <Card className="px-3 py-3 mt-5">
           <BlockHead size="sm" className="d-flex justify-content-between">
             <div className="nk-block-between">
               <BlockHeadContent>
@@ -141,7 +141,7 @@ const LatestOutgoingTrans = () => {
             </Row>
 
           </Block>
-        </div>}
+        </Card>}
     </React.Fragment>
   );
 };
