@@ -1,27 +1,27 @@
 const menu = [
   {
-    icon: "dashboard-fill",
-    text: "Dashboard",
+    icon: "fa-solid fa-house",
+    text: "Home",
     link: "/",
   },
   {
-    icon: "user-list-fill",
+    icon: "fa-solid fa-users-between-lines",
     text: "Merchants",
     link: "/merchants",
   },
   {
-    icon: "user-list-fill",
-    text: "Users",
+    icon: "fa-solid fa-user",
+    text: "Users List",
     link: "/users",
   },
 
   {
-    icon: "rss",
+    icon: "fa-solid fa-landmark",
     text: "Transactions",
     link: "/transactions",
   },
   {
-    icon: "rss",
+    icon: "fa-solid fa-gear",
     text: "Settings",
     link: "/settings",
   }

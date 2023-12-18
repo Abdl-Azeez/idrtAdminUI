@@ -1,41 +1,41 @@
 const menu = [
   {
-    icon: "dashboard-fill",
-    text: "Dashboard",
+    icon: "fa-solid fa-house",
+    text: "Home",
     link: "/",
   },
   {
-    icon: "user-list-fill",
+    icon: "fa-solid fa-user-tie",
     text: "Agents",
     link: "/agents",
   },
   {
-    icon: "user-list-fill",
+    icon: "fa-solid fa-users-between-lines",
     text: "Merchants",
     link: "/merchants",
   },
   {
-    icon: "user-list-fill",
-    text: "Users",
+    icon: "fa-solid fa-user",
+    text: "Users List",
     link: "/users",
   },
   {
-    icon: "share-alt",
+    icon: "fa-solid fa-coins",
     text: "Wallets",
     link: "/wallets",
   },
   {
-    icon: "rss",
+    icon: "fa-solid fa-landmark",
     text: "Transactions",
     link: "/transactions",
   },
   {
-    icon: "rss",
+    icon: "fa-solid fa-chart-column",
     text: "Orphan Log",
     link: "/orphan_log",
   },
   {
-    icon: "rss",
+    icon: "fa-solid fa-gear",
     text: "Settings",
     link: "/settings",
   }

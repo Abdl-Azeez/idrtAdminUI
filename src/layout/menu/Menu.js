@@ -11,7 +11,6 @@ const getMenuData = (role) => {
       return adminMenuData;
     case "AGENT":
       return agentMenuData;
-    // Add more cases for other roles if needed
     default:
       return merchantMenuData;
   }
@@ -25,136 +24,29 @@ const MenuHeading = ({ heading }) => {
   );
 };
 
-const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, mobileView, sidebarToggle, badge, ...props }) => {
-  let currentUrl;
-
+const MenuItem = ({ icon, link, text, sub, newTab, mobileView, sidebarToggle, badge, setActiveMenuItem, activeMenuItem, ...props }) => {
   const toggleActionSidebar = (e) => {
     if (!sub && !newTab && mobileView) {
       sidebarToggle(e);
     }
   };
 
-  if (window.location.pathname !== undefined) {
-    currentUrl = window.location.pathname;
-  } else {
-    currentUrl = null;
-  }
-
-  const menuHeight = (el) => {
-    var totalHeight = [];
-    for (var i = 0; i < el.length; i++) {
-      var margin =
-        parseInt(window.getComputedStyle(el[i]).marginTop.slice(0, -2)) +
-        parseInt(window.getComputedStyle(el[i]).marginBottom.slice(0, -2));
-      var padding =
-        parseInt(window.getComputedStyle(el[i]).paddingTop.slice(0, -2)) +
-        parseInt(window.getComputedStyle(el[i]).paddingBottom.slice(0, -2));
-      var height = el[i].clientHeight + margin + padding;
-      totalHeight.push(height);
-    }
-    totalHeight = totalHeight.reduce((sum, value) => (sum += value));
-    return totalHeight;
-  };
-
-  const makeParentActive = (el, childHeight) => {
-    let element = el.parentElement.parentElement.parentElement;
-    let wrap = el.parentElement.parentElement;
-    if (element.classList[0] === "nk-menu-item") {
-      element.classList.add("active");
-      const subMenuHeight = menuHeight(el.parentNode.children);
-      wrap.style.height = subMenuHeight + childHeight - 50 + "px";
-      makeParentActive(element);
-    }
-  };
-
-  useEffect(() => {
-    var element = document.getElementsByClassName("nk-menu-item active current-page");
-    var arrayElement = [...element];
-
-    arrayElement.forEach((dom) => {
-      if (dom.parentElement.parentElement.parentElement.classList[0] === "nk-menu-item") {
-        dom.parentElement.parentElement.parentElement.classList.add("active");
-        const subMenuHeight = menuHeight(dom.parentNode.children);
-        dom.parentElement.parentElement.style.height = subMenuHeight + "px";
-        makeParentActive(dom.parentElement.parentElement.parentElement, subMenuHeight);
-      }
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const menuToggle = (e) => {
-    e.preventDefault();
-    var self = e.target.closest(".nk-menu-toggle");
-    var parent = self.parentElement;
-    var subMenu = self.nextSibling;
-    var subMenuItem = subMenu.childNodes;
-    var parentSiblings = parent.parentElement.childNodes;
-    var parentMenu = parent.closest(".nk-menu-wrap");
-    //For Sub Menu Height
-    var subMenuHeight = menuHeight(subMenuItem);
-    // Get parent elements
-    const getParents = (el, parentSelector) => {
-      parentSelector = document.querySelector(".nk-menu");
-      if (parentSelector === undefined) {
-        parentSelector = document;
-      }
-      var parents = [];
-      var p = el.parentNode;
-      while (p !== parentSelector) {
-        var o = p;
-        parents.push(o);
-        p = o.parentNode;
-      }
-      parents.push(parentSelector);
-      return parents;
-    };
-    var parentMenus = getParents(self);
-    if (!parent.classList.contains("active")) {
-      // For Parent Siblings
-      for (var j = 0; j < parentSiblings.length; j++) {
-        parentSiblings[j].classList.remove("active");
-        if (typeof parentSiblings[j].childNodes[1] !== "undefined") {
-          parentSiblings[j].childNodes[1].style.height = 0;
-        }
-      }
-      if (parentMenu !== null) {
-        if (!parentMenu.classList.contains("sub-opened")) {
-          parentMenu.classList.add("sub-opened");
-
-          for (var l = 0; l < parentMenus.length; l++) {
-            if (typeof parentMenus !== "undefined") {
-              if (parentMenus[l].classList.contains("nk-menu-wrap")) {
-                parentMenus[l].style.height = subMenuHeight + parentMenus[l].clientHeight + "px";
-              }
-            }
-          }
-        }
-      }
-      // For Current Element
-      parent.classList.add("active");
-      subMenu.style.height = subMenuHeight + "px";
-    } else {
-      parent.classList.remove("active");
-      if (parentMenu !== null) {
-        parentMenu.classList.remove("sub-opened");
-        for (var k = 0; k < parentMenus.length; k++) {
-          if (typeof parentMenus !== "undefined") {
-            if (parentMenus[k].classList.contains("nk-menu-wrap")) {
-              parentMenus[k].style.height = parentMenus[k].clientHeight - subMenuHeight + "px";
-            }
-          }
-        }
-      }
-      subMenu.style.height = 0;
-    }
+  const handleMenuItemClick = () => {
+    setActiveMenuItem(link);
+    toggleActionSidebar();
   };
 
   const menuItemClass = classNames({
     "nk-menu-item": true,
     "has-sub": sub,
-    "active current-page": currentUrl === process.env.PUBLIC_URL + link,
+    "active current-page": activeMenuItem === link,
   });
+  useEffect(() => {
+    const currentUrl = window.location.pathname;
+    setActiveMenuItem(currentUrl);
+  }, []);
   return (
-    <li className={menuItemClass} onClick={(e) => toggleActionSidebar(e)}>
+    <li className={menuItemClass} onClick={handleMenuItemClick}>
       {newTab ? (
         <Link
           to={`${process.env.PUBLIC_URL + link}`}
@@ -164,7 +56,7 @@ const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, mobileView, 
         >
           {icon ? (
             <span className="nk-menu-icon">
-              {/* <Icon name={icon} /> */}
+              <i className={`${icon}`}></i>
             </span>
           ) : null}
           <span className="nk-menu-text">{text}</span>
@@ -173,11 +65,11 @@ const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, mobileView, 
         <NavLink
           to={`${process.env.PUBLIC_URL + link}`}
           className={`nk-menu-link${sub ? " nk-menu-toggle" : ""}`}
-          onClick={sub ? menuToggle : null}
+          onClick={sub ? handleMenuItemClick : null}
         >
           {icon ? (
             <span className="nk-menu-icon">
-              {/* <Icon name={icon} /> */}
+              <i className={`${icon}`}></i>
             </span>
           ) : null}
           <span className="nk-menu-text">{text}</span>
@@ -227,11 +119,13 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
             text={item.text}
             sub={item.subMenu}
             badge={item.badge}
+            setActiveMenuItem={() => { }}
+            activeMenuItem={null}
           />
         ))}
         <MenuHeading heading="Return to" />
         <li className={menuItemClass}>
-          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
+          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(data)}>
             <span className="nk-menu-icon">
               {/* <Icon name="dashlite-alt" /> */}
             </span>
@@ -239,7 +133,7 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
           </Link>
         </li>
         <li className={menuItemClass}>
-          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
+          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(data)}>
             <span className="nk-menu-icon">
               {/* <Icon name="layers-fill" /> */}
             </span>
@@ -251,7 +145,7 @@ const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...pr
   }
 };
 
-const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props }) => {
+const MenuSub = ({ sub, sidebarToggle, mobileView, ...props }) => {
   return (
     <ul className="nk-menu-sub" style={props.style}>
       {sub.map((item) => (
@@ -265,6 +159,8 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
           badge={item.badge}
           sidebarToggle={sidebarToggle}
           mobileView={mobileView}
+          setActiveMenuItem={() => { }}
+          activeMenuItem={null}
         />
       ))}
     </ul>
@@ -273,6 +169,7 @@ const MenuSub = ({ icon, link, text, sub, sidebarToggle, mobileView, ...props })
 
 const Menu = ({ sidebarToggle, mobileView }) => {
   const [data, setMenuData] = useState([]);
+  const [activeMenuItem, setActiveMenuItem] = useState(null);
 
   useEffect(() => {
     const role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null;
@@ -296,7 +193,6 @@ const Menu = ({ sidebarToggle, mobileView }) => {
             subPanel={item.subPanel}
             data={data}
             setMenuData={setMenuData}
-            sidebarToggle={sidebarToggle}
           />
         ) : (
           <MenuItem
@@ -310,6 +206,8 @@ const Menu = ({ sidebarToggle, mobileView }) => {
             subPanel={item.subPanel}
             sidebarToggle={sidebarToggle}
             mobileView={mobileView}
+            setActiveMenuItem={setActiveMenuItem}
+            activeMenuItem={activeMenuItem}
           />
         )
       )}
