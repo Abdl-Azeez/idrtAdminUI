@@ -18,125 +18,126 @@ const LatestOutgoingTrans = () => {
   return (
     <React.Fragment>
       {transactions?.latestOutgoingTransactions &&
-        <div className="py-5">
-          <BlockHead size="sm" className="d-flex justify-content-between pt-5">
+        <div>
+          <BlockHead size="sm" className="d-flex justify-content-between">
             <div className="nk-block-between">
               <BlockHeadContent>
-                <BlockTitle page tag="h3">
-                  LATEST OUTGOING TRANSACTIONS
-                </BlockTitle>
+                <p className="ml-4 mb-0" style={{ fontSize: '16px', fontWeight: '500' }}>
+                  Latest Outgoing Transactions
+                </p>
               </BlockHeadContent>
             </div>
           </BlockHead>
           <Block>
-            <Row className="g-gs">
+            <Row className="g-gs d-flex flex-column">
               <Col lg="12" xxl="12">
-                <Card className="">
-                  {transactions?.latestOutgoingTransactions?.length > 0 ?
-                    <div className="nk-tb-list is-loose traffic-channel-table">
-                      <DataTableHead className="">
-                        {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">User ID</DataTableRow> */}
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Date</DataTableRow>
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Transaction Hash</DataTableRow>
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From Wallet</DataTableRow>
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To Wallet</DataTableRow>
+                {transactions?.latestOutgoingTransactions?.length > 0 ?
+                  <div className="nk-tb-list is-loose traffic-channel-table">
+                    <DataTableHead className="">
+                      {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">User ID</DataTableRow> */}
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Date</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Transaction Hash</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From Wallet</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To Wallet</DataTableRow>
 
 
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount</DataTableRow>
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Currency</DataTableRow>
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Gas Fee</DataTableRow>
-                        {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Commission</DataTableRow> */}
-                        <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Orphan Tnx</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Currency</DataTableRow>
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Gas Fee</DataTableRow>
+                      {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Commission</DataTableRow> */}
+                      <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Orphan Tnx</DataTableRow>
 
 
-                        {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Callback Status</DataTableRow> */}
-                      </DataTableHead>
-                      {transactions?.latestOutgoingTransactions?.map((item, i) => {
-                        if (i <= 5) {
-                          return (
-                            <DataTableItem className="nk-tb-item L" key={item.txnHash}>
-                              {/* <DataTableRow className="nk-tb-channel">
+                      {/* <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Callback Status</DataTableRow> */}
+                    </DataTableHead>
+                    {transactions?.latestOutgoingTransactions?.map((item, i) => {
+                      if (i <= 5) {
+                        return (
+                          <DataTableItem className="nk-tb-item L" key={item.txnHash}>
+                            {/* <DataTableRow className="nk-tb-channel">
                                 <div>{item.userId}</div>
                               </DataTableRow> */}
-                              <DataTableRow className="nk-tb-sessions">
-                                <div className="d-flex">
-                                  {" "}
-                                  <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
+                            <DataTableRow className="nk-tb-sessions">
+                              <div className="d-flex">
+                                {" "}
+                                <div>{moment(item?.createdAt).format("DD/MM/YYYY")}</div>
 
-                                  <div className="ml-2">
-                                    {" "}
-                                    {moment(item?.createdAt).format("HH:mm ")}
-                                  </div>
+                                <div className="ml-2">
+                                  {" "}
+                                  {moment(item?.createdAt).format("HH:mm ")}
                                 </div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.txnHash}</div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div className="text-truncate" style={{ maxWidth: '200px' }} >{item.walletId}</div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.toAddress} </div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div>{`${item.amount / 100}`}</div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div>{item.currencySymbol} </div>
-                              </DataTableRow>
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div>{item.gasFee ? item?.gasFee / 1000000000000000000 : 0} </div>
-                              </DataTableRow>
-                              {/* <DataTableRow className="nk-tb-prev-sessions">
+                              </div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.txnHash}</div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div className="text-truncate" style={{ maxWidth: '200px' }} >{item.walletId}</div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.toAddress} </div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div>{`${item.amount / 100}`}</div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div>{item.currencySymbol} </div>
+                            </DataTableRow>
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div>{item.gasFee ? item?.gasFee / 1000000000000000000 : 0} </div>
+                            </DataTableRow>
+                            {/* <DataTableRow className="nk-tb-prev-sessions">
                                 <div>{item.commission / 100} </div>
                               </DataTableRow> */}
-                              <DataTableRow className="nk-tb-prev-sessions">
-                                <div>{item.isOrphanTxn ? 'Yes' : 'No'} </div>
-                              </DataTableRow>
-                              {/* <DataTableRow className="nk-tb-prev-sessions">
+                            <DataTableRow className="nk-tb-prev-sessions">
+                              <div>{item.isOrphanTxn ? 'Yes' : 'No'} </div>
+                            </DataTableRow>
+                            {/* <DataTableRow className="nk-tb-prev-sessions">
                                 <div>{item.callbackStatus} </div>
                               </DataTableRow> */}
 
-                            </DataTableItem>
-                          );
-                        }
-                        return null;
-                      })}
+                          </DataTableItem>
+                        );
+                      }
+                      return null;
+                    })}
 
 
 
-                    </div>
-                    :
+                  </div>
+                  :
 
 
-                    (
-                      <>
-                        <div className="nk-tb-list is-loose traffic-channel-table">
-                          <DataTableHead className="text-center">
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">ID</DataTableRow>
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Date</DataTableRow>
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From</DataTableRow>
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To</DataTableRow>
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount IDRT</DataTableRow>
-                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow>
-                          </DataTableHead>
-                        </div>
-                        <div className="card text-center p-3">
-                          <div className="font-weight-bold" style={{ fontSize: '16px' }}>No data to display</div>
-                        </div>
-
-
-
+                  (
+                    <>
+                      <div className="nk-tb-list is-loose traffic-channel-table">
+                        <DataTableHead className="text-center">
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">ID</DataTableRow>
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Date</DataTableRow>
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">From</DataTableRow>
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">To</DataTableRow>
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Amount IDRT</DataTableRow>
+                          <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">Action</DataTableRow>
+                        </DataTableHead>
+                      </div>
+                      <div className="card text-center p-3">
+                        <div className="font-weight-bold" style={{ fontSize: '16px' }}>No data to display</div>
+                      </div>
 
 
 
-                      </>
-                    )}
-                </Card>
-                <Link to='/transactions'>
-                  <Button size="sm" color="" className="btn-light font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
-                </Link>
+
+
+
+                    </>
+                  )}
+
               </Col>
+              {transactions?.latestOutgoingTransactions?.length > 0 &&
+                <Link to='/transactions'>
+                  <Button size="sm" color="info" className=" font-size-10 text-center w-100"><span>VIEW ALL TRANSACTIONS</span></Button>
+                </Link>
+              }
             </Row>
 
           </Block>

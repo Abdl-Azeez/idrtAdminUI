@@ -146,7 +146,7 @@ const MainWallets = ({ role }) => {
                             {/* </Block> */}
                         </Col>
                         <Col lg="4" xxl="4">
-                            <DashboardAnalytics />
+                            <DashboardAnalytics role={role} />
                         </Col>
                     </Row>
                 </Col>

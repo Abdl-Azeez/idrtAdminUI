@@ -4,8 +4,14 @@
 .is-light .active > .nk-menu-link {
   background: #ebeef2;
 }
-.current-page .nk-menu-link.active {
-  background: #ebeef2;
+.is-light .nk-menu-link:hover,
+.is-light .active > .nk-menu-link {
+  color: #09c2de !important;
+}
+.nk-menu-link:hover .nk-menu-icon,
+.nk-menu-item.active > .nk-menu-link .nk-menu-icon,
+.nk-menu-item.current-menu > .nk-menu-link .nk-menu-icon {
+  color: #09c2de !important;
 }
 .top-cards {
   flex-wrap: nowrap !important;
@@ -80,4 +86,9 @@ fieldset.MuiOutlinedInput-notchedOutline {
   min-width: 0% !important;
   border-color: transparent !important; /* Remove other border colors */
   border-bottom-color: rgba(0, 0, 0, 0.23) !important; /* Set only the bottom border color */
+}
+
+.overview-cards .card {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 10px;
 }

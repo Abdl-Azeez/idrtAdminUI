@@ -9,7 +9,7 @@ import { fetchWallet, errorChecker } from "../../../../store/actions";
 import moment from 'moment';
 
 
-export const DashboardAnalytics = () => {
+export const DashboardAnalytics = ({ role }) => {
     const { error, toastMessage, toastType } = useSelector((state) => state.General);
     const { wallet, walletError } = useSelector((state) => state.Wallet);
     const dispatch = useDispatch();
@@ -80,78 +80,97 @@ export const DashboardAnalytics = () => {
 
 
     return (
-        <Block>
+        <Block className="h-100">
             {walletError &&
                 <Alert color="danger">
                     Wallet Summary API Error: {walletError}
                 </Alert>
             }
-            <div className="top-cards justify-content-start col-md-12">
-                <Col className="mb-1">
-                    <Card className="p-1 d-flex justify-content-center shadow-none h-100">
-                        <div className="d-flex">
-                            <div className="d-flex align-items-center">
-                                <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px', marginLeft: '0.74rem', marginRight: '0.74rem' }}>Exchange Rate</p>
-
-                            </div>
-                            <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                                <div className="d-flex justify-content-between">
-                                    <div>
-                                        <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
-
-                                    <p className="mr-3">
-                                        {bnbRate ? bnbRate?.price : '0'}
-                                    </p>
+            {role !== "MERCHANT" &&
+                <div className="top-cards justify-content-start col-md-12">
+                    <Col className="mb-1">
+                        <Card className="p-1 d-flex justify-content-center shadow-none h-100">
+                            <div className="d-flex">
+                                <div className="d-flex align-items-center">
+                                    <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px', marginLeft: '0.74rem', marginRight: '0.74rem' }}>Exchange Rate</p>
 
                                 </div>
-                                <div className="d-flex justify-content-between">
-                                    <div>
-                                        <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
-                                    <p className="mr-3">
-                                        {idrtRate ? idrtRate?.price : '0'}
-                                    </p>
+                                <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
+                                    <div className="d-flex justify-content-between">
+                                        <div>
+                                            <label className="font-weight-bolder mb-0">BNB</label>/USD:</div>
 
+                                        <p className="mr-3">
+                                            {bnbRate ? bnbRate?.price : '0'}
+                                        </p>
+
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <div>
+                                            <label className="font-weight-bolder mb-0">IDRT</label>/USD:</div>
+                                        <p className="mr-3">
+                                            {idrtRate ? idrtRate?.price : '0'}
+                                        </p>
+
+                                    </div>
                                 </div>
                             </div>
+                        </Card>
+                    </Col>
+                    <Col className="">
+                        <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
+                            <div className="d-flex">
+                                <div className="d-flex align-items-center">
+                                    <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Wallets Summary</p>
+
+                                </div>
+                                <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
+                                    <div className="d-flex justify-content-between">
+                                        <label className="font-weight-bolder mb-0">Total:</label>
+                                        <p className="mr-3">{wallet ? wallet?.length : 0}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <label className="font-weight-bolder mb-0">Active:</label>
+                                        <p className="mr-3">{wallet ? activeWallets : 0}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <label className="font-weight-bolder mb-0">Inactive:</label>
+                                        <p className="mr-3">{wallet ? wallet?.length - activeWallets : 0}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <label className="font-weight-bolder mb-0">Locked:</label>
+                                        <p className="mr-3">{wallet ? lockedWallets : 0}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <label className="font-weight-bolder mb-0">IDRT:</label>
+                                        <p className="mr-3">{totalBalance ? (totalBalance / 1000000000000000000)?.toLocaleString() : 0} </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </Card>
+                    </Col>
+
+
+                </div>
+            }
+            <Card className="h-100 justify-content-center shadow" style={{ marginLeft: '-15px' }}>
+                <div className="card-body p-4">
+                    <div className="text-center">
+                        <p style={{ fontSize: '20px' }} className="font-weight-bold">Exchange Rate</p>
+                    </div>
+                    <div className="pt-3 mx-auto w-80">
+                        <div className="d-flex mb-3">
+                            <h6 className="text-dark font-weight-bolder mb-0 mr-3">BNB/USD:</h6>
+                            <h6 className="text-dark font-weight-bolder mb-0 w-50 text-truncate">{bnbRate ? bnbRate?.price : '0'}</h6>
                         </div>
-                    </Card>
-                </Col>
-                <Col className="">
-                    <Card className="h-100 p-1 d-flex justify-content-center shadow-none">
                         <div className="d-flex">
-                            <div className="d-flex align-items-center">
-                                <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px' }}>Wallets Summary</p>
-
-                            </div>
-                            <div className="w-100 pl-3" style={{ borderLeft: "1.5px solid #80808038" }}>
-                                <div className="d-flex justify-content-between">
-                                    <label className="font-weight-bolder mb-0">Total:</label>
-                                    <p className="mr-3">{wallet ? wallet?.length : 0}</p>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <label className="font-weight-bolder mb-0">Active:</label>
-                                    <p className="mr-3">{wallet ? activeWallets : 0}</p>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <label className="font-weight-bolder mb-0">Inactive:</label>
-                                    <p className="mr-3">{wallet ? wallet?.length - activeWallets : 0}</p>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <label className="font-weight-bolder mb-0">Locked:</label>
-                                    <p className="mr-3">{wallet ? lockedWallets : 0}</p>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <label className="font-weight-bolder mb-0">IDRT:</label>
-                                    <p className="mr-3">{totalBalance ? (totalBalance / 1000000000000000000)?.toLocaleString() : 0} </p>
-                                </div>
-                            </div>
+                            <h6 className="text-dark font-weight-bolder mb-0 mr-3">IDRT/USD:</h6>
+                            <h6 className="text-dark font-weight-bolder mb-0">{idrtRate ? idrtRate?.price : '0'}</h6>
                         </div>
-
-                    </Card>
-                </Col>
-
-
-            </div>
+                    </div>
+                </div>
+            </Card>
         </Block>
     )
 }

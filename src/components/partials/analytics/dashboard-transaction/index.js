@@ -12,8 +12,10 @@ import {
 } from "../../../Component";
 import { fetchTransaction, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import MerchantTxn from "./MerchantTxn";
+import MerchantTxnSummary from "./MerchantTxnSummary";
 
-const TnxAnalytics = ({ timeFrame, date }) => {
+const TnxAnalytics = ({ timeFrame, date, role }) => {
 
     const { transaction, transactionError } = useSelector((state) => state.Transaction);
     const dispatch = useDispatch();
@@ -125,38 +127,53 @@ const TnxAnalytics = ({ timeFrame, date }) => {
                     Transactions API Error: {transactionError}
                 </Alert>
             }
+            {role === "ADMIN" &&
+                <>
+                    <Row className="g-gs py-4">
+                        <Col md="12" lg="12" xxl="12">
+                            <Card>
+                                <TransactionTable data={filteredTransactions} />
+                            </Card>
+                        </Col>
+                    </Row>
 
-            <Row className="g-gs py-4">
-                <Col md="12" lg="12" xxl="12">
-                    <Card>
-                        <TransactionTable data={filteredTransactions} />
-                    </Card>
-                </Col>
-            </Row>
+                    <Block>
+                        <Row className="g-gs">
+                            <Col lg="6" xxl="6">
+                                <PreviewAltCard className="h-100">
+                                    <Transaction dateRange={dateRange} data={filteredTransactions} />
+                                </PreviewAltCard>
+                            </Col>
+                            <Col md="6" lg="6" xxl="6">
+                                <PreviewAltCard className="h-100">
+                                    <IDRT_TXN dateRange={dateRange} data={filteredTransactions} />
+                                </PreviewAltCard>
+                            </Col>
+                        </Row>
+                        <Row className="g-gs">
+                            <Col md="12" lg="12" xxl="12">
+                                <Fees dateRange={dateRange} data={filteredTransactions} />
+                            </Col>
+                        </Row>
+                    </Block>
+                </>
+            }
             <Block>
-                <Row className="g-gs">
-                    <Col lg="6" xxl="6">
+                <Row className="g-gs py-2">
+                    <Col md="9" lg="9" xxl="9">
+                        {/* <Row> */}
                         <PreviewAltCard className="h-100">
-                            <Transaction dateRange={dateRange} data={filteredTransactions} />
+                            <MerchantTxn dateRange={dateRange} data={filteredTransactions} />
                         </PreviewAltCard>
+                        {/* </Row> */}
                     </Col>
-                    <Col md="6" lg="6" xxl="6">
-                        <PreviewAltCard className="h-100">
-                            <IDRT_TXN dateRange={dateRange} data={filteredTransactions} />
-                        </PreviewAltCard>
+                    <Col md="9" lg="9" xxl="9">
+                        <MerchantTxnSummary dateRange={dateRange} data={filteredTransactions} />
                     </Col>
-                </Row>
-                <Row className="g-gs">
-                    <Col md="12" lg="12" xxl="12">
 
-                        <Fees dateRange={dateRange} data={filteredTransactions} />
-
-                    </Col>
                 </Row>
             </Block>
-
-
-        </React.Fragment >
+        </React.Fragment>
     );
 };
 

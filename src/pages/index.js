@@ -18,6 +18,7 @@ import { DashboardAnalytics } from "../components/partials/analytics/dashboard-a
 import TnxAnalytics from "../components/partials/analytics/dashboard-transaction";
 import LatestIncomingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestIncomingTrans";
 import LatestOutgoingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestOutgoingTrans";
+import AccountOverview from "../components/partials/analytics/dashboard-wallet/AccountOverview";
 
 const Homepage = () => {
   const [timeFrame, setSelectedTimeFrame] = useState("1month");
@@ -43,20 +44,25 @@ const Homepage = () => {
         {/* <DashboardAnalytics /> */}
 
         {/* MAIN WALLETS */}
+        <h3 className="text-dark mb-5 pb-2 text-capitalize">Hello, <span style={{ letterSpacing: '2px' }}>{role.toLowerCase()}</span></h3>
 
-        <MainWallets role={role} />
-
+        {role !== "ADMIN" ?
+          <AccountOverview role={role} />
+          :
+          <MainWallets role={role} />
+        }
 
         {/* IDRT Transactions Overview */}
-        <BlockHead size="sm" className="d-flex justify-content-between pt-3">
+        <BlockHead size="sm" className={`d-flex justify-content-between pt-3 ${role !== "ADMIN" ? "col-md-9" : ""}`}>
           <div className="nk-block-between">
             <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                IDRT Transactions Overview
-              </BlockTitle>
+              {role === "ADMIN" &&
+                <BlockTitle page tag="h3">
+                  IDRT Transactions Overview
+                </BlockTitle>}
             </BlockHeadContent>
           </div>
-          <div className="card-tools shrink-0 d-none d-sm-block mr-5">
+          <div className={`card-tools shrink-0 d-none d-sm-block ${role !== "ADMIN" ? "" : "mr-5"}`}>
             <ul className="nav nav-switch-s2 nav-tabs bg-white">
               <li className="nav-item">
                 <a
@@ -150,7 +156,7 @@ const Homepage = () => {
         </BlockHead>
 
         {/* Transaction Analytics And Charts */}
-        <TnxAnalytics timeFrame={timeFrame} date={date} />
+        <TnxAnalytics timeFrame={timeFrame} date={date} role={role} />
 
         {/* ORPHAN TRANSACTIONS */}
         {role === "ADMIN" &&
@@ -158,11 +164,16 @@ const Homepage = () => {
         }
 
         {/* LATEST INCOMING TRANSACTIONS */}
-        <LatestIncomingTrans />
+        <Card className="px-3 py-3 mt-5">
+          <LatestIncomingTrans />
+        </Card>
+
 
         {/* LATEST OUTGOING TRANSACTIONS */}
-        <LatestOutgoingTrans />
 
+        <Card className="px-3 py-3 mt-5">
+          <LatestOutgoingTrans />
+        </Card>
 
 
 
