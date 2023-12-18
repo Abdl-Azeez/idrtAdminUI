@@ -86,7 +86,7 @@ export const DashboardAnalytics = ({ role }) => {
                     Wallet Summary API Error: {walletError}
                 </Alert>
             }
-            {role !== "MERCHANT" &&
+            {role !== "MERCHANT" ?
                 <div className="top-cards justify-content-start col-md-12">
                     <Col className="mb-1">
                         <Card className="p-1 d-flex justify-content-center shadow-none h-100">
@@ -153,24 +153,25 @@ export const DashboardAnalytics = ({ role }) => {
 
 
                 </div>
+                :
+                <Card className="h-100 justify-content-center shadow" style={{ marginLeft: '-15px' }}>
+                    <div className="card-body p-4">
+                        <div className="text-center">
+                            <p style={{ fontSize: '20px' }} className="font-weight-bold">Exchange Rate</p>
+                        </div>
+                        <div className="pt-3 mx-auto w-80">
+                            <div className="d-flex mb-3">
+                                <h6 className="text-dark font-weight-bolder mb-0 mr-3">BNB/USD:</h6>
+                                <h6 className="text-dark font-weight-bolder mb-0 w-50 text-truncate">{bnbRate ? bnbRate?.price : '0'}</h6>
+                            </div>
+                            <div className="d-flex">
+                                <h6 className="text-dark font-weight-bolder mb-0 mr-3">IDRT/USD:</h6>
+                                <h6 className="text-dark font-weight-bolder mb-0">{idrtRate ? idrtRate?.price : '0'}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
             }
-            <Card className="h-100 justify-content-center shadow" style={{ marginLeft: '-15px' }}>
-                <div className="card-body p-4">
-                    <div className="text-center">
-                        <p style={{ fontSize: '20px' }} className="font-weight-bold">Exchange Rate</p>
-                    </div>
-                    <div className="pt-3 mx-auto w-80">
-                        <div className="d-flex mb-3">
-                            <h6 className="text-dark font-weight-bolder mb-0 mr-3">BNB/USD:</h6>
-                            <h6 className="text-dark font-weight-bolder mb-0 w-50 text-truncate">{bnbRate ? bnbRate?.price : '0'}</h6>
-                        </div>
-                        <div className="d-flex">
-                            <h6 className="text-dark font-weight-bolder mb-0 mr-3">IDRT/USD:</h6>
-                            <h6 className="text-dark font-weight-bolder mb-0">{idrtRate ? idrtRate?.price : '0'}</h6>
-                        </div>
-                    </div>
-                </div>
-            </Card>
         </Block>
     )
 }

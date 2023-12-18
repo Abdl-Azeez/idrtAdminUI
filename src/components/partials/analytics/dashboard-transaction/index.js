@@ -127,7 +127,7 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
                     Transactions API Error: {transactionError}
                 </Alert>
             }
-            {role === "ADMIN" &&
+            {role === "ADMIN" ?
                 <>
                     <Row className="g-gs py-4">
                         <Col md="12" lg="12" xxl="12">
@@ -157,22 +157,23 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
                         </Row>
                     </Block>
                 </>
-            }
-            <Block>
-                <Row className="g-gs py-2">
-                    <Col md="9" lg="9" xxl="9">
-                        {/* <Row> */}
-                        <PreviewAltCard className="h-100">
-                            <MerchantTxn dateRange={dateRange} data={filteredTransactions} />
-                        </PreviewAltCard>
-                        {/* </Row> */}
-                    </Col>
-                    <Col md="9" lg="9" xxl="9">
-                        <MerchantTxnSummary dateRange={dateRange} data={filteredTransactions} />
-                    </Col>
+                :
+                <Block>
+                    <Row className="g-gs py-2">
+                        <Col md="9" lg="9" xxl="9">
+                            {/* <Row> */}
+                            <PreviewAltCard className="h-100">
+                                <MerchantTxn dateRange={dateRange} data={filteredTransactions} />
+                            </PreviewAltCard>
+                            {/* </Row> */}
+                        </Col>
+                        <Col md="9" lg="9" xxl="9">
+                            <MerchantTxnSummary dateRange={dateRange} data={filteredTransactions} />
+                        </Col>
 
-                </Row>
-            </Block>
+                    </Row>
+                </Block>
+            }
         </React.Fragment>
     );
 };

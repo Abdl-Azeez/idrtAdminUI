@@ -69,13 +69,13 @@ const LatestOutgoingTrans = () => {
                               </div>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-prev-sessions">
-                              <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.txnHash}</div>
+                              <div className="text-truncate text-info" style={{ maxWidth: '200px' }}>{item.txnHash}</div>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-prev-sessions">
-                              <div className="text-truncate" style={{ maxWidth: '200px' }} >{item.walletId}</div>
+                              <div className="text-truncate text-info" style={{ maxWidth: '200px' }} >{item.walletId}</div>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-prev-sessions">
-                              <div className="text-truncate" style={{ maxWidth: '200px' }}>{item.toAddress} </div>
+                              <div className="text-truncate text-info" style={{ maxWidth: '200px' }}>{item.toAddress} </div>
                             </DataTableRow>
                             <DataTableRow className="nk-tb-prev-sessions">
                               <div>{`${item.amount / 100}`}</div>
