@@ -1,4 +1,5 @@
-import React, { Suspense, useLayoutEffect } from "react";
+// Pages.js
+import React, { Suspense, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { RedirectAs404 } from "../utils/Utils";
 import Login from "../pages/auth/Login";
@@ -10,32 +11,33 @@ import OrphanLog from "../pages/OrphanLog";
 import Settings from "../pages/Settings";
 import Merchants from "../pages/Merchants";
 import Agents from "../pages/Agents";
-
-
+import PrivateRoute from "./PrivateRoute";
 
 const Pages = () => {
-  useLayoutEffect(() => {
-    // window.scrollTo(0, 0);
-  });
+  useEffect(() => {
+    // Additional initialization code if needed
+  }, []);
 
   return (
     <Suspense fallback={<div />}>
       <Switch>
+        {/* <Route exact path={`/login`} component={Login} /> */}
+        {/* <Route component={RedirectAs404} /> */}
+        <PrivateRoute exact path={`/`} component={Homepage} roles={["MERCHANT", "ADMIN", "AGENT"]} />
+        <PrivateRoute exact path={`/merchants`} component={Merchants} roles={["ADMIN", "AGENT"]} />
+        <PrivateRoute exact path={`/agents`} component={Agents} roles={["ADMIN"]} />
+        <PrivateRoute exact path={`/users`} component={User} roles={["MERCHANT", "ADMIN", "AGENT"]} />
+        <PrivateRoute exact path={`/wallets`} component={Wallets} roles={["ADMIN"]} />
+        <PrivateRoute exact path={`/transactions`} component={Transactions} roles={["MERCHANT", "ADMIN", "AGENT"]} />
+        <PrivateRoute exact path={`/orphan_log`} component={OrphanLog} roles={["ADMIN"]} />
+        <PrivateRoute exact path={`/settings`} component={Settings} roles={["MERCHANT", "ADMIN", "AGENT"]} />
 
-        <Route exact path={`/`} component={Homepage}></Route>
-        <Route exact path={`/merchants`} component={Merchants}></Route>
-        <Route exact path={`/agents`} component={Agents}></Route>
-        <Route exact path={`/users`} component={User}></Route>
-        <Route exact path={`/wallets`} component={Wallets}></Route>
-        <Route exact path={`/transactions`} component={Transactions}></Route>
-        <Route exact path={`/orphan_log`} component={OrphanLog}></Route>
-        <Route exact path={`/settings`} component={Settings}></Route>
-
-        <Route component={RedirectAs404}></Route>
+        <Route component={RedirectAs404} />
       </Switch>
     </Suspense>
   );
 };
+
 export default Pages;
 export const publicRoutesData = [
   { path: `/login`, component: Login },

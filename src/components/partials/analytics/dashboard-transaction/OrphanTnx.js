@@ -154,8 +154,6 @@ const OrphanTnx = () => {
 
                                     </div>
                                     :
-
-
                                     (
                                         <>
                                             <div className="nk-tb-list is-loose traffic-channel-table">
@@ -173,7 +171,6 @@ const OrphanTnx = () => {
                                             </div>
                                         </>
                                     )}
-
                             </Col>
                         </Row>
                     </Block>

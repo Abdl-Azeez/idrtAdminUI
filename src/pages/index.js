@@ -170,8 +170,6 @@ const Homepage = () => {
         <LatestOutgoingTrans />
 
 
-
-
         <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
           <ModalHeader toggle={() => setShowModal(false)}>
             Date Filter
@@ -222,9 +220,9 @@ const Homepage = () => {
               </Row>
             </div>
           </ModalBody >
-        </Modal >
-      </Content >
-    </React.Fragment >
+        </Modal>
+      </Content>
+    </React.Fragment>
   );
 };
 

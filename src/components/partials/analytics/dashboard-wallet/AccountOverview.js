@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, DropdownMenu, UncontrolledDropdown, DropdownItem, Alert } from "reactstrap";
+import { Card, Modal, ModalBody, ModalHeader, Alert } from "reactstrap";
 import { DataTableRow, DataTableItem, Row, Col, BlockHead, BlockHeadContent, BlockTitle, Block, Button } from "../../../Component";
 import { loadMerchant, fetchWalletBalance, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,12 +13,21 @@ const AccountOverview = ({ role }) => {
     const [merchantWalletResponse, setMerchantWalletResponse] = useState(null);
     const [commissionWalletResponse, setCommissionWalletResponse] = useState(null);
     const [bnbWalletResponse, setBnbWalletResponse] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const dispatch = useDispatch();
 
 
     useEffect(() => {
         dispatch(loadMerchant());
     }, [dispatch]);
+
+
+    useEffect(() => {
+        if (showSuccessModal) {
+            setShowModal(false)
+        }
+    }, [showSuccessModal]);
 
     const merchantWallet = merchants && merchants[0]?.configs?.find((merchants) => {
         return merchants.key === 'merchantWallet'
@@ -105,7 +114,9 @@ const AccountOverview = ({ role }) => {
                                     </div>
                                     <div className="d-flex justify-content-between align-items-end pt-5">
                                         <p className="mb-0" style={{ fontSize: '12px' }}>Amounts in USDT</p>
-                                        <Button color="info" size="md" className="text-dark font-weight-bolder px-5 mr-5" style={{ borderRadius: "8px", letterSpacing: '3px' }}>SETTLEMENT</Button>
+                                        <Button color="info" size="md" className="text-dark font-weight-bolder px-5 mr-5" style={{ borderRadius: "8px", letterSpacing: '3px' }} onClick={() => {
+                                            setShowModal(true);
+                                        }}>SETTLEMENT</Button>
                                     </div>
                                 </div>
 
@@ -121,7 +132,63 @@ const AccountOverview = ({ role }) => {
                 </Col>
 
             </Row>
+            <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="md">
+                <ModalHeader toggle={() => setShowModal(false)} className="font-weight-bolder">
+                    Balance Settlement
+                </ModalHeader>
+                <ModalBody>
+                    <div className="pt-3">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <p style={{ fontSize: '20px' }}>Balance:</p>
+                            <p style={{ fontSize: '20px' }}>{merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}</p>
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <p style={{ fontSize: '20px' }}>Commission:</p>
+                            <p style={{ fontSize: '20px' }}>-{commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}</p>
+                        </div>
+                        <hr />
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h5 className="font-weight-bold">Settlement Total:</h5>
+                            <h5 className="text-dark">{merchantWalletResponse && commissionWalletResponse ? ((merchantWalletResponse[0]?.balance / 100) - (commissionWalletResponse[0]?.balance / 100)).toLocaleString() : 0}  </h5>
+                        </div>
+                        <div className="mt-3 text-left">
+                            <p className="mb-0">Settlement Wallet Address:</p>
+                            <p>{merchantWallet?.value}</p>
+                        </div>
 
+                        <Button color="info" size="md" className="text-dark float-right font-weight-bolder my-3 " style={{ borderRadius: "8px", letterSpacing: '3px' }} onClick={() => {
+                            setShowSuccessModal(true);
+                        }}>CONFIRM</Button>
+                    </div>
+                </ModalBody>
+            </Modal>
+
+
+            <Modal isOpen={showSuccessModal} toggle={() => setShowSuccessModal(!showSuccessModal)} className="modal-dialog-centered" size="md">
+                <ModalHeader toggle={() => setShowSuccessModal(false)} className="font-weight-bolder" style={{ border: 'none' }}>
+
+                </ModalHeader>
+                <ModalBody>
+                    <div className="pt-3 w-80 mx-auto">
+                        <h3 className="text-dark text-center">
+                            <i className="fa-solid fa-handshake-angle mr-2"></i>
+                            Congratulations!
+                        </h3>
+                        <div className="d-flex justify-content-between align-items-center mt-5">
+                            <h5 className="font-weight-bold text-dark">You have settled</h5>
+                            <h5 className="text-dark">{merchantWalletResponse && commissionWalletResponse ? ((merchantWalletResponse[0]?.balance / 100) - (commissionWalletResponse[0]?.balance / 100)).toLocaleString() : 0}  </h5>
+                        </div>
+                        <div className="mt-5 text-left">
+                            <p className="mb-0">Settlement Wallet Address:</p>
+                            <p>{merchantWallet?.value}</p>
+                        </div>
+
+                        <Button color="info" size="md" className="float-right text-dark font-weight-bolder my-3" style={{ borderRadius: "8px", letterSpacing: '3px' }} onClick={() => {
+                            setShowSuccessModal(false);
+                        }}>CLOSE</Button>
+                    </div>
+                </ModalBody>
+            </Modal>
         </React.Fragment>
     );
 };
