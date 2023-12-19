@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import adminMenuData from "./adminMenuData";
 import agentMenuData from "./agentMenuData";
 import merchantMenuData from "./merchantMenuData";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 
 const getMenuData = (role) => {
@@ -170,12 +170,16 @@ const MenuSub = ({ sub, sidebarToggle, mobileView, ...props }) => {
 const Menu = ({ sidebarToggle, mobileView }) => {
   const [data, setMenuData] = useState([]);
   const [activeMenuItem, setActiveMenuItem] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null;
     const menuData = getMenuData(role);
     setMenuData(menuData);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Set initial active menu item based on the current URL path
+    setActiveMenuItem(location.pathname);
+  }, [location.pathname]);
 
   return (
     <ul className="nk-menu">

@@ -19,6 +19,7 @@ const Merchants = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const dispatch = useDispatch();
+    let role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null
     const theme = createTheme();
     const columns = [
         { title: 'ID', field: 'id' },
@@ -46,6 +47,17 @@ const Merchants = () => {
             ),
         },
     ];
+    const agentColumns = [
+        { title: 'ID', field: 'id' },
+        { title: 'Name', field: 'name' },
+        { title: 'Total Deposit', field: 'ytd_commission' },
+        { title: 'Total # of Txn', field: 'mtd_txns' },
+        { title: 'Total Commission', field: 'total_incoming_txn' },
+        { title: 'Average Daily Deposit Amount', field: 'unsettled_balance' },
+        { title: 'Deposit Amount Unsettled', field: 'total_incoming_txn' },
+        { title: 'Commission %', field: 'mtd_txns' },
+    ];
+
 
     const handleButtonClick = (rowData, actionTooltip) => {
         // Handle button clicks here
@@ -72,7 +84,7 @@ const Merchants = () => {
                         <ThemeProvider theme={theme}>
                             <MaterialTable
                                 title="Merchants"
-                                columns={columns}
+                                columns={role === "ADMIN" ? columns : agentColumns}
                                 data={merchantData.data}
                                 options={{
                                     filtering: true,

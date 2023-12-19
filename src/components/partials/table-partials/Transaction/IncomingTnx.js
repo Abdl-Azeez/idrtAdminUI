@@ -11,6 +11,7 @@ import {
     BlockHeadContent,
     BlockTitle,
     Block,
+    BlockDes,
 } from "../../../Component";
 import { fetchIncomingTnx, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +19,7 @@ import moment from "moment";
 import Content from "../../../../layout/content/Content";
 
 
-const IncomingTnx = ({ }) => {
+const IncomingTnx = ({ role }) => {
     const { incomingTnx, transactionError } = useSelector((state) => state.Transaction);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
@@ -32,7 +33,7 @@ const IncomingTnx = ({ }) => {
     const columns = [
         { title: 'User', field: 'username' },
         {
-            title: 'Date',
+            title: 'Date/Time',
             field: 'createdAt',
             render: rowData => <span className="date">
                 <div className="d-flex">
@@ -63,6 +64,63 @@ const IncomingTnx = ({ }) => {
         { title: 'Orphan Txn', field: 'isOrphanTxn' },
     ];
 
+    const merchantColumns = [
+        { title: 'ID', field: 'id' },
+        { title: 'User Name', field: 'username' },
+        {
+            title: 'Date/Time',
+            field: 'createdAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.createdAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.createdAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        { title: 'Transaction Hash', field: 'txnHash' },
+        { title: 'From Wallet', field: 'fromAddress' },
+        { title: 'To Wallet', field: 'walletId' },
+
+        {
+            title: 'Amount',
+            field: 'amount',
+            render: rowData => <span>{Number(rowData.amount / 100).toLocaleString()}</span>,
+        },
+        { title: 'Currency', field: 'currencySymbol' },
+        { title: 'Orphan Txn', field: 'isOrphanTxn' },
+    ];
+    const agentColumns = [
+        { title: 'ID', field: 'id' },
+        { title: 'Name', field: 'username' },
+        { title: 'User ID', field: 'txnHash' },
+        {
+            title: 'Date / Time',
+            field: 'createdAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.createdAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.createdAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        {
+            title: 'Amount',
+            field: 'amount',
+            render: rowData => <span>{Number(rowData.amount / 100).toLocaleString()}</span>,
+        },
+        { title: 'Currency', field: 'currencySymbol' },
+    ];
+
     useEffect(() => {
         if (transactionError) {
             setTimeout(() => {
@@ -77,24 +135,27 @@ const IncomingTnx = ({ }) => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle tag="h2" className="fw-normal">Transactions</BlockTitle>
-
+                            {role !== "AGENT" ? <BlockTitle tag="h2" className="fw-normal">Transactions</BlockTitle>
+                                : <BlockDes className="text-soft">
+                                    <p>You have {incomingTnx?.totalItems} {`${role === "AGENT" ? "Merchants Incoming Transactions" : "Incoming Transactions"}`}.</p>
+                                </BlockDes>
+                            }
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
 
                 <Block>
-                    {transactionError &&
+                    {role !== "AGENT" && transactionError ?
                         <Alert color="danger">
                             Transaction API Error: {transactionError}
-                        </Alert>
+                        </Alert> : null
                     }
                     {incomingTnx?.data &&
                         <div className="p-0">
                             <ThemeProvider theme={theme}>
                                 <MaterialTable
-                                    title="Incoming Transactions"
-                                    columns={columns}
+                                    title={`${role === "AGENT" ? "Merchants Incoming Transactions" : "Incoming Transactions"}`}
+                                    columns={role === "AGENT" ? agentColumns : role === "MERCHANT" ? merchantColumns : columns}
                                     data={query =>
                                         new Promise((resolve, reject) => {
                                             let url = `${process.env.REACT_APP_BASE_URL}/transactions/incoming?`

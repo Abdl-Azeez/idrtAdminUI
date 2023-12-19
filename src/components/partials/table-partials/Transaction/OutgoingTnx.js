@@ -20,7 +20,7 @@ import moment from "moment";
 import Content from "../../../../layout/content/Content";
 
 
-const OutgoingTnx = ({ updatePageNumber }) => {
+const OutgoingTnx = ({ updatePageNumber, role }) => {
     const { outgoingTnx, transactionError } = useSelector((state) => state.Transaction);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
@@ -65,6 +65,62 @@ const OutgoingTnx = ({ updatePageNumber }) => {
     ];
 
 
+    const agentColumns = [
+        { title: 'ID', field: 'txnHash' },
+        { title: 'Name', field: 'txnHash' },
+        {
+            title: 'Date/Time',
+            field: 'createdAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.createdAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.createdAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        {
+            title: 'Settlement Amount',
+            field: 'amount',
+            render: rowData => <span>{Number(rowData.amount / 100).toLocaleString()}</span>,
+        },
+        { title: 'Currency', field: 'currencySymbol' },
+    ];
+
+    const merchantColumns = [
+        {
+            title: 'Date/Time',
+            field: 'createdAt',
+            render: rowData => <span className="date">
+                <div className="d-flex">
+                    {" "}
+                    <div>{moment(rowData?.createdAt).format("DD/MM/YYYY")}</div>
+
+                    <div className="ml-2">
+                        {" "}
+                        {moment(rowData?.createdAt).format("HH:mm ")}
+                    </div>
+                </div>
+            </span>,
+        },
+        { title: 'Transaction Hash', field: 'txnHash' },
+        { title: 'Settlement Wallet', field: 'toAddress' },
+        {
+            title: 'Settlement Amount',
+            field: 'amount',
+            render: rowData => <span>{Number(rowData.amount / 100).toLocaleString()}</span>,
+        },
+        {
+            title: 'Gas Fee',
+            field: 'gasFee',
+            render: rowData => <span>{Number(rowData?.gasFee ? rowData?.gasFee / 1000000000000000000 : 0)}</span>,
+        },
+        { title: 'Currency', field: 'currencySymbol' },
+    ];
 
     useEffect(() => {
         if (transactionError) {
@@ -94,7 +150,7 @@ const OutgoingTnx = ({ updatePageNumber }) => {
                         <BlockHeadContent>
                             {/* <BlockTitle page>Transactions</BlockTitle> */}
                             <BlockDes className="text-soft">
-                                <p>You have {outgoingTnx?.totalItems} Outgoing Transactions.</p>
+                                <p>You have {outgoingTnx?.totalItems} {`${role === "AGENT" ? "Merchant Settlement Transactions" : role === "MERCHANT" ? "Settlement Transactions" : "Outgoing Transactions"}`}.</p>
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
@@ -109,8 +165,8 @@ const OutgoingTnx = ({ updatePageNumber }) => {
                         <div className="p-0">
                             <ThemeProvider theme={theme}>
                                 <MaterialTable
-                                    title="Outgoing Transactions"
-                                    columns={columns}
+                                    title={`${role === "AGENT" ? "Merchant Settlement Transactions" : role === "MERCHANT" ? "Settlement Transactions" : "Outgoing Transactions"}`}
+                                    columns={role === "AGENT" ? agentColumns : role === "MERCHANT" ? merchantColumns : columns}
                                     data={query =>
                                         new Promise((resolve, reject) => {
                                             let url = `${process.env.REACT_APP_BASE_URL}/transactions/outgoing?`

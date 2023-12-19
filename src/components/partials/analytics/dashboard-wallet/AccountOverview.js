@@ -79,7 +79,7 @@ const AccountOverview = ({ role }) => {
                 </Alert>
             }
             <Row className="g-gs pb-4">
-                <Col lg="9" xxl="9">
+                <Col lg={role === "MERCHANT" ? "9" : "7"} xxl={role === "MERCHANT" ? "9" : "7"}>
                     <BlockHead size="sm" className="d-flex justify-content-between">
                         <div className="nk-block-between w-100">
                             <BlockHeadContent>
@@ -103,10 +103,12 @@ const AccountOverview = ({ role }) => {
                             <Card className="h-100 justify-content-center">
                                 <div className="card-body p-4 d-flex flex-column justify-content-between">
                                     <div className="d-flex justify-content-between">
-                                        <div>
-                                            <p style={{ fontSize: '20px' }} className="font-weight-bold">Balance <span style={{ fontSize: '10px' }}>{`{IDRT}`}</span></p>
-                                            <h5 className="w-80 text-dark">{merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}</h5>
-                                        </div>
+                                        {role === "MERCHANT" &&
+                                            <div>
+                                                <p style={{ fontSize: '20px' }} className="font-weight-bold">Balance <span style={{ fontSize: '10px' }}>{`{IDRT}`}</span></p>
+                                                <h5 className="w-80 text-dark">{merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}</h5>
+                                            </div>
+                                        }
                                         <div>
                                             <p style={{ fontSize: '20px' }} className="font-weight-bold">Commission (Pending) <span style={{ fontSize: '10px' }}>{`{IDRT}`}</span></p>
                                             <h5 className="w-80 text-dark">{commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}  </h5>
@@ -175,7 +177,7 @@ const AccountOverview = ({ role }) => {
                             Congratulations!
                         </h3>
                         <div className="d-flex justify-content-between align-items-center mt-5">
-                            <h5 className="font-weight-bold text-dark">You have settled</h5>
+                            <h5 className="font-weight-bold text-dark mb-0">You have settled</h5>
                             <h5 className="text-dark">{merchantWalletResponse && commissionWalletResponse ? ((merchantWalletResponse[0]?.balance / 100) - (commissionWalletResponse[0]?.balance / 100)).toLocaleString() : 0}  </h5>
                         </div>
                         <div className="mt-5 text-left">

@@ -1,5 +1,5 @@
 // Pages.js
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { RedirectAs404 } from "../utils/Utils";
 import Login from "../pages/auth/Login";
@@ -14,19 +14,17 @@ import Agents from "../pages/Agents";
 import PrivateRoute from "./PrivateRoute";
 
 const Pages = () => {
-  useEffect(() => {
-    // Additional initialization code if needed
-  }, []);
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <Suspense fallback={<div />}>
       <Switch>
-        {/* <Route exact path={`/login`} component={Login} /> */}
-        {/* <Route component={RedirectAs404} /> */}
         <PrivateRoute exact path={`/`} component={Homepage} roles={["MERCHANT", "ADMIN", "AGENT"]} />
         <PrivateRoute exact path={`/merchants`} component={Merchants} roles={["ADMIN", "AGENT"]} />
         <PrivateRoute exact path={`/agents`} component={Agents} roles={["ADMIN"]} />
-        <PrivateRoute exact path={`/users`} component={User} roles={["MERCHANT", "ADMIN", "AGENT"]} />
+        <PrivateRoute exact path={`/users`} component={User} roles={["MERCHANT", "ADMIN"]} />
         <PrivateRoute exact path={`/wallets`} component={Wallets} roles={["ADMIN"]} />
         <PrivateRoute exact path={`/transactions`} component={Transactions} roles={["MERCHANT", "ADMIN", "AGENT"]} />
         <PrivateRoute exact path={`/orphan_log`} component={OrphanLog} roles={["ADMIN"]} />

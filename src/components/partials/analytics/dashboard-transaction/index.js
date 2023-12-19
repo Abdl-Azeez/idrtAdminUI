@@ -163,12 +163,12 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
                         <Col md="9" lg="9" xxl="9">
                             {/* <Row> */}
                             <PreviewAltCard className="h-100">
-                                <MerchantTxn dateRange={dateRange} data={filteredTransactions} />
+                                <MerchantTxn dateRange={dateRange} data={filteredTransactions} role={role} />
                             </PreviewAltCard>
                             {/* </Row> */}
                         </Col>
                         <Col md="9" lg="9" xxl="9">
-                            <MerchantTxnSummary dateRange={dateRange} data={filteredTransactions} />
+                            <MerchantTxnSummary dateRange={dateRange} data={filteredTransactions} role={role} />
                         </Col>
 
                     </Row>

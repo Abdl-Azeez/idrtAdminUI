@@ -9,11 +9,6 @@ const menu = [
     text: "Merchants",
     link: "/merchants",
   },
-  {
-    icon: "fa-solid fa-user",
-    text: "Users List",
-    link: "/users",
-  },
 
   {
     icon: "fa-solid fa-landmark",

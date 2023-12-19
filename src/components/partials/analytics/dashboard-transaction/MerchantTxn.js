@@ -3,7 +3,7 @@ import { IDRTLineChart, TransactionLineChart } from "../../charts/analytics/Anal
 import { formatNumber } from "../../../../utils/Utils.js";
 import moment from "moment";
 
-const MerchantTxn = ({ dateRange, data }) => {
+const MerchantTxn = ({ dateRange, data, role }) => {
     const totalCommission = data?.reduce((sum, data) => {
         if (data && data.inCommission) {
             return sum + Number(data.inCommission);
@@ -129,7 +129,7 @@ const MerchantTxn = ({ dateRange, data }) => {
             <div className="analytic-au">
                 <div className="analytic-data-group analytic-au-group g-3 pl-5 align-items-end justify-content-around">
                     <div className="analytic-data analytic-au-data">
-                        <div className="title font-weight-bold" style={{ fontSize: '20px' }} >Total Deposits</div>
+                        <div className="title font-weight-bold" style={{ fontSize: '20px' }} >Total {role === "AGENT" && "Merchants "}Deposits</div>
                         <h5 className="text-dark">{totalIDRT_Out ? formatNumber((totalIDRT_Out / 100)) : 0}</h5>
                     </div>
                     <div className="analytic-data analytic-au-data">

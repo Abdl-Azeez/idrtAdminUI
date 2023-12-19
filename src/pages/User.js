@@ -21,7 +21,7 @@ import { fetchUserTransactionsError, fetchUserTransactions, fetchWalletHistory }
 import { useSelector, useDispatch } from "react-redux";
 import WalletHistory from "../components/partials/table-partials/Wallet/WalletHistory";
 
-const User = () => {
+const User = ({ }) => {
     const { userTransaction, userTransactionError } = useSelector((state) => state.Transaction);
     const { walletBalance, walletError } = useSelector((state) => state.Wallet);
     const [userID, setUserID] = useState('clp8hu68t0000ncvh03fi48pw');
@@ -31,6 +31,7 @@ const User = () => {
 
     const dispatch = useDispatch();
 
+    let role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null
 
 
     // Changing state value when searching name
@@ -91,6 +92,14 @@ const User = () => {
         { title: 'CallBack Status', field: 'callbackStatus' },
     ];
 
+    const merchantColumns = [
+        { title: 'ID', field: 'id' },
+        { title: 'Name', field: 'username' },
+
+        { title: 'Total Deposits', field: 'gasFee' },
+        { title: 'Total # of Deposits', field: 'amount' },
+
+    ];
     return (
         <React.Fragment>
             <Head title="Users" />
@@ -124,7 +133,7 @@ const User = () => {
                             <ThemeProvider theme={theme}>
                                 <MaterialTable
                                     title="User Transactions"
-                                    columns={columns}
+                                    columns={role === "MERCHANT" ? merchantColumns : columns}
                                     data={query =>
                                         new Promise((resolve, reject) => {
                                             let url = `${process.env.REACT_APP_BASE_URL}/transactions/byUser/${userID}?`
@@ -171,9 +180,11 @@ const User = () => {
                         </div>
                     }
 
-                    <div className="mt-5">
-                        <WalletHistory Id={userID} type={'user'} />
-                    </div>
+                    {role === "ADMIN" &&
+                        <div className="mt-5">
+                            <WalletHistory Id={userID} type={'user'} />
+                        </div>
+                    }
                 </Block>
             </Content>
         </React.Fragment>
