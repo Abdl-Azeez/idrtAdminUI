@@ -135,7 +135,7 @@ const IncomingTnx = ({ role }) => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            {role !== "AGENT" ? <BlockTitle tag="h2" className="fw-normal">Transactions</BlockTitle>
+                            {role !== "AGENT" ? <BlockTitle tag="h2" className="fw-normal">Transactions Summary</BlockTitle>
                                 : <BlockDes className="text-soft">
                                     <p>You have {incomingTnx?.totalItems} {`${role === "AGENT" ? "Merchants Incoming Transactions" : "Incoming Transactions"}`}.</p>
                                 </BlockDes>

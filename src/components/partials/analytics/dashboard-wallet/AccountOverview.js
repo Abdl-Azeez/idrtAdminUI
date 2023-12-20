@@ -79,7 +79,7 @@ const AccountOverview = ({ role }) => {
                 </Alert>
             }
             <Row className="g-gs pb-4">
-                <Col lg={role === "MERCHANT" ? "9" : "7"} xxl={role === "MERCHANT" ? "9" : "7"}>
+                <Col lg="9" xxl="9">
                     <BlockHead size="sm" className="d-flex justify-content-between">
                         <div className="nk-block-between w-100">
                             <BlockHeadContent>
@@ -98,7 +98,7 @@ const AccountOverview = ({ role }) => {
                     </BlockHead>
 
                     <Row className="overview-cards">
-                        <Col lg="8" xxl="8">
+                        <Col lg={role === "AGENT" ? "6" : "8"} xxl={role === "AGENT" ? "6" : "8"} >
                             {/* <Block> */}
                             <Card className="h-100 justify-content-center">
                                 <div className="card-body p-4 d-flex flex-column justify-content-between">
@@ -125,7 +125,17 @@ const AccountOverview = ({ role }) => {
                             </Card>
                             {/* </Block> */}
                         </Col>
-                        <Col lg="4" xxl="4" md="4" sm="4">
+                        {role === "AGENT" &&
+                            <Col xs="6" sm="4" md="3" lg="3" xl="3" className="pl-0">
+                                <Card className="h-100 text-center justify-content-center">
+                                    <div className="card-body p-4 ">
+                                        <p style={{ fontSize: '20px' }} className="font-weight-bold">Total Commission</p>
+                                        <h5 className="mt-5 text-dark">$20,000.00</h5>
+                                    </div>
+                                </Card>
+                            </Col>
+                        }
+                        <Col lg={role === "MERCHANT" ? "4" : "3"} xxl={role === "MERCHANT" ? "4" : "3"} md="4" sm="4">
                             <DashboardAnalytics role={role} />
                         </Col>
                     </Row>

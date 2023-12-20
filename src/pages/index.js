@@ -3,14 +3,7 @@ import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
 import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
 
-import {
-  Block,
-  BlockHead,
-  BlockHeadContent,
-  BlockTitle,
-  Row,
-  Col,
-} from "../components/Component";
+import { Block, BlockHead, BlockHeadContent, BlockTitle, Row, Col } from "../components/Component";
 import MainWallets from "../components/partials/analytics/dashboard-wallet/MainWallets";
 
 import OrphanTnx from "../components/partials/analytics/dashboard-transaction/OrphanTnx";
@@ -19,23 +12,21 @@ import TnxAnalytics from "../components/partials/analytics/dashboard-transaction
 import LatestIncomingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestIncomingTrans";
 import LatestOutgoingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestOutgoingTrans";
 import AccountOverview from "../components/partials/analytics/dashboard-wallet/AccountOverview";
+import TopMerchants from "../components/partials/analytics/dashboard-latest-transactions/topMerchants";
 
 const Homepage = () => {
   const [timeFrame, setSelectedTimeFrame] = useState("1month");
   const [showModal, setShowModal] = useState(false);
-  const [date, setDate] = useState({ startDate: null, endDate: null })
+  const [date, setDate] = useState({ startDate: null, endDate: null });
   const [formData, setFormData] = useState({
     endDate: new Date(),
     startDate: new Date(),
-
   });
-  let role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null
-
+  let role = localStorage.getItem("idrtRole") ? JSON.parse(localStorage.getItem("idrtRole")) : null;
 
   const handleTimeFrameChange = (value) => {
     setSelectedTimeFrame(value);
   };
-
 
   return (
     <React.Fragment>
@@ -44,22 +35,19 @@ const Homepage = () => {
         {/* <DashboardAnalytics /> */}
 
         {/* MAIN WALLETS */}
-        <h3 className="text-dark mb-5 pb-2 text-capitalize">Hello, <span style={{ letterSpacing: '2px' }}>{role.toLowerCase()}</span></h3>
+        <h3 className="text-dark mb-5 pb-2 text-capitalize">
+          Hello, <span style={{ letterSpacing: "2px" }}>{role.toLowerCase()}</span>
+        </h3>
 
-        {role !== "ADMIN" ?
-          <AccountOverview role={role} />
-          :
-          <MainWallets role={role} />
-        }
+        {role !== "ADMIN" ? <AccountOverview role={role} /> : <MainWallets role={role} />}
 
         {/* IDRT Transactions Overview */}
         <BlockHead size="sm" className={`d-flex justify-content-between pt-3 ${role !== "ADMIN" ? "col-md-9" : ""}`}>
           <div className="nk-block-between">
             <BlockHeadContent>
-              {role === "ADMIN" &&
-                <BlockTitle page tag="h3">
-                  IDRT Transactions Overview
-                </BlockTitle>}
+              <BlockTitle page tag="h3">
+                {role === "ADMIN" ? "IDRT Transactions Overview" : "Trend Analysis"}
+              </BlockTitle>
             </BlockHeadContent>
           </div>
           <div className={`card-tools shrink-0 d-none d-sm-block ${role !== "ADMIN" ? "" : "mr-5"}`}>
@@ -138,7 +126,6 @@ const Homepage = () => {
                 </a>
               </li>
 
-
               <li>
                 <Button
                   className="ml-2 toggle d-none d-md-inline-flex"
@@ -159,23 +146,24 @@ const Homepage = () => {
         <TnxAnalytics timeFrame={timeFrame} date={date} role={role} />
 
         {/* ORPHAN TRANSACTIONS */}
-        {role === "ADMIN" &&
-          <OrphanTnx />
-        }
+        {role === "ADMIN" && <OrphanTnx />}
 
-        {/* LATEST INCOMING TRANSACTIONS */}
-        <LatestIncomingTrans />
+        {role === "AGENT" ? (
+          <TopMerchants />
+        ) : (
+          <>
+            {/* LATEST INCOMING TRANSACTIONS */}
+            <LatestIncomingTrans />
 
-        {/* LATEST OUTGOING TRANSACTIONS */}
-        <LatestOutgoingTrans />
-
+            {/* LATEST OUTGOING TRANSACTIONS */}
+            <LatestOutgoingTrans />
+          </>
+        )}
 
         <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
-          <ModalHeader toggle={() => setShowModal(false)}>
-            Date Filter
-          </ModalHeader>
+          <ModalHeader toggle={() => setShowModal(false)}>Date Filter</ModalHeader>
           <ModalBody>
-            <div >
+            <div>
               <Row className="g-3">
                 <Col md="6">
                   <div className="form-group">
@@ -184,9 +172,14 @@ const Homepage = () => {
                     </label>
                     <FormGroup>
                       <div className="form-control-wrap">
-                        <input type="date" className="form-control" id="startDate" defaultValue={formData.startDate} selected={formData.startDate}
-
-                          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="startDate"
+                          defaultValue={formData.startDate}
+                          selected={formData.startDate}
+                          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                        />
                       </div>
                     </FormGroup>
                     {/* {errors.startDate && <span className="invalid">{errors.startDate.message}</span>} */}
@@ -199,27 +192,36 @@ const Homepage = () => {
                     </label>
                     <FormGroup>
                       <div className="form-control-wrap">
-                        <input type="date" className="form-control" id="endDate" defaultValue={formData.endDate} selected={formData.endDate}
-
-                          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} />
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="endDate"
+                          defaultValue={formData.endDate}
+                          selected={formData.endDate}
+                          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                        />
                       </div>
                     </FormGroup>
                     {/* {errors.endDate && <span className="invalid">{errors.endDate.message}</span>} */}
                   </div>
                 </Col>
                 <Col size="12">
-                  <Button color="primary" type="submit" onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedTimeFrame('customRange')
-                    setDate(formData);
-                    setShowModal(false);
-                  }}>
+                  <Button
+                    color="primary"
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedTimeFrame("customRange");
+                      setDate(formData);
+                      setShowModal(false);
+                    }}
+                  >
                     <span>Filter</span>
                   </Button>
                 </Col>
               </Row>
             </div>
-          </ModalBody >
+          </ModalBody>
         </Modal>
       </Content>
     </React.Fragment>

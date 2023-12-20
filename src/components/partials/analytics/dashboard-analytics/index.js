@@ -81,15 +81,16 @@ export const DashboardAnalytics = ({ role }) => {
 
     return (
         <Block className="h-100">
-            {walletError &&
-                <Alert color="danger">
-                    Wallet Summary API Error: {walletError}
-                </Alert>
-            }
+
             {role === "ADMIN" ?
                 <div className="top-cards justify-content-start col-md-12">
                     <Col className="mb-1">
                         <Card className="p-1 d-flex justify-content-center shadow-none h-100">
+                            {walletError &&
+                                <Alert color="danger">
+                                    Wallet Summary API Error: {walletError}
+                                </Alert>
+                            }
                             <div className="d-flex">
                                 <div className="d-flex align-items-center">
                                     <p className="mb-0 text-uppercase font-size-12 text-center" style={{ lineHeight: '13px', marginLeft: '0.74rem', marginRight: '0.74rem' }}>Exchange Rate</p>
@@ -155,6 +156,11 @@ export const DashboardAnalytics = ({ role }) => {
                 </div>
                 :
                 <Card className="h-100 justify-content-center shadow" style={{ marginLeft: '-15px' }}>
+                    {walletError &&
+                        <Alert color="danger">
+                            Wallet Summary API Error: {walletError}
+                        </Alert>
+                    }
                     <div className="card-body p-4">
                         <div className="text-center">
                             <p style={{ fontSize: '20px' }} className="font-weight-bold">Exchange Rate</p>

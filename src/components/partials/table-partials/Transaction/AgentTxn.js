@@ -67,7 +67,7 @@ const AgentTxn = ({ role }) => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle tag="h2" className="fw-normal">Transactions</BlockTitle>
+                            <BlockTitle tag="h2" className="fw-normal">Transactions Summary</BlockTitle>
 
                         </BlockHeadContent>
                     </BlockBetween>
@@ -83,7 +83,7 @@ const AgentTxn = ({ role }) => {
                         <div className="p-0">
                             <ThemeProvider theme={theme}>
                                 <MaterialTable
-                                    title={`My Settlement Transactions`}
+                                    title={`My Commission Settlements`}
                                     columns={columns}
                                     // data={query =>
                                     //     new Promise((resolve, reject) => {
