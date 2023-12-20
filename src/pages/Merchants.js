@@ -166,38 +166,38 @@ const Merchants = () => {
                                     DetailPanel: ChevronRight,
                                 }}
                                 onRowClick={(evt, rowData) => handleRowClick(evt, rowData)}
-                                detailPanel={rowData => {
-                                    return (
-                                        <div className="mb-5 px-5 pt-3">
-                                            <BlockHeadContent>
-                                                <BlockTitle page tag="h3">
-                                                    Trend Analysis
-                                                </BlockTitle>
-                                                <h5>Merchant: Mer{rowData?.id}</h5>
-                                            </BlockHeadContent>
+                            // detailPanel={rowData => {
+                            //     return (
+                            //         <div className="mb-5 px-5 pt-3">
+                            //             <BlockHeadContent>
+                            //                 <BlockTitle page tag="h3">
+                            //                     Trend Analysis
+                            //                 </BlockTitle>
+                            //                 <h5>Merchant: Mer{rowData?.id}</h5>
+                            //             </BlockHeadContent>
 
-                                            <Row className="g-gs py-4">
-                                                <Col md="12" lg="12" xxl="12">
+                            //             <Row className="g-gs py-4">
+                            //                 <Col md="12" lg="12" xxl="12">
 
-                                                    <MerchantTrends dateRange={dateRange} data={filteredTransactions} />
-                                                    <Row className="d-flex justify-content-between p-3">
-                                                        <Card className="text-center px-3 py-4 justify-content-center align-items-center shadow" style={{ width: '49%' }}>
-                                                            <p style={{ fontSize: '20px' }}>Avg Daily Deposit</p>
-                                                            <h5 className="w-80 text-dark">{rowData?.averageDailyDepositAmount}</h5>
-                                                        </Card>
-                                                        <Card className="text-center px-3 py-4 justify-content-center mt-0 align-items-center shadow" style={{ width: '49%' }}>
-                                                            <p style={{ fontSize: '20px' }}>Total # of Transactions</p>
-                                                            <h5 className="w-80 text-dark">{rowData?.totalNumberOfTxn}</h5>
-                                                        </Card>
+                            //                     <MerchantTrends dateRange={dateRange} data={filteredTransactions} />
+                            //                     <Row className="d-flex justify-content-between p-3">
+                            //                         <Card className="text-center px-3 py-4 justify-content-center align-items-center shadow" style={{ width: '49%' }}>
+                            //                             <p style={{ fontSize: '20px' }}>Avg Daily Deposit</p>
+                            //                             <h5 className="w-80 text-dark">{rowData?.averageDailyDepositAmount}</h5>
+                            //                         </Card>
+                            //                         <Card className="text-center px-3 py-4 justify-content-center mt-0 align-items-center shadow" style={{ width: '49%' }}>
+                            //                             <p style={{ fontSize: '20px' }}>Total # of Transactions</p>
+                            //                             <h5 className="w-80 text-dark">{rowData?.totalNumberOfTxn}</h5>
+                            //                         </Card>
 
-                                                    </Row>
-                                                </Col>
-                                            </Row>
+                            //                     </Row>
+                            //                 </Col>
+                            //             </Row>
 
 
-                                        </div>
-                                    )
-                                }}
+                            //         </div>
+                            //     )
+                            // }}
                             />
 
                         </ThemeProvider>
