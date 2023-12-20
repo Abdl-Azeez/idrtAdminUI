@@ -78,8 +78,10 @@ const AccountOverview = ({ role }) => {
                     Merchant Address API Error: {merchantsError}
                 </Alert>
             }
+
             <Row className="g-gs pb-4">
                 <Col lg="9" xxl="9">
+                    <hr className="px-5 mb-4 pb-2" />
                     <BlockHead size="sm" className="d-flex justify-content-between">
                         <div className="nk-block-between w-100">
                             <BlockHeadContent>
@@ -140,7 +142,7 @@ const AccountOverview = ({ role }) => {
                         </Col>
                     </Row>
 
-                    <hr className="px-5 my-4 w-50" />
+                    <hr className="px-5 my-4 " />
                 </Col>
 
             </Row>

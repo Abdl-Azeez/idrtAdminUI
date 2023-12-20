@@ -5,6 +5,7 @@ import { formatNumber } from "../../../../utils/Utils";
 import moment from "moment";
 
 const Transaction = ({ dateRange, data }) => {
+  console.log("data: ", data);
 
   const totalTnxIn = data?.reduce((sum, data) => {
     if (data && data.inCount) {
@@ -90,12 +91,12 @@ const Transaction = ({ dateRange, data }) => {
         borderWidth: 2,
         // dash: 0,
         fill: false,
-        borderColor: "#00f890",
+        borderColor: "#000000d4",
         backgroundColor: "transparent",
         pointBorderColor: "transparent",
         pointBackgroundColor: "transparent",
         pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "#00f890",
+        pointHoverBorderColor: "#0e0e00",
         pointBorderWidth: 2,
         pointHoverRadius: 4,
         pointHoverBorderWidth: 2,
@@ -109,13 +110,13 @@ const Transaction = ({ dateRange, data }) => {
         borderWidth: 2,
         lineTension: 0,
         dash: 0,
-        borderColor: "#00a859",
+        borderColor: "#00000052",
         backgroundColor: "transparent",
         borderCapStyle: "square",
         pointBorderColor: "transparent",
         pointBackgroundColor: "transparent",
         pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "#00a859",
+        pointHoverBorderColor: "#807f7f",
         pointBorderWidth: 2,
         pointHoverRadius: 4,
         pointHoverBorderWidth: 2,

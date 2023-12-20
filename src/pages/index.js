@@ -35,7 +35,7 @@ const Homepage = () => {
         {/* <DashboardAnalytics /> */}
 
         {/* MAIN WALLETS */}
-        <h3 className="text-dark mb-5 pb-2 text-capitalize">
+        <h3 className="text-dark pb-2 text-capitalize">
           Hello, <span style={{ letterSpacing: "2px" }}>{role.toLowerCase()}</span>
         </h3>
 

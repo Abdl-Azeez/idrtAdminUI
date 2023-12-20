@@ -11,7 +11,7 @@ const menu = [
   },
   {
     icon: "fa-solid fa-users-between-lines",
-    text: "Merchants",
+    text: "Merchants List",
     link: "/merchants",
   },
   {
