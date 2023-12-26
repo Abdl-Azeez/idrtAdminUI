@@ -132,7 +132,7 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
                 <>
                     <Row className="g-gs py-4">
                         <Col md="10" lg="10" xxl="10">
-                            <Card className="w-100">
+                            <Card className="" style={{ width: 'fit-content' }}>
                                 <TransactionTable data={filteredTransactions} />
                             </Card>
                         </Col>

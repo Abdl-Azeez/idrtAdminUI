@@ -76,7 +76,7 @@ const TransactionTable = ({ data }) => {
                     <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark border-right text-center">
                         IN
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark border-right text-center">
+                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark text-center">
                         OUT
                     </DataTableRow>
                 </DataTableHead>
@@ -88,7 +88,7 @@ const TransactionTable = ({ data }) => {
                     <DataTableRow className="nk-tb-sessions border-right text-center">
                         <div style={{ width: '300px' }} className="mx-auto">{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                    <DataTableRow className="nk-tb-sessions text-center">
                         <div style={{ width: '300px' }} className="mx-auto">{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</div>
                     </DataTableRow>
 
@@ -100,7 +100,7 @@ const TransactionTable = ({ data }) => {
                     <DataTableRow className="nk-tb-sessions border-right text-center">
                         <div style={{ width: '300px' }} className="mx-auto">${totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                    <DataTableRow className="nk-tb-sessions text-center">
                         <div style={{ width: '300px' }} className="mx-auto">${totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
 
