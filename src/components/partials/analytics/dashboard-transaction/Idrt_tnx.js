@@ -129,7 +129,7 @@ const IDRT_TXN = ({ dateRange, data }) => {
     <React.Fragment>
       <div className="card-title-group align-start pb-3 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">Transaction Amount (IDRT)</h6>
+          <h6 className="title">Transaction Amount</h6>
           <p>IDRT Net for {dateRange()}.</p>
         </div>
         <div className="card-tools">
@@ -152,14 +152,14 @@ const IDRT_TXN = ({ dateRange, data }) => {
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
-            <div className="title">IDRT In</div>
+            <div className="title">In</div>
             <div className="amount">{totalIDRT_In ? formatNumber((totalIDRT_In / 100)) : 0}</div>
             <div className="change down">
               {/* <Icon name="arrow-long-down"></Icon>1.92% */}
             </div>
           </div>
           <div className="analytic-data analytic-au-data">
-            <div className="title">IDRT Out</div>
+            <div className="title">Out</div>
             <div className="amount">{totalIDRT_Out ? formatNumber((totalIDRT_Out / 100)) : 0}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon>3.45% */}

@@ -149,19 +149,19 @@ const Fees = ({ dateRange, data }) => {
           <PreviewAltCard className="h-100">
             <div className="card-title-group align-start pt-3 pb-2 g-2">
               <div className="card-title card-title-sm">
-                <h6 className="title">Commission (IDRT)</h6>
+                <h6 className="title">Commissions</h6>
               </div>
-              <div className="card-tools">
-                {/* <TooltipComponent
-                  iconClass="card-hint"
-                  icon="help"
-                  direction="left"
-                  id="tooltip-perfomance"
-                  text="Performance of this month"
-                ></TooltipComponent> */}
-              </div>
+
             </div>
             <div className="analytic-wp">
+              <div className="analytic-data-group analytic-ov-group g-3 pl-5">
+                <div className="analytic-data analytic-ov-data ml-2">
+                  <div className="title font-weight-bold"
+                  // style={{ fontSize: '20px' }}
+                  >Received</div>
+                  <h5 className="text-dark">$2,000.00</h5>
+                </div>
+              </div>
               <div className="analytic-wp-group g-3">
                 <div className="analytic-data analytic-wp-data w-100">
                   <div className="analytic-wp-graph w-100">
@@ -185,11 +185,19 @@ const Fees = ({ dateRange, data }) => {
           <PreviewAltCard className="h-100">
             <div className="card-title-group align-start pb-2 g-2">
               <div className="card-title card-title-sm">
-                <h6 className="title">Transaction Fees (BNB)</h6>
+                <h6 className="title">Fees Spent</h6>
                 <p>The fees for {dateRange()}.</p>
               </div>
             </div>
             <div className="analytic-wp">
+              <div className="analytic-data-group analytic-ov-group g-3 pl-5">
+                <div className="analytic-data analytic-ov-data ml-2">
+                  <div className="title font-weight-bold"
+                  // style={{ fontSize: '20px' }}
+                  >BNB</div>
+                  <h5 className="text-dark">8.30</h5>
+                </div>
+              </div>
               <div className="analytic-wp-group g-3">
                 <div className="analytic-data analytic-wp-data w-100">
                   <div className="analytic-wp-graph w-100">

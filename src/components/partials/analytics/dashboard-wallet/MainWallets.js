@@ -70,15 +70,15 @@ const MainWallets = ({ role }) => {
                 </Alert>
             }
             <Row className="g-gs pb-4">
-                <Col lg="12" xxl="12">
+                <Col lg="10" xxl="10">
                     <BlockHead size="sm" className="d-flex justify-content-between">
                         <div className="nk-block-between w-100">
                             <BlockHeadContent>
                                 <BlockTitle page tag="h3">
-                                    MAIN WALLETS
+                                    Organization Overview
                                 </BlockTitle>
                             </BlockHeadContent>
-                            <div className="d-flex pos-rel" style={{ right: '50px' }}>
+                            <div className="d-flex pos-rel">
                                 Last Updated:
                                 <div className="d-flex ml-2" style={{ textWrap: 'nowrap' }}>
                                     <p className="mr-2 mb-0">{`Date: ${moment().format('L')}`}</p>
@@ -88,65 +88,38 @@ const MainWallets = ({ role }) => {
                         </div>
                     </BlockHead>
                     <Row>
-                        <Col lg="8" xxl="8">
-                            {/* <Block> */}
-                            <Card className="h-100 justify-content-center">
-
-                                <div className="nk-tb-list is-loose traffic-channel-table">
-                                    {role === "MERCHANT" &&
-                                        <DataTableItem className="nk-tb-item py-1" >
-                                            <DataTableRow className="nk-tb-channel">
-                                                <span>Merchant Wallet</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions text-info">
-                                                <span>{merchantWallet?.value}</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                                                {merchantWalletResponse ? (merchantWalletResponse[0]?.balance / 100)?.toLocaleString() : 0} IDRT
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions">
-                                                <Button size="small" color="primary">Settle</Button>
-                                            </DataTableRow>
-                                        </DataTableItem>
-                                    }
-                                    {role !== "MERCHANT" &&
-                                        <DataTableItem className="nk-tb-item py-1" >
-                                            <DataTableRow className="nk-tb-channel">
-                                                <span>Commission Fee Wallet</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions text-info">
-                                                <span>{commissionWallet?.value}</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                                                {commissionWalletResponse ? (commissionWalletResponse[0]?.balance / 100)?.toLocaleString() : 0}  IDRT
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions">
-                                                <Button size="small" color="primary">Settle</Button>
-                                            </DataTableRow>
-                                        </DataTableItem>
-                                    }
-                                    {role === "ADMIN" &&
-                                        <DataTableItem className="nk-tb-item py-1" >
-                                            <DataTableRow className="nk-tb-channel">
-                                                <span>BNB Vault Wallet</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions text-info">
-                                                <span>{bnbWallet?.value}</span>
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                                                {bnbWalletResponse ? (bnbWalletResponse[1]?.balance / 1000000000000000000)?.toLocaleString() : 0} BNB
-                                            </DataTableRow>
-                                            <DataTableRow className="nk-tb-sessions">
-                                                <Button size="small" color="primary">Settle</Button>
-                                            </DataTableRow>
-                                        </DataTableItem>
-                                    }
-                                </div>
+                        {/* <Card className="h-100 justify-content-center"> */}
+                        <Row className="d-flex justify-content-between ml-3 w-100 overview-cards">
+                            <Card className="text-center px-3 py-4 justify-content-center align-items-center shadow" style={{ width: '310px' }}>
+                                <p style={{ fontSize: '20px' }}>Agents <br /> Total #</p>
+                                <h5 className="w-80 text-dark">100</h5>
                             </Card>
-                            {/* </Block> */}
-                        </Col>
+                            <Card className="text-center px-3 py-4 justify-content-center align-items-center shadow mt-0" style={{ width: '310px' }}>
+                                <p style={{ fontSize: '20px' }}>Merchants <br /> Total #</p>
+                                <h5 className="w-80 text-dark">2,000</h5>
+                            </Card>
+                            <Card className="text-center px-3 py-4 justify-content-center align-items-center shadow mt-0" style={{ width: '310px' }}>
+                                <p style={{ fontSize: '20px' }}>Users <br /> Total #</p>
+                                <h5 className="w-80 text-dark">2,000,000</h5>
+                            </Card>
+                        </Row>
+                        {role === "ADMIN" &&
+                            <>
+                                <BlockHeadContent className="pt-5 ml-3">
+                                    <BlockTitle page tag="h3">
+                                        Wallets Balance
+                                    </BlockTitle>
+                                </BlockHeadContent>
+                                <DashboardAnalytics role={role} />
+                            </>
+
+                        }
+
+                        {/* </Card> */}
                         <Col lg="4" xxl="4">
-                            <DashboardAnalytics role={role} />
+                            {role !== "ADMIN" &&
+                                <DashboardAnalytics role={role} />
+                            }
                         </Col>
                     </Row>
                 </Col>

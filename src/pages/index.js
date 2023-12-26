@@ -42,15 +42,15 @@ const Homepage = () => {
         {role !== "ADMIN" ? <AccountOverview role={role} /> : <MainWallets role={role} />}
 
         {/* IDRT Transactions Overview */}
-        <BlockHead size="sm" className={`d-flex justify-content-between pt-3 ${role !== "ADMIN" ? "col-md-9" : ""}`}>
+        <BlockHead size="sm" className={`d-flex justify-content-between pt-3 ${role !== "ADMIN" ? "col-md-9" : "col-md-10"}`}>
           <div className="nk-block-between">
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                {role === "ADMIN" ? "IDRT Transactions Overview" : "Trend Analysis"}
+                {role === "ADMIN" ? "Financial Summary" : "Trend Analysis"}
               </BlockTitle>
             </BlockHeadContent>
           </div>
-          <div className={`card-tools shrink-0 d-none d-sm-block ${role !== "ADMIN" ? "" : "mr-5"}`}>
+          <div className={`card-tools shrink-0 d-none d-sm-block`}>
             <ul className="nav nav-switch-s2 nav-tabs bg-white">
               <li className="nav-item">
                 <a

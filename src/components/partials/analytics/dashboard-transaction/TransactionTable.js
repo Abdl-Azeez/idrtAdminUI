@@ -1,5 +1,5 @@
 import React from "react";
-import { DataTableHead, DataTableRow, DataTableItem } from "../../../Component";
+import { DataTableHead, DataTableRow, DataTableItem, BlockHeadContent, BlockTitle } from "../../../Component";
 
 const TransactionTable = ({ data }) => {
     const totalTnxIn = data?.reduce((sum, data) => {
@@ -62,68 +62,50 @@ const TransactionTable = ({ data }) => {
 
     return (
         <React.Fragment>
+            <BlockHeadContent className="pt-5 ml-3">
+                <BlockTitle page tag="h3">
+                    Transaction Totals
+                </BlockTitle>
+            </BlockHeadContent>
+
             <div className="nk-tb-list is-loose traffic-channel-table">
                 <DataTableHead>
-                    <DataTableRow className="nk-tb-channel">
+                    <DataTableRow className="nk-tb-channe border-right">
 
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        TOTAL IN
+                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark border-right text-center">
+                        IN
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark">
-                        TOTAL OUT
+                    <DataTableRow className="nk-tb-sessions font-weight-bolder text-dark border-right text-center">
+                        OUT
                     </DataTableRow>
                 </DataTableHead>
 
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <div style={{ width: '350px' }}>No. of Transactions</div>
+                <DataTableItem className="nk-tb-item border-right" >
+                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark border-right">
+                        <div style={{ width: '350px' }}># of Transactions</div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</div>
+                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                        <div style={{ width: '300px' }} className="mx-auto">{totalTnxIn ? totalTnxIn?.toLocaleString() : 0}</div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</div>
-                    </DataTableRow>
-
-                </DataTableItem>
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <div>Transaction Amount (IDRT)</div>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</div>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</div>
+                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                        <div style={{ width: '300px' }} className="mx-auto">{totalTnxOut ? (totalTnxOut).toLocaleString() : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <div>Commssion (IDRT)</div>
+                <DataTableItem className="nk-tb-item border-right" >
+                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark border-right">
+                        <div>Txn Amount </div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalCommissionIn ? (totalCommissionIn / 100)?.toLocaleString() : 0}</div>
+                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                        <div style={{ width: '300px' }} className="mx-auto">${totalIDRT_In ? ((totalIDRT_In / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalCommissionOut ? (totalCommissionOut / 100)?.toLocaleString() : 0}</div>
+                    <DataTableRow className="nk-tb-sessions border-right text-center">
+                        <div style={{ width: '300px' }} className="mx-auto">${totalIDRT_Out ? ((totalIDRT_Out / 100)?.toLocaleString()) : 0}</div>
                     </DataTableRow>
 
                 </DataTableItem>
 
-                <DataTableItem className="nk-tb-item" >
-                    <DataTableRow className="nk-tb-channel font-weight-bolder text-dark">
-                        <div>Transaction Fee (BNB)</div>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalFeeIn ? (totalFeeIn / 1000000000000000000)?.toFixed(5) : 0}</div>
-                    </DataTableRow>
-                    <DataTableRow className="nk-tb-sessions">
-                        <div style={{ width: '300px' }}>{totalFeeOut ? ((totalFeeOut / 1000000000000000000)?.toFixed(5)) : 0}</div>
-                    </DataTableRow>
-
-                </DataTableItem>
 
             </div>
         </React.Fragment>

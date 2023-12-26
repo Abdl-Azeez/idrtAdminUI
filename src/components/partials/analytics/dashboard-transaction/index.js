@@ -9,6 +9,8 @@ import {
     Row,
     Col,
     PreviewAltCard,
+    BlockHeadContent,
+    BlockTitle,
 } from "../../../Component";
 import { fetchTransaction, errorChecker } from "../../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -129,24 +131,62 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
             {role === "ADMIN" ?
                 <>
                     <Row className="g-gs py-4">
-                        <Col md="12" lg="12" xxl="12">
-                            <Card>
+                        <Col md="10" lg="10" xxl="10">
+                            <Card className="w-100">
                                 <TransactionTable data={filteredTransactions} />
                             </Card>
                         </Col>
                     </Row>
 
-                    <Block>
+                    <Col lg="10" xxl="10">
                         <Row className="g-gs">
                             <Col lg="6" xxl="6">
                                 <PreviewAltCard className="h-100">
                                     <Transaction dateRange={dateRange} data={filteredTransactions} />
                                 </PreviewAltCard>
                             </Col>
+
                             <Col md="6" lg="6" xxl="6">
                                 <PreviewAltCard className="h-100">
                                     <IDRT_TXN dateRange={dateRange} data={filteredTransactions} />
                                 </PreviewAltCard>
+                            </Col>
+                        </Row>
+                        <Row className="g-gs my-4">
+                            <Col md="6" lg="6" xxl="6">
+                                <Card className="rounded">
+                                    <BlockHeadContent className="pt-4 ml-3">
+                                        <BlockTitle page tag="h3">
+                                            Commission <span className="ml-1 font-weight-normal" style={{ fontSize: '12px' }}>USDT</span>
+                                        </BlockTitle>
+                                    </BlockHeadContent>
+                                    <Row className="d-flex justify-content-between w-85 mx-auto">
+                                        <div className="text-center px-3 py-4 justify-content-center align-items-center" style={{ width: 'auto' }}>
+                                            <p style={{ fontSize: '20px' }}>Received</p>
+                                            <h5 className="text-dark">$2,0000.00</h5>
+                                        </div>
+                                        <div className="text-center px-3 py-4 justify-content-center align-items-center mt-0" style={{ width: 'auto' }}>
+                                            <p style={{ fontSize: '20px' }}>Pending</p>
+                                            <h5 className="text-dark">$150.00</h5>
+                                        </div>
+
+                                    </Row>
+                                </Card>
+                            </Col>
+                            <Col md="6" lg="6" xxl="6">
+                                <Card className="rounded" style={{ width: '200px' }}>
+                                    <BlockHeadContent className="pt-4 ml-3">
+                                        <BlockTitle page tag="h3">
+                                            Fees Spent
+                                        </BlockTitle>
+                                    </BlockHeadContent>
+                                    <Row className="d-flex justify-content-between w-85 mx-auto">
+                                        <div className="text-center px-3 py-4 justify-content-center align-items-center w-100">
+                                            <p style={{ fontSize: '20px' }}>BNB</p>
+                                            <h5 className="text-dark">8.30</h5>
+                                        </div>
+                                    </Row>
+                                </Card>
                             </Col>
                         </Row>
                         <Row className="g-gs">
@@ -154,7 +194,7 @@ const TnxAnalytics = ({ timeFrame, date, role }) => {
                                 <Fees dateRange={dateRange} data={filteredTransactions} />
                             </Col>
                         </Row>
-                    </Block>
+                    </Col>
                 </>
                 :
                 <Block>

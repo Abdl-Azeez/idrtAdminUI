@@ -131,7 +131,7 @@ const Transaction = ({ dateRange, data }) => {
     <React.Fragment>
       <div className="card-title-group pb-3 g-2">
         <div className="card-title card-title-sm">
-          <h6 className="title">No. of Transactions</h6>
+          <h6 className="title"># of Transactions</h6>
           <p>Total Number of transactions for {dateRange()}</p>
         </div>
 
@@ -146,14 +146,14 @@ const Transaction = ({ dateRange, data }) => {
             </div>
           </div>
           <div className="analytic-data analytic-ov-data">
-            <div className="title">Total In</div>
+            <div className="title">In</div>
             <div className="amount">{formatNumber(totalTnxIn)}</div>
             <div className="change up">
               {/* <Icon name="arrow-long-up"></Icon> {timeFrame === "Month" ? "47.5" : "80.6"}% */}
             </div>
           </div>
           <div className="analytic-data analytic-ov-data">
-            <div className="title">Total Out</div>
+            <div className="title">Out</div>
             <div className="amount">{formatNumber(totalTnxOut)}</div>
             <div className="change down">
               {/* <Icon name="arrow-long-down"></Icon> {timeFrame === "Month" ? "12.57" : "18.21"}% */}
