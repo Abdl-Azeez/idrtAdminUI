@@ -155,7 +155,7 @@ const Fees = ({ dateRange, data }) => {
             </div>
             <div className="analytic-wp">
               <div className="analytic-data-group analytic-ov-group g-3 pl-5">
-                <div className="analytic-data analytic-ov-data ml-2">
+                <div className="analytic-data analytic-ov-data ml-2 w-100">
                   <div className="title font-weight-bold"
                   // style={{ fontSize: '20px' }}
                   >Received</div>
@@ -191,7 +191,7 @@ const Fees = ({ dateRange, data }) => {
             </div>
             <div className="analytic-wp">
               <div className="analytic-data-group analytic-ov-group g-3 pl-5">
-                <div className="analytic-data analytic-ov-data ml-2">
+                <div className="analytic-data analytic-ov-data ml-2 w-100">
                   <div className="title font-weight-bold"
                   // style={{ fontSize: '20px' }}
                   >BNB</div>
